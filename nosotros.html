@@ -81,17 +81,22 @@ body.menu-open{overflow:hidden;}
 .chip{font-size:.8rem;padding:8px 14px;border:1px solid var(--line);border-radius:999px;color:var(--text-secondary);}
 .chip.hl{border-color:var(--dorado);color:var(--dorado);}
 
-.rooms{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:32px;}
-.room{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px;}
-.room .ico{width:34px;height:34px;margin-bottom:12px;stroke:var(--dorado);fill:none;stroke-width:1.5;}
-.room h3{font-size:1rem;margin-bottom:6px;}
-.room p{font-size:.88rem;color:var(--text-secondary);margin:0;}
+/* Base (safe) layout: works with no JS, no motion libs, reduced-motion — plain stacked list. */
+.stack-stage{display:flex;flex-direction:column;gap:16px;margin-top:12px;}
+.room{padding:0;}
+.room-inner{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:32px;max-width:520px;width:100%;box-shadow:0 30px 70px rgba(0,0,0,.45);}
+.room-inner .ico{width:40px;height:40px;margin-bottom:16px;stroke:var(--dorado);fill:none;stroke-width:1.5;}
+.room-inner h3{font-size:1.3rem;margin-bottom:10px;}
+.room-inner p{font-size:.98rem;color:var(--text-secondary);margin:0;max-width:none;}
+/* Enhanced (JS-confirmed GSAP/ScrollTrigger/Lenis loaded, motion allowed): pinned card-stack scroll effect. */
+.stack-stage.js-stacked{position:relative;height:100vh;}
+.stack-stage.js-stacked .room{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:0 22px;}
 .foundation{margin-top:16px;background:var(--azul-nova);border-radius:14px;padding:22px;display:flex;gap:16px;align-items:flex-start;}
 .foundation .ico{width:34px;height:34px;stroke:var(--dorado);fill:none;stroke-width:1.5;flex:none;}
 .foundation p{margin:0;font-size:.9rem;}
 .incremental{margin-top:22px;padding:18px 22px;border-left:2px solid var(--dorado);background:var(--dorado-dim);border-radius:0 10px 10px 0;}
 .incremental p{margin:0;font-size:.92rem;}
-@media (max-width:700px){.rooms{grid-template-columns:1fr;}}
+@media (max-width:700px){.room-inner{padding:32px 26px;}}
 
 .stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:30px;}
 .stat-cell{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px;}
@@ -204,28 +209,38 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
       <p class="eyebrow rv">Cómo pensamos el espacio</p>
       <h2 class="rv rv2">Toda casa inteligente tiene 4 habitaciones</h2>
       <p class="muted rv rv3" style="margin-top:10px;">Se instalan y programan por separado, o se integran y controlan desde un solo lugar.</p>
-      <div class="rooms">
-        <div class="room rv">
+    </div>
+    <div class="stack-stage" id="habitaciones-stage">
+      <div class="room" data-card>
+        <div class="room-inner">
           <svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="9" r="6"/><path d="M12 15v3M9 21h6"/></svg>
           <h3>Iluminación</h3>
           <p>Escenas, brillo y color programables por app, voz o panel centralizado.</p>
         </div>
-        <div class="room rv rv2">
+      </div>
+      <div class="room" data-card>
+        <div class="room-inner">
           <svg class="ico" viewBox="0 0 24 24"><path d="M4 12c1.5-2 2.5-3 4-3M20 12c-1.5-2-2.5-3-4-3M4 12c1.5 2 2.5 3 4 3M20 12c-1.5 2-2.5 3-4 3"/><circle cx="12" cy="12" r="2.5"/></svg>
           <h3>Confort</h3>
           <p>Climatización y automatización que se adaptan a tus hábitos y ahorran energía.</p>
         </div>
-        <div class="room rv rv3">
+      </div>
+      <div class="room" data-card>
+        <div class="room-inner">
           <svg class="ico" viewBox="0 0 24 24"><rect x="7" y="3" width="10" height="16" rx="1"/><circle cx="12" cy="9" r="2"/></svg>
           <h3>Entretenimiento</h3>
           <p>Sonido y multimedia integrados, controlados desde una única experiencia.</p>
         </div>
-        <div class="room rv rv4">
+      </div>
+      <div class="room" data-card>
+        <div class="room-inner">
           <svg class="ico" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="1"/><circle cx="12" cy="15" r="1"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
           <h3>Seguridad</h3>
           <p>Cerraduras digitales, videovigilancia y alarmas con acceso local y remoto.</p>
         </div>
       </div>
+    </div>
+    <div class="wrap">
       <div class="foundation rv">
         <svg class="ico" viewBox="0 0 24 24"><path d="M4 21V9l8-6 8 6v12"/><rect x="10" y="13" width="4" height="4"/></svg>
         <div>
@@ -331,5 +346,14 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.26/dist/lenis.min.js"></script>
 <script src="js/motion.js"></script>
 <script src="js/site.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (window.initStack && !reduced) {
+    document.getElementById('habitaciones-stage').classList.add('js-stacked');
+    initStack('#habitaciones-stage', '#habitaciones-stage [data-card]');
+  }
+});
+</script>
 </body>
 </html>

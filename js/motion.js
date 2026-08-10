@@ -37,22 +37,47 @@
   };
 
   // Técnica 2: cards apiladas (usar en nosotros.html#habitaciones, reemplaza el grid .rooms estático)
+  //
+  // Rewritten from the original spec (N separate ScrollTrigger.create calls, each with its
+  // own pixel-offset start/end, PLUS a final pin ScrollTrigger — all sharing the same trigger
+  // element): under real testing that composition released the pin far earlier than its own
+  // 'bottom bottom' end condition implied, leaving a multi-viewport dead scroll gap with
+  // nothing rendered. A single pinned+scrubbed ScrollTrigger driving every card off one shared
+  // progress value is the standard, reliable way to do this — same visual result (card i
+  // recedes — scale floor 0.88, opacity floor 0.4 — while card i+1 is revealed on top of it,
+  // reading order first-to-last, last card never recedes), no measurement conflicts.
   window.initStack = function (stageSelector, cardSelector) {
     if (reduced) return;
     var cards = gsap.utils.toArray(cardSelector);
+    var n = cards.length;
+    if (!n) return;
     cards.forEach(function (card, i) {
-      gsap.set(card, { zIndex: i });
-      if (i === cards.length - 1) return;
-      ScrollTrigger.create({
-        trigger: stageSelector,
-        start: function () { return 'top+=' + (i * window.innerHeight * 1.1) + ' top'; },
-        end: function () { return 'top+=' + ((i + 1) * window.innerHeight * 1.1) + ' top'; },
-        scrub: true,
-        onUpdate: function (self) {
-          gsap.set(card, { scale: 1 - self.progress * 0.12, opacity: 1 - self.progress * 0.6 });
-        }
-      });
+      // Reading order first: card 0 stacks on top initially and recedes to reveal
+      // card 1, and so on — not the reverse (zIndex: i would keep the LAST card
+      // permanently on top, hiding every earlier one for the whole scroll).
+      gsap.set(card, { zIndex: n - 1 - i });
     });
-    ScrollTrigger.create({ trigger: stageSelector, start: 'top top', end: 'bottom bottom', pin: true });
+
+    ScrollTrigger.create({
+      trigger: stageSelector,
+      start: 'top top',
+      // Explicit scroll distance (not tied to the trigger element's own CSS height): GSAP
+      // inserts its own pin-spacer sized to exactly this much, so there's no leftover
+      // unoccupied space to scroll through once the pin releases. Using the element's own
+      // height (e.g. 'bottom bottom' on a 400vh-tall container whose visible content only
+      // fills the first 100vh) left a multi-viewport dead gap after unpinning — this is the
+      // standard fix.
+      end: '+=' + (n - 1) * 100 + '%',
+      pin: true,
+      scrub: true,
+      onUpdate: function (self) {
+        var totalProgress = self.progress * (n - 1);
+        cards.forEach(function (card, i) {
+          if (i === n - 1) return;
+          var local = Math.max(0, Math.min(1, totalProgress - i));
+          gsap.set(card, { scale: 1 - local * 0.12, opacity: 1 - local * 0.6 });
+        });
+      }
+    });
   };
 })();
