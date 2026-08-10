@@ -61,7 +61,7 @@
 
   function initFooterYear() {
     var el = document.querySelector('[data-year]');
-    if (el) el.textContent = '2026';
+    if (el) el.textContent = new Date().getFullYear();
   }
 
   function initGalleryTabs() {
