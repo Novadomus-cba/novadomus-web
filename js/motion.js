@@ -19,6 +19,10 @@
     var text = el.textContent;
     el.textContent = '';
     text.split('').forEach(function (ch) {
+      if (ch === ' ') {
+        el.appendChild(document.createTextNode(' '));
+        return;
+      }
       var span = document.createElement('span');
       span.style.display = 'inline-block';
       span.textContent = ch;
