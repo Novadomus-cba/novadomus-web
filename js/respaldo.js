@@ -102,7 +102,13 @@
         .eq('video_estado', 'cargado')
         .order('marca', { ascending: true });
       if (res.error) throw res.error;
-      render(res.data || []);
+      // Ubiquiti: Tier 5 "no publicar" (nova-domus-jerarquia-marcas-dispositivos.md) — 0
+      // apariciones en inventario real, compite con TP-Link Omada que es la línea vigente.
+      var NO_PUBLICAR = ['UBIQUITI'];
+      var items = (res.data || []).filter(function (i) {
+        return NO_PUBLICAR.indexOf((i.marca || '').toUpperCase()) === -1;
+      });
+      render(items);
     } catch (err) {
       host.innerHTML = '<p class="muted">No pudimos cargar esta sección ahora.</p>';
       console.error('marcas_respaldo:', err);

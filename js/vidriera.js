@@ -6,6 +6,28 @@
   var WA_NUMBER = '543516747513';
   var CONSULTA_KEY = 'nd_vidriera_consulta';
 
+  // Curación de vidriera (nova-domus-jerarquia-marcas-dispositivos.md, 31/08/2026):
+  // Home Assistant, Shelly y Yale muestran su catálogo completo (núcleo técnico + motor
+  // comercial). El resto de las marcas solo aporta los dispositivos ya jerarquizados en el
+  // documento (foto + ficha técnica confirmadas) — el resto del inventario de esas marcas
+  // existe pero no se publica, para no prometer una vidriera que no rota. Lo que falta se
+  // resuelve por WhatsApp (ver leyenda en vidriera.html).
+  var FULL_BRANDS = ['HOME ASSISTANT', 'SHELLY', 'YALE'];
+  var CURATED_IDS = [
+    // Seguridad (Hikvision) — excluye id 188 (videoportero, sin foto todavía)
+    147, 136, 204, 1805, 202, 129, 132, 1966, 191,
+    // Redes (TP-Link Omada) — excluye id 1448, ER7212PC descontinuado
+    1311, 1461, 1302, 1469, 1455,
+    // Infraestructura (GLC, Seagate, Forza) — excluye id 812, UPS sin foto
+    1126, 108, 111, 109, 817,
+    // Confort (Sensibo, único dispositivo con historial real)
+    325,
+    // Accesos, no-Yale (EZVIZ)
+    89
+  ];
+  // Descontinuados con historial de cotización: no se publican aunque la marca sea "completa".
+  var EXCLUDE_IDS = [1448, 631];
+
   var allItems = [];
   var activeFamily = 'Todas';
   var searchQuery = '';
@@ -23,11 +45,6 @@
       .replace(/>/g, '&gt;')
       .replace(/"/g, '&quot;')
       .replace(/'/g, '&#39;');
-  }
-
-  function formatPrice(n) {
-    var rounded = Math.ceil(Number(n));
-    return '$ ' + rounded.toLocaleString('es-AR');
   }
 
   function waLink(text) {
@@ -79,7 +96,7 @@
 
   function addToConsulta(item) {
     if (consulta.some(function (c) { return c.id === item.id; })) return false;
-    consulta.push({ id: item.id, nombre: item.nombre, marca: item.marca, precio_publico: item.precio_publico });
+    consulta.push({ id: item.id, nombre: item.nombre, marca: item.marca });
     saveConsulta();
     return true;
   }
@@ -132,14 +149,13 @@
     document.getElementById('pd-fam').textContent = item.grupo || 'Otros';
     document.getElementById('pd-title').textContent = item.nombre || '';
     document.getElementById('pd-brand').textContent = item.marca || '';
-    document.getElementById('pd-price').textContent = formatPrice(item.precio_publico);
 
     var featEl = document.getElementById('pd-features');
     var feats = featuresList(item.caracteristicas_principales);
     featEl.innerHTML = feats.map(function (f) { return '<li>' + escapeHtml(toDisplayCase(f)) + '</li>'; }).join('');
 
     var updated = formatDate(item.updated_at);
-    document.getElementById('pd-updated').textContent = updated ? 'Precio actualizado: ' + updated : '';
+    document.getElementById('pd-updated').textContent = updated ? 'Ficha actualizada: ' + updated : '';
 
     pdAdd.disabled = false;
     pdAdd.textContent = consulta.some(function (c) { return c.id === item.id; }) ? 'Ya está en tu consulta' : 'Agregar a consulta';
@@ -188,14 +204,13 @@
     return ''
       + '<div class="drawer-item">'
       + '  <div class="thumb">' + img + '</div>'
-      + '  <div class="info"><b>' + escapeHtml(c.nombre) + '</b><span>' + escapeHtml(c.marca) + ' · ' + formatPrice(c.precio_publico) + '</span></div>'
+      + '  <div class="info"><b>' + escapeHtml(c.nombre) + '</b><span>' + escapeHtml(c.marca) + '</span></div>'
       + '  <button class="remove" data-remove-id="' + c.id + '">Quitar</button>'
       + '</div>';
   }
 
   function renderDrawer() {
     var body = document.getElementById('drawer-body');
-    var totalEl = document.getElementById('drawer-total-amount');
     var sendBtn = document.getElementById('drawer-send');
     var clearBtn = document.getElementById('drawer-clear');
 
@@ -204,13 +219,11 @@
     } else {
       body.innerHTML = consulta.map(drawerItemHtml).join('');
     }
-    var total = consulta.reduce(function (sum, c) { return sum + (Number(c.precio_publico) || 0); }, 0);
-    totalEl.textContent = formatPrice(total);
     sendBtn.setAttribute('aria-disabled', consulta.length ? 'false' : 'true');
     clearBtn.disabled = !consulta.length;
 
     var lines = ['Hola Nova Domus, quiero consultar por estos productos:', ''];
-    consulta.forEach(function (c) { lines.push(c.nombre + ' — ' + formatPrice(c.precio_publico)); });
+    consulta.forEach(function (c) { lines.push('- ' + c.nombre + ' (' + c.marca + ')'); });
     lines.push('', 'Gracias!');
     sendBtn.href = consulta.length ? waLink(lines.join('\n')) : waLink('Hola Nova Domus, quiero hacer una consulta');
   }
@@ -261,7 +274,6 @@
       + '    <span class="fam">' + grupo + '</span>'
       + '    <h3>' + nombre + '</h3>'
       + '    <span class="brand">' + marca + '</span>'
-      + '    <span class="price">' + formatPrice(item.precio_publico) + '</span>'
       + '    <div class="prod-actions">'
       + '      <button type="button" class="btn btn-outline" data-view-id="' + item.id + '">Ver ficha técnica</button>'
       + '      <button type="button" class="btn btn-primary" data-add-id="' + item.id + '">' + (yaAgregado ? 'Agregado ✓' : 'Agregar a consulta') + '</button>'
@@ -281,10 +293,6 @@
       switch (sortMode) {
         case 'marca-asc':
           return (a.marca || '').localeCompare(b.marca || '') || (a.nombre || '').localeCompare(b.nombre || '');
-        case 'precio-asc':
-          return (Number(a.precio_publico) || 0) - (Number(b.precio_publico) || 0);
-        case 'precio-desc':
-          return (Number(b.precio_publico) || 0) - (Number(a.precio_publico) || 0);
         default:
           return (a.nombre || '').localeCompare(b.nombre || '');
       }
@@ -326,11 +334,16 @@
       var client = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
       var res = await client
         .from('vidriera_publica')
-        .select('id,nombre,marca,grupo,imagen_url,precio_publico,updated_at,caracteristicas_principales')
+        .select('id,nombre,marca,grupo,imagen_url,updated_at,caracteristicas_principales')
         .order('grupo', { ascending: true })
         .order('nombre', { ascending: true });
       if (res.error) throw res.error;
-      allItems = res.data || [];
+      allItems = (res.data || []).filter(function (item) {
+        if (!item.imagen_url) return false;
+        if (EXCLUDE_IDS.indexOf(item.id) !== -1) return false;
+        if (FULL_BRANDS.indexOf((item.marca || '').toUpperCase()) !== -1) return true;
+        return CURATED_IDS.indexOf(item.id) !== -1;
+      });
       renderChips();
       renderGrid();
     } catch (err) {

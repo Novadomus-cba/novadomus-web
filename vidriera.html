@@ -78,9 +78,8 @@ body.menu-open,body.scroll-lock{overflow:hidden;}
 .prod-body .fam{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--dorado);}
 .prod-body h3{font-size:1rem;}
 .prod-body .brand{font-size:.82rem;color:var(--text-secondary);margin-bottom:8px;}
-.prod-body .price{font-family:'Michroma';font-size:.78rem;color:var(--crema);margin-top:auto;padding-top:10px;border-top:1px solid var(--line);}
 .prod-body .btn{margin-top:0;justify-content:center;}
-.prod-actions{display:flex;gap:8px;margin-top:12px;}
+.prod-actions{display:flex;gap:8px;margin-top:auto;padding-top:10px;border-top:1px solid var(--line);}
 .prod-actions .btn{flex:1;font-size:.78rem;padding:10px 12px;white-space:nowrap;}
 .prod-card{cursor:pointer;}
 @media (max-width:900px){.prod-grid{grid-template-columns:repeat(2,1fr);}}
@@ -124,8 +123,7 @@ body.menu-open,body.scroll-lock{overflow:hidden;}
 .pd-body .fam{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--dorado);}
 .pd-body h2{font-size:1.25rem;text-transform:none;margin:4px 0 2px;}
 .pd-body .brand{font-size:.85rem;color:var(--text-secondary);}
-.pd-body .price{font-family:'Michroma';font-size:1rem;color:var(--crema);margin:10px 0;padding:10px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
-.pd-features{list-style:none;margin:6px 0 4px;padding:0;display:flex;flex-direction:column;gap:6px;}
+.pd-features{list-style:none;margin:10px 0 4px;padding:10px 0 0 0;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:6px;}
 .pd-features li{font-size:.85rem;color:var(--text-secondary);padding-left:16px;position:relative;}
 .pd-features li::before{content:'';position:absolute;left:0;top:.55em;width:6px;height:6px;border-radius:50%;background:var(--dorado);}
 .pd-updated{font-size:.75rem;color:var(--text-secondary);margin:2px 0 10px;}
@@ -151,7 +149,6 @@ body.menu-open,body.scroll-lock{overflow:hidden;}
 .drawer-item .remove{font-size:.76rem;color:var(--text-secondary);text-decoration:underline;flex:none;}
 .drawer-item .remove:hover{color:var(--dorado);}
 .drawer-foot{padding:18px 22px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:10px;}
-.drawer-total{display:flex;justify-content:space-between;font-size:.9rem;margin-bottom:4px;}
 .drawer-foot .btn{justify-content:center;}
 @media (prefers-reduced-motion:reduce){.drawer,.drawer-overlay,.pd-overlay,.pd-modal{transition:none!important;}}
 
@@ -220,6 +217,7 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
 
   <div class="wrap">
     <div class="notice rv"><b>Catálogo en vivo</b> — actualizado directamente desde nuestro inventario.</div>
+    <div class="notice rv rv2"><b>¿No ves el dispositivo que buscás?</b> Esta vidriera muestra una selección curada de cada marca, no el catálogo completo de fabricante. Probablemente lo tengamos igual — <a href="https://wa.me/543516747513?text=Hola%20Nova%20Domus%2C%20estoy%20buscando%20un%20dispositivo%20que%20no%20encontr%C3%A9%20en%20la%20vidriera" style="color:var(--dorado);">escribinos por WhatsApp</a> y te confirmamos al toque.</div>
   </div>
 
   <section class="section">
@@ -232,8 +230,6 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
         <select id="vid-sort" class="vid-sort" aria-label="Ordenar productos">
           <option value="nombre-asc">Nombre (A-Z)</option>
           <option value="marca-asc">Marca (A-Z)</option>
-          <option value="precio-asc">Precio (menor a mayor)</option>
-          <option value="precio-desc">Precio (mayor a menor)</option>
         </select>
       </div>
       <div class="vid-chips" id="vid-chips" aria-label="Filtrar por familia"></div>
@@ -250,7 +246,6 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
       <span class="fam" id="pd-fam"></span>
       <h2 id="pd-title"></h2>
       <span class="brand" id="pd-brand"></span>
-      <span class="price" id="pd-price"></span>
       <ul class="pd-features" id="pd-features"></ul>
       <p class="pd-updated" id="pd-updated"></p>
       <div class="pd-actions">
@@ -269,7 +264,6 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
   </div>
   <div class="drawer-body" id="drawer-body"></div>
   <div class="drawer-foot">
-    <div class="drawer-total"><span>Total informativo</span><b id="drawer-total-amount">$ 0</b></div>
     <button class="btn btn-outline" id="drawer-clear">Vaciar consulta</button>
     <a class="btn btn-primary" id="drawer-send" target="_blank" rel="noopener">Enviar consulta por WhatsApp</a>
   </div>
