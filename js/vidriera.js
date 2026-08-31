@@ -34,9 +34,13 @@
   var sortMode = 'recomendado';
   var consulta = [];
 
-  // Orden de marca para "Recomendado": Home Assistant, Shelly y Yale primero (en ese orden),
-  // el resto de las marcas jerarquizadas despues, alfabetico dentro de cada grupo.
-  var BRAND_ORDER = ['HOME ASSISTANT', 'SHELLY', 'YALE'];
+  // Orden de marca para "Recomendado": Control4, Home Assistant, Shelly y Yale primero (en ese
+  // orden), el resto de las marcas jerarquizadas despues, alfabetico dentro de cada grupo.
+  // Control4 va antes que Home Assistant por posicionamiento de marca (horizonte estrategico,
+  // mayor ticket), no por volumen de obra real -- ver nota en
+  // nova-domus-jerarquia-marcas-dispositivos.md. Hoy no cambia nada visible: Control4 no tiene
+  // items con foto en inventario todavia.
+  var BRAND_ORDER = ['CONTROL4', 'HOME ASSISTANT', 'SHELLY', 'YALE'];
   function brandRank(marca) {
     var i = BRAND_ORDER.indexOf((marca || '').toUpperCase());
     return i === -1 ? BRAND_ORDER.length : i;

@@ -4,6 +4,25 @@
 
 ---
 
+## Corrección editorial (Agustín, 31/08/2026) — Control4 por encima de Home Assistant
+
+Este documento mide **volumen de obra real** (líneas cotizadas), y por eso ubica a Home Assistant
+en Tier 1 y a Control4 en Tier 4 — es un dato correcto. Pero para **posicionamiento de marca**
+(mensaje público, orden en que se nombran los sistemas de control/domótica) esa jerarquía se
+invierte: **Control4 es la marca de referencia N°1, Home Assistant la N°2.**
+
+**Motivo:** Control4 es el horizonte estratégico de Nova Domus — mayor ticket, integrador
+certificado, posicionamiento premium — aunque hoy el volumen de obra real sea mayor en Home
+Assistant (sistema abierto, más económico, mayor penetración actual). Se prioriza la marca
+aspiracional por sobre el historial de cotización.
+
+**Alcance de la corrección:** aplica a mensaje/orden de marca (ej. `BRAND_ORDER` en
+`js/vidriera.js`, texto de servicios/marcas). **No** aplica a qué se publica en la vidriera como
+producto con foto+ficha — eso sigue siendo 100% data-driven (Control4 no tiene un solo SKU con
+foto cargada hoy, así que no aparece ahí independientemente de este orden de marca).
+
+---
+
 ## 0. Metodología y límite de la evidencia
 
 Todo lo que sigue sale de contar líneas reales cotizadas, no de criterio ni de memoria. Se cruzaron
