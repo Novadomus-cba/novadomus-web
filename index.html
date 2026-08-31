@@ -101,10 +101,14 @@ body.menu-open{overflow:hidden;}
 .card h3{font-size:1.15rem;}
 .card p{font-size:.9rem;color:var(--text-secondary);margin:0;}
 .card .arrow{margin-top:auto;font-size:.85rem;color:var(--dorado);font-weight:600;}
-.card.card-photo{padding:0;overflow:hidden;}
-.card-photo .card-thumb{aspect-ratio:16/9;overflow:hidden;}
-.card-photo .card-thumb img{width:100%;height:100%;object-fit:cover;display:block;}
-.card-photo .card-body{padding:20px 24px 24px;display:flex;flex-direction:column;gap:10px;flex:1;}
+.card.card-photo{position:relative;padding:0;overflow:hidden;min-height:340px;}
+.card.card-photo>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;transition:transform .5s cubic-bezier(.25,.1,.25,1);}
+.card.card-photo:hover>img,.card.card-photo:focus-visible>img{transform:scale(1.12);}
+.card.card-photo::after{content:'';position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,transparent 30%,rgba(11,19,43,.94) 82%);pointer-events:none;}
+.card.card-photo:hover{transform:none;}
+.card-photo .card-overlay{position:relative;z-index:2;margin-top:auto;padding:22px;display:flex;flex-direction:column;gap:8px;}
+.card-photo .card-overlay p{font-size:.86rem;}
+@media (prefers-reduced-motion:reduce){.card.card-photo>img{transition:none;}}
 @media (max-width:900px){.card-grid{grid-template-columns:repeat(2,1fr);}}
 @media (max-width:600px){.card-grid{grid-template-columns:1fr;}}
 
@@ -202,9 +206,9 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
       <p class="eyebrow rv">Explorá Nova Domus</p>
       <h2 class="rv rv2" style="margin-bottom:32px;">¿Qué estás buscando?</h2>
       <div class="card-grid">
-        <a class="card card-photo rv" href="servicios.html">
-          <div class="card-thumb"><img src="assets/img/home-card-servicios-960.webp" srcset="assets/img/home-card-servicios-640.webp 640w, assets/img/home-card-servicios-960.webp 960w, assets/img/home-card-servicios-1440.webp 1440w" sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, 347px" width="1440" height="1920" loading="lazy" decoding="async" alt="Cerradura digital EZVIZ en primer plano, con mueble de TV e iluminación ambiental de fondo en el showroom de Nova Domus"></div>
-          <div class="card-body">
+        <a class="card card-photo rv" href="servicios.html" aria-label="Ver servicios">
+          <img src="assets/img/home-card-servicios-960.webp" srcset="assets/img/home-card-servicios-640.webp 640w, assets/img/home-card-servicios-960.webp 960w, assets/img/home-card-servicios-1440.webp 1440w" sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, 347px" width="1440" height="1920" loading="lazy" decoding="async" alt="">
+          <div class="card-overlay">
             <h3>Servicios</h3>
             <p>Instalación eléctrica, redes, domótica, seguridad y dirección de obra — un solo responsable.</p>
             <span class="arrow">Ver servicios →</span>
@@ -216,9 +220,9 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
           <p>9 familias de producto y las marcas con las que trabajamos: Hikvision, Philips Hue, Control4 y más.</p>
           <span class="arrow">Ver marcas →</span>
         </a>
-        <a class="card card-photo rv rv3" href="obras.html">
-          <div class="card-thumb"><img src="assets/img/home-card-obras-960.webp" srcset="assets/img/home-card-obras-640.webp 640w, assets/img/home-card-obras-960.webp 960w, assets/img/home-card-obras-1440.webp 1440w" sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, 347px" width="1440" height="2558" loading="lazy" decoding="async" alt="Fachada de la Casa San Isidro, con escalones de acceso iluminados por tira LED integrada en cada peldaño"></div>
-          <div class="card-body">
+        <a class="card card-photo rv rv3" href="obras.html" aria-label="Ver obras">
+          <img src="assets/img/home-card-obras-960.webp" srcset="assets/img/home-card-obras-640.webp 640w, assets/img/home-card-obras-960.webp 960w, assets/img/home-card-obras-1440.webp 1440w" sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, 347px" width="1440" height="2558" loading="lazy" decoding="async" alt="">
+          <div class="card-overlay">
             <h3>Obras</h3>
             <p>Proyectos en ejecución y casos reales, documentados de punta a punta.</p>
             <span class="arrow">Ver obras →</span>
