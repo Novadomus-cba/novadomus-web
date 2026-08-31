@@ -101,6 +101,10 @@ body.menu-open{overflow:hidden;}
 .card h3{font-size:1.15rem;}
 .card p{font-size:.9rem;color:var(--text-secondary);margin:0;}
 .card .arrow{margin-top:auto;font-size:.85rem;color:var(--dorado);font-weight:600;}
+.card.card-photo{padding:0;overflow:hidden;}
+.card-photo .card-thumb{aspect-ratio:16/9;overflow:hidden;}
+.card-photo .card-thumb img{width:100%;height:100%;object-fit:cover;display:block;}
+.card-photo .card-body{padding:20px 24px 24px;display:flex;flex-direction:column;gap:10px;flex:1;}
 @media (max-width:900px){.card-grid{grid-template-columns:repeat(2,1fr);}}
 @media (max-width:600px){.card-grid{grid-template-columns:1fr;}}
 
@@ -198,11 +202,13 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
       <p class="eyebrow rv">Explorá Nova Domus</p>
       <h2 class="rv rv2" style="margin-bottom:32px;">¿Qué estás buscando?</h2>
       <div class="card-grid">
-        <a class="card rv" href="servicios.html">
-          <svg class="card-ico" viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z"/></svg>
-          <h3>Servicios</h3>
-          <p>Instalación eléctrica, redes, domótica, seguridad y dirección de obra — un solo responsable.</p>
-          <span class="arrow">Ver servicios →</span>
+        <a class="card card-photo rv" href="servicios.html">
+          <div class="card-thumb"><img src="assets/img/home-card-servicios-960.webp" srcset="assets/img/home-card-servicios-640.webp 640w, assets/img/home-card-servicios-960.webp 960w, assets/img/home-card-servicios-1440.webp 1440w" sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, 347px" width="1440" height="1920" loading="lazy" decoding="async" alt="Cerradura digital EZVIZ en primer plano, con mueble de TV e iluminación ambiental de fondo en el showroom de Nova Domus"></div>
+          <div class="card-body">
+            <h3>Servicios</h3>
+            <p>Instalación eléctrica, redes, domótica, seguridad y dirección de obra — un solo responsable.</p>
+            <span class="arrow">Ver servicios →</span>
+          </div>
         </a>
         <a class="card rv rv2" href="marcas.html">
           <svg class="card-ico" viewBox="0 0 24 24"><path d="M4 21V10l8-6 8 6v11"/><rect x="10" y="14" width="4" height="3"/></svg>
@@ -210,11 +216,13 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
           <p>9 familias de producto y las marcas con las que trabajamos: Hikvision, Philips Hue, Control4 y más.</p>
           <span class="arrow">Ver marcas →</span>
         </a>
-        <a class="card rv rv3" href="obras.html">
-          <svg class="card-ico" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="1"/><path d="M8.5 8h7M8.5 12h7M8.5 16h4"/></svg>
-          <h3>Obras</h3>
-          <p>Proyectos en ejecución y casos reales, documentados de punta a punta.</p>
-          <span class="arrow">Ver obras →</span>
+        <a class="card card-photo rv rv3" href="obras.html">
+          <div class="card-thumb"><img src="assets/img/home-card-obras-960.webp" srcset="assets/img/home-card-obras-640.webp 640w, assets/img/home-card-obras-960.webp 960w, assets/img/home-card-obras-1440.webp 1440w" sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, 347px" width="1440" height="2558" loading="lazy" decoding="async" alt="Fachada de la Casa San Isidro, con escalones de acceso iluminados por tira LED integrada en cada peldaño"></div>
+          <div class="card-body">
+            <h3>Obras</h3>
+            <p>Proyectos en ejecución y casos reales, documentados de punta a punta.</p>
+            <span class="arrow">Ver obras →</span>
+          </div>
         </a>
         <a class="card rv rv4" href="vidriera.html">
           <svg class="card-ico" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="1"/><path d="M12 4v16M4 9h16M4 14h16"/></svg>

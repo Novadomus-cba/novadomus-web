@@ -63,8 +63,12 @@ body.menu-open{overflow:hidden;}
 .subnav-inner{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 22px;flex-wrap:wrap;}
 .subnav-title{font-family:'Michroma';font-size:.82rem;text-transform:uppercase;letter-spacing:.04em;}
 
-.pagehero{padding:150px 0 30px;}
+.pagehero{position:relative;padding:150px 0 30px;overflow:hidden;}
 .pagehero h1{font-size:clamp(2rem,4.6vw,2.8rem);margin:14px 0 12px;}
+.pagehero-bg{position:absolute;inset:0;z-index:0;}
+.pagehero-bg img{width:100%;height:100%;object-fit:cover;object-position:center;}
+.pagehero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,19,43,.55),rgba(11,19,43,.93) 85%);}
+.pagehero .wrap{position:relative;z-index:1;}
 
 .anchor-index{display:flex;gap:10px;flex-wrap:wrap;padding:26px 0 40px;border-bottom:1px solid var(--line);}
 .anchor-index a{font-size:.82rem;padding:8px 14px;border:1px solid var(--line);border-radius:999px;color:var(--text-secondary);}
@@ -77,6 +81,8 @@ body.menu-open{overflow:hidden;}
 .svc h2{font-size:1.2rem;margin:8px 0 8px;text-transform:none;}
 .svc p{color:var(--text-secondary);font-size:.94rem;margin:0;}
 @media (max-width:640px){.svc{grid-template-columns:1fr;gap:16px;} .svc .ico-box{width:64px;height:64px;} .svc .ico-box svg{width:30px;height:30px;}}
+.svc-photo{grid-column:1/-1;aspect-ratio:16/7;border-radius:14px;overflow:hidden;margin-top:6px;}
+.svc-photo img{width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in;}
 
 .gallery-block{padding:60px 0;}
 .tabs{display:flex;gap:10px;margin-bottom:24px;flex-wrap:wrap;}
@@ -142,6 +148,7 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
 
 <main>
   <section class="pagehero">
+    <div class="pagehero-bg"><img src="assets/img/servicios-hero-1440.webp" srcset="assets/img/servicios-hero-640.webp 640w, assets/img/servicios-hero-960.webp 960w, assets/img/servicios-hero-1440.webp 1440w" sizes="100vw" width="1440" height="1920" loading="eager" fetchpriority="high" decoding="async" alt="Isotipo de Nova Domus iluminado en la entrada del showroom"></div>
     <div class="wrap">
       <p class="eyebrow rv">Qué ofrecemos</p>
       <h1 class="rv rv2">Conocé todo sobre nuestros servicios</h1>
@@ -173,18 +180,22 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
     <div class="svc rv" id="instalacion-electrica">
       <div class="ico-box"><svg viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z"/></svg></div>
       <div><span class="num">01</span><h2>Instalación Eléctrica</h2><p>Cableado, tableros, protecciones y puesta a tierra: la base para que todo funcione seguro.</p></div>
+      <div class="svc-photo"><a href="assets/img/servicio-instalacion-electrica-1440.webp" class="glightbox"><img src="assets/img/servicio-instalacion-electrica-960.webp" srcset="assets/img/servicio-instalacion-electrica-640.webp 640w, assets/img/servicio-instalacion-electrica-960.webp 960w, assets/img/servicio-instalacion-electrica-1440.webp 1440w" sizes="(max-width: 640px) 100vw, 1076px" width="720" height="1280" loading="lazy" decoding="async" alt="Tablero eléctrico cableado por circuito, con térmicas y diferenciales identificados"></a></div>
     </div>
     <div class="svc rv" id="redes">
       <div class="ico-box"><svg viewBox="0 0 24 24"><path d="M4 9c4.5-4 11.5-4 16 0M7 12.5c3-2.5 7-2.5 10 0"/><circle cx="12" cy="17" r="1.2" fill="var(--dorado)" stroke="none"/></svg></div>
       <div><span class="num">02</span><h2>Redes</h2><p>LAN, WLAN y VPN dimensionadas para sostener cada dispositivo conectado sin perder estabilidad.</p></div>
+      <div class="svc-photo"><a href="assets/img/servicio-redes-1440.webp" class="glightbox"><img src="assets/img/servicio-redes-960.webp" srcset="assets/img/servicio-redes-640.webp 640w, assets/img/servicio-redes-960.webp 960w, assets/img/servicio-redes-1440.webp 1440w" sizes="(max-width: 640px) 100vw, 1076px" width="1440" height="1920" loading="lazy" decoding="async" alt="Rack de networking con controlador Control4, switch administrado TP-Link Omada y grabador Hikvision"></a></div>
     </div>
     <div class="svc rv" id="domotica">
       <div class="ico-box"><svg viewBox="0 0 24 24"><path d="M4 21V10l8-6 8 6v11"/><rect x="10" y="14" width="4" height="3"/></svg></div>
       <div><span class="num">03</span><h2>Domótica</h2><p>Gestión centralizada de iluminación, climatización, seguridad y multimedia.</p></div>
+      <div class="svc-photo"><a href="assets/img/servicio-domotica-1440.webp" class="glightbox"><img src="assets/img/servicio-domotica-960.webp" srcset="assets/img/servicio-domotica-640.webp 640w, assets/img/servicio-domotica-960.webp 960w, assets/img/servicio-domotica-1440.webp 1440w" sizes="(max-width: 640px) 100vw, 1076px" width="1440" height="1920" loading="lazy" decoding="async" alt="Wall Display de Home Assistant mostrando temperatura, humedad y consumo de energía en tiempo real"></a></div>
     </div>
     <div class="svc rv" id="iot">
       <div class="ico-box"><svg viewBox="0 0 24 24"><circle cx="6" cy="7" r="2"/><circle cx="18" cy="7" r="2"/><circle cx="12" cy="18" r="2"/><path d="M7.6 8.2 10.6 16M16.4 8.2 13.4 16M8 7h8"/></svg></div>
       <div><span class="num">04</span><h2>IoT</h2><p>Sensores y dispositivos interconectados vía Wi-Fi, Zigbee o Z-Wave para automatizar el día a día.</p></div>
+      <div class="svc-photo"><a href="assets/img/servicio-iot-1440.webp" class="glightbox"><img src="assets/img/servicio-iot-960.webp" srcset="assets/img/servicio-iot-640.webp 640w, assets/img/servicio-iot-960.webp 960w, assets/img/servicio-iot-1440.webp 1440w" sizes="(max-width: 640px) 100vw, 1076px" width="1440" height="2558" loading="lazy" decoding="async" alt="Módulo Shelly cableado detrás de un tablero eléctrico, con conexión Wi-Fi para automatizar el circuito"></a></div>
     </div>
     <div class="svc rv" id="iluminacion">
       <div class="ico-box"><svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="6"/><path d="M9.5 21h5M12 15v6"/></svg></div>
@@ -193,6 +204,7 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
     <div class="svc rv" id="cerraduras">
       <div class="ico-box"><svg viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="1"/><circle cx="12" cy="15" r="1"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></div>
       <div><span class="num">06</span><h2>Cerraduras Digitales</h2><p>Acceso sin llave por PIN, huella, tarjeta o app, con registro de ingresos.</p></div>
+      <div class="svc-photo"><a href="assets/img/servicio-cerraduras-1440.webp" class="glightbox"><img src="assets/img/servicio-cerraduras-960.webp" srcset="assets/img/servicio-cerraduras-640.webp 640w, assets/img/servicio-cerraduras-960.webp 960w, assets/img/servicio-cerraduras-1440.webp 1440w" sizes="(max-width: 640px) 100vw, 1076px" width="603" height="1079" loading="lazy" decoding="async" alt="Mano ingresando el código en el teclado de una cerradura digital instalada en puerta de madera"></a></div>
     </div>
     <div class="svc rv" id="videovigilancia">
       <div class="ico-box"><svg viewBox="0 0 24 24"><rect x="2" y="8" width="12" height="8" rx="1"/><path d="M14 10.5 21 8v8l-7-2.5z"/><circle cx="8" cy="12" r="1.3" fill="var(--dorado)" stroke="none"/></svg></div>
@@ -201,10 +213,12 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
     <div class="svc rv" id="alarmas">
       <div class="ico-box"><svg viewBox="0 0 24 24"><path d="M6 16v-5a6 6 0 0 1 12 0v5"/><path d="M4 16h16"/><path d="M10 19a2 2 0 0 0 4 0"/></svg></div>
       <div><span class="num">08</span><h2>Alarmas</h2><p>Detección y respuesta ante intrusiones o emergencias, integrada al resto del sistema.</p></div>
+      <div class="svc-photo"><a href="assets/img/servicio-alarmas-1440.webp" class="glightbox"><img src="assets/img/servicio-alarmas-960.webp" srcset="assets/img/servicio-alarmas-640.webp 640w, assets/img/servicio-alarmas-960.webp 960w, assets/img/servicio-alarmas-1440.webp 1440w" sizes="(max-width: 640px) 100vw, 1076px" width="1440" height="1920" loading="lazy" decoding="async" alt="Teclado de alarma Hikvision montado sobre panel de madera, con íconos de armado, señal y batería"></a></div>
     </div>
     <div class="svc rv" id="direccion-obra">
       <div class="ico-box"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="1"/><path d="M8.5 8h7M8.5 12h7M8.5 16h4"/></svg></div>
       <div><span class="num">09</span><h2>Dirección de Obra</h2><p>Instaladores matriculados y certificación de obra por arquitectos, de punta a punta.</p></div>
+      <div class="svc-photo"><a href="assets/img/servicio-direccion-obra-1440.webp" class="glightbox"><img src="assets/img/servicio-direccion-obra-960.webp" srcset="assets/img/servicio-direccion-obra-640.webp 640w, assets/img/servicio-direccion-obra-960.webp 960w, assets/img/servicio-direccion-obra-1440.webp 1440w" sizes="(max-width: 640px) 100vw, 1076px" width="1440" height="2558" loading="lazy" decoding="async" alt="Electricista instalando una toma de pared durante una obra en construcción"></a></div>
     </div>
   </div>
 
