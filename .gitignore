@@ -1,2 +1,5 @@
 # originales de fotos: se procesan a assets/img/, no se versionan
 /Fotos/
+
+# material de trabajo del pipeline de imagenes, no se versiona
+/assets/img/manifest.json
