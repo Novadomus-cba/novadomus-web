@@ -32,18 +32,22 @@
   // element): under real testing that composition released the pin far earlier than its own
   // 'bottom bottom' end condition implied, leaving a multi-viewport dead scroll gap with
   // nothing rendered. A single pinned+scrubbed ScrollTrigger driving every card off one shared
-  // progress value is the standard, reliable way to do this — same visual result (card i
-  // recedes — scale floor 0.88, opacity floor 0.4 — while card i+1 is revealed on top of it,
-  // reading order first-to-last, last card never recedes), no measurement conflicts.
+  // progress value is the standard, reliable way to do this.
+  //
+  // Bug encontrado y corregido: la version anterior dejaba la opacidad de la tarjeta que
+  // recede en un piso de 0.4 (nunca llegaba a 0). Como esa tarjeta tiene mayor z-index que la
+  // siguiente (recede desde arriba para revelar la de abajo), un piso de opacidad > 0 la deja
+  // como un fantasma semi-transparente permanentemente superpuesto sobre la tarjeta revelada
+  // -- se ve como dos tarjetas mezcladas en simultaneo. La opacidad tiene que llegar a 0 real.
   window.initStack = function (stageSelector, cardSelector) {
     if (reduced) return;
     var cards = gsap.utils.toArray(cardSelector);
     var n = cards.length;
     if (!n) return;
     cards.forEach(function (card, i) {
-      // Reading order first: card 0 stacks on top initially and recedes to reveal
-      // card 1, and so on — not the reverse (zIndex: i would keep the LAST card
-      // permanently on top, hiding every earlier one for the whole scroll).
+      // Reading order first: card 0 stacks on top initially y recede (fade a opacity:0) para
+      // revelar la card 1 que esta debajo, y asi sucesivamente -- no al reves (zIndex: i
+      // dejaria la ULTIMA card permanentemente arriba, tapando todas las anteriores).
       gsap.set(card, { zIndex: n - 1 - i });
     });
 
@@ -63,8 +67,17 @@
         var totalProgress = self.progress * (n - 1);
         cards.forEach(function (card, i) {
           if (i === n - 1) return;
-          var local = Math.max(0, Math.min(1, totalProgress - i));
-          gsap.set(card, { scale: 1 - local * 0.12, opacity: 1 - local * 0.6 });
+          // La tarjeta de abajo ya esta en opacity:1 apenas empieza la transicion de la de
+          // arriba (su propio fade no arranca hasta llegar a su turno) -- si el fade de la de
+          // arriba ocupa el slot de scroll completo, se ven las dos superpuestas durante gran
+          // parte del scroll. Se comprime el fade a FADE_FRACTION del slot: transicion rapida,
+          // el resto del scroll de ese slot se lee una sola tarjeta nitida.
+          var FADE_FRACTION = 0.35;
+          var local = Math.max(0, Math.min(1, (totalProgress - i) / FADE_FRACTION));
+          // Blur progresivo ademas del fade: durante la ventana de transicion (breve, pero
+          // sigue existiendo con scrub continuo) el texto que recede se "disuelve" en vez de
+          // competir nitido con el texto de la tarjeta de abajo.
+          gsap.set(card, { scale: 1 - local * 0.12, opacity: 1 - local, filter: 'blur(' + (local * 6) + 'px)' });
         });
       }
     });

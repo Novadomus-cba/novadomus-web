@@ -36,7 +36,7 @@ input,textarea,select{font:inherit;color:inherit;}
 p{line-height:1.6;max-width:62ch;}
 .rv{opacity:0;transform:translateY(26px);transition:opacity .7s cubic-bezier(.25,.1,.25,1),transform .7s cubic-bezier(.25,.1,.25,1);}
 .rv.in{opacity:1;transform:translateY(0);}
-.rv2{transition-delay:.08s;} .rv3{transition-delay:.16s;} .rv4{transition-delay:.24s;} .rv5{transition-delay:.32s;}
+.rv2{transition-delay:.08s;} .rv3{transition-delay:.16s;} .rv4{transition-delay:.24s;} .rv5{transition-delay:.32s;} .rv6{transition-delay:.4s;}
 @media (prefers-reduced-motion:reduce){ .rv{opacity:1 !important;transform:none !important;transition:none !important;} html{scroll-behavior:auto;} }
 
 .nav{position:fixed;top:0;left:0;right:0;z-index:60;background:linear-gradient(180deg,rgba(11,19,43,.96),rgba(11,19,43,.7) 80%,transparent);backdrop-filter:blur(6px);}
@@ -199,11 +199,11 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
     <div class="wrap">
       <p class="eyebrow rv">Del cable a la app</p>
       <p class="manifest rv rv2">En una obra con domótica normalmente coordinás tres proveedores distintos: el electricista, el de redes y el integrador. Cuando algo falla, cada uno señala al otro y el problema queda en el medio. <b>Nosotros hacemos las tres cosas con equipo propio:</b> la obra eléctrica con electricistas matriculados, las redes, y la automatización con Home Assistant — sistema abierto, sin ataduras a un fabricante. Un solo responsable de la obra a la app.</p>
-      <div class="promise-row rv rv3">
-        <span class="chip hl">Queda funcionando y documentado</span>
-        <span class="chip">Electricistas matriculados propios</span>
-        <span class="chip">Sin subcontratar</span>
-        <span class="chip">Home Assistant — sistema abierto</span>
+      <div class="promise-row">
+        <span class="chip hl rv rv3">Queda funcionando y documentado</span>
+        <span class="chip rv rv4">Electricistas matriculados propios</span>
+        <span class="chip rv rv5">Sin subcontratar</span>
+        <span class="chip rv rv6">Home Assistant — sistema abierto</span>
       </div>
     </div>
   </section>
