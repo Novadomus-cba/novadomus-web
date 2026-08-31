@@ -31,8 +31,16 @@
   var allItems = [];
   var activeFamily = 'Todas';
   var searchQuery = '';
-  var sortMode = 'nombre-asc';
+  var sortMode = 'recomendado';
   var consulta = [];
+
+  // Orden de marca para "Recomendado": Home Assistant, Shelly y Yale primero (en ese orden),
+  // el resto de las marcas jerarquizadas despues, alfabetico dentro de cada grupo.
+  var BRAND_ORDER = ['HOME ASSISTANT', 'SHELLY', 'YALE'];
+  function brandRank(marca) {
+    var i = BRAND_ORDER.indexOf((marca || '').toUpperCase());
+    return i === -1 ? BRAND_ORDER.length : i;
+  }
 
   function reducedMotion() {
     return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -293,8 +301,12 @@
       switch (sortMode) {
         case 'marca-asc':
           return (a.marca || '').localeCompare(b.marca || '') || (a.nombre || '').localeCompare(b.nombre || '');
-        default:
+        case 'nombre-asc':
           return (a.nombre || '').localeCompare(b.nombre || '');
+        default:
+          return brandRank(a.marca) - brandRank(b.marca)
+            || (a.marca || '').localeCompare(b.marca || '')
+            || (a.nombre || '').localeCompare(b.nombre || '');
       }
     });
     return list;
