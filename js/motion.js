@@ -4,6 +4,7 @@
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   gsap.registerPlugin(ScrollTrigger);
+  if (window.SplitText) gsap.registerPlugin(SplitText);
 
   if (!reduced) {
     var lenis = new Lenis();
@@ -15,23 +16,10 @@
   // Técnica 1: split-text con pin + scrub (usar en index.html hero o nosotros.html#manifiesto)
   window.initSplitPin = function (selector, sectionSelector) {
     var el = document.querySelector(selector);
-    if (!el || reduced) return;
-    var text = el.textContent;
-    el.textContent = '';
-    text.split('').forEach(function (ch) {
-      if (ch === ' ') {
-        el.appendChild(document.createTextNode(' '));
-        return;
-      }
-      var span = document.createElement('span');
-      span.style.display = 'inline-block';
-      span.textContent = ch;
-      el.appendChild(span);
-    });
-    var chars = el.querySelectorAll('span');
-    gsap.set(chars, { opacity: 0.12, y: 24 });
-    gsap.to(chars, {
-      opacity: 1, y: 0, stagger: 0.04, ease: 'none',
+    if (!el || reduced || !window.SplitText) return;
+    var split = new SplitText(el, { type: 'chars', mask: 'chars' });
+    gsap.from(split.chars, {
+      opacity: 0.12, y: 24, stagger: 0.04, ease: 'none',
       scrollTrigger: { trigger: sectionSelector, start: 'top top', end: '+=160%', scrub: true, pin: true }
     });
   };

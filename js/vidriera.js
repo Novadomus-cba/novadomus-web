@@ -126,8 +126,9 @@
     pdTrigger = triggerEl || document.activeElement;
 
     document.getElementById('pd-photo').innerHTML = item.imagen_url
-      ? '<img src="' + escapeHtml(item.imagen_url) + '" alt="' + escapeHtml(item.nombre) + '">'
+      ? '<a href="' + escapeHtml(item.imagen_url) + '" class="glightbox"><img src="' + escapeHtml(item.imagen_url) + '" alt="' + escapeHtml(item.nombre) + '"></a>'
       : '<span class="muted" style="font-size:.8rem;">Foto pendiente</span>';
+    if (window.pdLightbox) window.pdLightbox.reload();
     document.getElementById('pd-fam').textContent = item.grupo || 'Otros';
     document.getElementById('pd-title').textContent = item.nombre || '';
     document.getElementById('pd-brand').textContent = item.marca || '';
@@ -343,6 +344,8 @@
   function init() {
     consulta = loadConsulta();
     updateCartFloatLabel();
+
+    if (window.GLightbox) window.pdLightbox = GLightbox({ selector: '.glightbox', touchNavigation: true, loop: true });
 
     pdOverlay = document.getElementById('pd-overlay');
     pdClose = document.getElementById('pd-close');
