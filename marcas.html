@@ -76,11 +76,20 @@ body.menu-open{overflow:hidden;}
 @media (max-width:600px){.fam-grid{grid-template-columns:1fr;}}
 
 .cred{padding:40px 0 70px;}
-.cred-strip{display:flex;align-items:center;flex-wrap:wrap;background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;}
-.cred-item{padding:16px 22px;font-family:'Michroma';font-size:.72rem;letter-spacing:.05em;color:var(--text-secondary);border-right:1px solid var(--line);white-space:nowrap;}
-.cred-item:last-child{border-right:none;}
-.cred-item.brand{color:var(--dorado);font-size:.88rem;}
-.cred-note{margin-top:16px;font-size:.8rem;color:var(--text-secondary);}
+.brand-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:24px;}
+.brand-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;}
+.brand-thumb{position:relative;aspect-ratio:16/9;background:#000;cursor:pointer;}
+.brand-thumb img{width:100%;height:100%;object-fit:cover;}
+.brand-thumb iframe{width:100%;height:100%;border:none;}
+.brand-thumb .play-btn{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(11,19,43,.28);transition:background .2s;}
+.brand-thumb .play-btn:hover{background:rgba(11,19,43,.45);}
+.brand-thumb .play-btn svg{width:52px;height:52px;}
+.brand-body{padding:18px 20px;display:flex;flex-direction:column;gap:8px;flex:1;}
+.brand-body h3{font-family:'Michroma';font-weight:400;font-size:.8rem;letter-spacing:.03em;text-transform:uppercase;color:var(--dorado);}
+.brand-body p{font-size:.82rem;color:var(--text-secondary);line-height:1.55;max-width:none;}
+.cred-note{margin-top:20px;font-size:.8rem;color:var(--text-secondary);}
+@media (max-width:900px){.brand-grid{grid-template-columns:repeat(2,1fr);}}
+@media (max-width:600px){.brand-grid{grid-template-columns:1fr;}}
 
 .btn{display:inline-flex;align-items:center;gap:8px;padding:13px 24px;border-radius:999px;font-weight:600;font-size:.92rem;transition:transform .2s,border-color .2s;}
 .btn-outline{border:1px solid var(--line);color:var(--crema);}
@@ -178,7 +187,7 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
           <svg class="ico" viewBox="0 0 24 24"><path d="M4 9c4.5-4 11.5-4 16 0M7 12.5c3-2.5 7-2.5 10 0"/><circle cx="12" cy="17" r="1.2" fill="var(--dorado)" stroke="none"/></svg>
           <h3>Redes</h3>
           <p class="sub">Router · Switch · Access Point · Rack · Gabinetes · Cable · Postes</p>
-          <span class="brands">Araknis · Ubiquiti · GLC</span>
+          <span class="brands">Araknis · Ubiquiti · GLC · TP-Link Omada</span>
         </div>
         <div class="fam-card rv rv2">
           <svg class="ico" viewBox="0 0 24 24"><path d="M4 21V10l8-6 8 6v11"/><rect x="10" y="14" width="4" height="3"/></svg>
@@ -218,16 +227,10 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
     <div class="wrap">
       <p class="eyebrow rv">Respaldo</p>
       <h2 class="rv rv2" style="margin-bottom:24px;">Marcas y credenciales</h2>
-      <div class="cred-strip rv">
-        <span class="cred-item brand">NOVA DOMUS</span>
-        <span class="cred-item">CONTROL4</span>
-        <span class="cred-item">PHILIPS HUE</span>
-        <span class="cred-item">YALE</span>
-        <span class="cred-item">SHELLY</span>
-        <span class="cred-item">HIKVISION</span>
-        <span class="cred-item">CEDIA</span>
+      <div id="respaldo-grid" class="brand-grid">
+        <p class="muted rv in">Cargando marcas…</p>
       </div>
-      <p class="cred-note">Distribuidor oficial Philips Hue. Miembro CEDIA desde 2024. Las marcas de terceros son credencial, no protagonista — Nova Domus es siempre el responsable de la instalación completa.</p>
+      <p class="cred-note">Distribuidor oficial Philips Hue. Integrador certificado Control4. Miembro CEDIA desde 2024. Las marcas de terceros son credencial, no protagonista — Nova Domus es siempre el responsable de la instalación completa.</p>
     </div>
   </section>
 </main>
@@ -287,6 +290,8 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lenis@1.3.26/dist/lenis.css">
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.26/dist/lenis.min.js"></script>
 <script src="js/motion.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/respaldo.js"></script>
 <script src="js/site.js"></script>
 </body>
 </html>
