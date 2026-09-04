@@ -319,10 +319,7 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
           </div>
         </div>
         <div class="case-photo">
-          <svg viewBox="0 0 200 200" fill="none" stroke="var(--crema)" stroke-width="1">
-            <rect x="10" y="10" width="180" height="180"/><rect x="45" y="45" width="110" height="110"/><rect x="78" y="78" width="44" height="44"/>
-          </svg>
-          <span>Foto de obra — pendiente</span>
+          <img src="assets/img/obra-flv-dracma-960.webp" srcset="assets/img/obra-flv-dracma-640.webp 640w, assets/img/obra-flv-dracma-960.webp 960w, assets/img/obra-flv-dracma-1440.webp 1440w" sizes="(max-width: 760px) 100vw, 358px" width="1440" height="2558" loading="lazy" decoding="async" alt="Vista desde el pasillo de acceso hacia el living de la oficina Dracma, con ventanales de piso a techo">
         </div>
       </div>
 
@@ -344,10 +341,7 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
           </div>
         </div>
         <div class="case-photo">
-          <svg viewBox="0 0 200 200" fill="none" stroke="var(--crema)" stroke-width="1">
-            <rect x="10" y="10" width="180" height="180"/><rect x="45" y="45" width="110" height="110"/><rect x="78" y="78" width="44" height="44"/>
-          </svg>
-          <span>Foto de obra — pendiente</span>
+          <img src="assets/img/obra-casa-causana-960.webp" srcset="assets/img/obra-casa-causana-640.webp 640w, assets/img/obra-casa-causana-960.webp 960w, assets/img/obra-casa-causana-1440.webp 1440w" sizes="(max-width: 760px) 100vw, 358px" width="1440" height="1277" loading="lazy" decoding="async" alt="Fachada de Casa Causana al atardecer, con iluminación arquitectónica integrada en cada volumen">
         </div>
       </div>
 
@@ -393,6 +387,26 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
       </button>
       <ul class="carousel__track" id="services-track" role="list" tabindex="0" aria-label="Casos de obra de Nova Domus">
         <li class="card">
+          <a class="card__link" href="#panel-obra-casa-causana" id="obra-casa-causana-card" aria-controls="panel-obra-casa-causana" aria-expanded="false" data-panel="panel-obra-casa-causana">
+            <img src="assets/img/obra-casa-causana-640.webp" srcset="assets/img/obra-casa-causana-640.webp 640w, assets/img/obra-casa-causana-960.webp 960w" sizes="320px" width="1440" height="1277" loading="lazy" decoding="async" alt="">
+            <span class="card__body">
+              <span class="card__title">Casa<br>Causana</span>
+              <span class="card__plus" aria-hidden="true"><svg viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M7 0V14" stroke="currentColor" stroke-linecap="round"/><path d="M0 7H14" stroke="currentColor" stroke-linecap="round"/></svg></span>
+            </span>
+            <span class="u-sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);">Ver más sobre Casa Causana</span>
+          </a>
+        </li>
+        <li class="card">
+          <a class="card__link" href="#panel-obra-flv-dracma" id="obra-flv-dracma-card" aria-controls="panel-obra-flv-dracma" aria-expanded="false" data-panel="panel-obra-flv-dracma">
+            <img src="assets/img/obra-flv-dracma-640.webp" srcset="assets/img/obra-flv-dracma-640.webp 640w, assets/img/obra-flv-dracma-960.webp 960w" sizes="320px" width="1440" height="2558" loading="lazy" decoding="async" alt="">
+            <span class="card__body">
+              <span class="card__title">FLV<br>Oficina Dracma</span>
+              <span class="card__plus" aria-hidden="true"><svg viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M7 0V14" stroke="currentColor" stroke-linecap="round"/><path d="M0 7H14" stroke="currentColor" stroke-linecap="round"/></svg></span>
+            </span>
+            <span class="u-sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);">Ver más sobre FLV — Oficina Dracma</span>
+          </a>
+        </li>
+        <li class="card">
           <a class="card__link" href="#panel-obra-san-isidro" id="obra-san-isidro-card" aria-controls="panel-obra-san-isidro" aria-expanded="false" data-panel="panel-obra-san-isidro">
             <img src="assets/img/obra-san-isidro-640.webp" srcset="assets/img/obra-san-isidro-640.webp 640w, assets/img/obra-san-isidro-960.webp 960w" sizes="320px" width="1440" height="2558" loading="lazy" decoding="async" alt="">
             <span class="card__body">
@@ -403,12 +417,98 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
           </a>
         </li>
       </ul>
-      <button type="button" class="carousel__nav next" aria-label="Casos siguientes" hidden data-carousel-next>
+      <button type="button" class="carousel__nav next" aria-label="Casos siguientes" data-carousel-next>
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
     </div>
   </section>
 
+  <dialog class="panel" id="panel-obra-casa-causana" aria-labelledby="panel-obra-casa-causana-title">
+    <div class="panel__progress" aria-hidden="true"><span></span></div>
+    <button type="button" class="panel__close" data-panel-close aria-label="Cerrar detalle">✕</button>
+    <div class="panel__scroll" data-lenis-prevent>
+      <figure class="panel__hero reveal">
+        <img src="assets/img/obra-casa-causana-1440.webp" srcset="assets/img/obra-casa-causana-960.webp 960w, assets/img/obra-casa-causana-1440.webp 1440w" sizes="880px" width="1440" height="1277" loading="lazy" decoding="async" alt="Fachada de Casa Causana al atardecer, con iluminación arquitectónica integrada en cada volumen">
+      </figure>
+      <header class="panel__head reveal">
+        <p class="eyebrow">Caso · Concluida</p>
+        <h2 class="panel__title" id="panel-obra-casa-causana-title">Casa Causana</h2>
+        <p class="panel__lede">Vivienda unifamiliar, Córdoba — iluminación LED centralizada con Home Assistant.</p>
+      </header>
+      <div class="panel__case-detail reveal">
+        <h4>Desafío</h4>
+        <p>Una vivienda quería iluminación LED controlada de forma centralizada, sin instalar interruptores adicionales.</p>
+        <h4>Solución</h4>
+        <p>Home Assistant como núcleo, con toda la iluminación LED integrada y controlable por escenas.</p>
+        <h4>Resultado</h4>
+        <p>Control de iluminación centralizado en toda la casa, con espacio para sumar más habitaciones cuando el cliente lo decida.</p>
+      </div>
+      <div class="panel__block reveal" data-format="landscape">
+        <figure class="panel__block-media">
+          <img src="assets/img/obra-casa-causana-galeria-1-960.webp" srcset="assets/img/obra-casa-causana-galeria-1-640.webp 640w, assets/img/obra-casa-causana-galeria-1-960.webp 960w, assets/img/obra-casa-causana-galeria-1-1440.webp 1440w" sizes="(max-width: 720px) 100vw, 440px" width="1440" height="811" loading="lazy" decoding="async" alt="Vista general de la fachada de Casa Causana entre los árboles del terreno">
+        </figure>
+        <div class="panel__block-text">
+          <h3>La casa en su terreno</h3>
+          <p>Una vivienda de líneas rectas y revestimiento en piedra, integrada al parque que la rodea.</p>
+        </div>
+      </div>
+      <div class="panel__cta reveal">
+        <a class="btn btn-outline" href="contacto.html">Quiero un caso como este →</a>
+      </div>
+    </div>
+  </dialog>
+  <dialog class="panel" id="panel-obra-flv-dracma" aria-labelledby="panel-obra-flv-dracma-title">
+    <div class="panel__progress" aria-hidden="true"><span></span></div>
+    <button type="button" class="panel__close" data-panel-close aria-label="Cerrar detalle">✕</button>
+    <div class="panel__scroll" data-lenis-prevent>
+      <figure class="panel__hero reveal">
+        <img src="assets/img/obra-flv-dracma-1440.webp" srcset="assets/img/obra-flv-dracma-960.webp 960w, assets/img/obra-flv-dracma-1440.webp 1440w" sizes="880px" width="1440" height="2558" loading="lazy" decoding="async" alt="Vista desde el pasillo de acceso hacia el living de la oficina Dracma, con ventanales de piso a techo">
+      </figure>
+      <header class="panel__head reveal">
+        <p class="eyebrow">Caso · Concluida</p>
+        <h2 class="panel__title" id="panel-obra-flv-dracma-title">FLV — Oficina Dracma</h2>
+        <p class="panel__lede">Oficina, Edificio Dracma, Córdoba — domótica integral con Home Assistant.</p>
+      </header>
+      <div class="panel__case-detail reveal">
+        <h4>Desafío</h4>
+        <p>Una oficina necesitaba electricidad, redes y automatización completas desde cero, con control real de iluminación, clima, seguridad y entretenimiento en un solo lugar.</p>
+        <h4>Solución</h4>
+        <p>Instalación eléctrica completa + redes + Home Assistant como núcleo, integrando iluminación, confort, seguridad y entretenimiento bajo un mismo sistema.</p>
+        <h4>Resultado</h4>
+        <p>Oficina completamente integrada, con las 4 habitaciones funcionando desde un solo punto de control.</p>
+      </div>
+      <div class="panel__block reveal" data-format="portrait">
+        <figure class="panel__block-media">
+          <img src="assets/img/obra-flv-dracma-galeria-1-960.webp" srcset="assets/img/obra-flv-dracma-galeria-1-640.webp 640w, assets/img/obra-flv-dracma-galeria-1-960.webp 960w, assets/img/obra-flv-dracma-galeria-1-1440.webp 1440w" sizes="(max-width: 720px) 100vw, 440px" width="1440" height="3027" loading="lazy" decoding="async" alt="Living de la oficina Dracma con vista panorámica a los campos de Córdoba">
+        </figure>
+        <div class="panel__block-text">
+          <h3>Un living con vista al campo</h3>
+          <p>Sillones, alfombra y ventanales de piso a techo, todo bajo el mismo control de iluminación y clima.</p>
+        </div>
+      </div>
+      <div class="panel__block reveal" data-flip data-format="portrait">
+        <figure class="panel__block-media">
+          <img src="assets/img/obra-flv-dracma-galeria-2-960.webp" srcset="assets/img/obra-flv-dracma-galeria-2-640.webp 640w, assets/img/obra-flv-dracma-galeria-2-960.webp 960w, assets/img/obra-flv-dracma-galeria-2-1440.webp 1440w" sizes="(max-width: 720px) 100vw, 440px" width="1440" height="2558" loading="lazy" decoding="async" alt="Pasillo de acceso con obras de arte enmarcadas e iluminación puntual LED">
+        </figure>
+        <div class="panel__block-text">
+          <h3>Iluminación de acento</h3>
+          <p>Cada obra de la colección con su propio punto de luz, integrado al mismo sistema que controla el resto de la oficina.</p>
+        </div>
+      </div>
+      <div class="panel__block reveal" data-format="portrait">
+        <figure class="panel__block-media">
+          <img src="assets/img/obra-flv-dracma-galeria-3-960.webp" srcset="assets/img/obra-flv-dracma-galeria-3-640.webp 640w, assets/img/obra-flv-dracma-galeria-3-960.webp 960w, assets/img/obra-flv-dracma-galeria-3-1440.webp 1440w" sizes="(max-width: 720px) 100vw, 440px" width="1440" height="2558" loading="lazy" decoding="async" alt="Rincón de galería con fotografía artística enmarcada y banqueta tapizada">
+        </figure>
+        <div class="panel__block-text">
+          <h3>Un rincón de galería</h3>
+          <p>La oficina también funciona como espacio de exhibición, con la misma atención al detalle en cada ambiente.</p>
+        </div>
+      </div>
+      <div class="panel__cta reveal">
+        <a class="btn btn-outline" href="contacto.html">Quiero un caso como este →</a>
+      </div>
+    </div>
+  </dialog>
   <dialog class="panel" id="panel-obra-san-isidro" aria-labelledby="panel-obra-san-isidro-title">
     <div class="panel__progress" aria-hidden="true"><span></span></div>
     <button type="button" class="panel__close" data-panel-close aria-label="Cerrar detalle">✕</button>
@@ -428,6 +528,15 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
         <p>Home Assistant + una implementación extensa de Shelly (mini, 2PM, i4, wall display) para retrofit sobre la instalación eléctrica existente, más Sensibo para climatización.</p>
         <h4>Resultado</h4>
         <p>Una de las integraciones más completas en confort e iluminación del banco de casos, con control por app y por los interruptores de pared originales.</p>
+      </div>
+      <div class="panel__block reveal" data-format="portrait">
+        <figure class="panel__block-media">
+          <img src="assets/img/obra-san-isidro-galeria-1-960.webp" srcset="assets/img/obra-san-isidro-galeria-1-640.webp 640w, assets/img/obra-san-isidro-galeria-1-960.webp 960w, assets/img/obra-san-isidro-galeria-1-1440.webp 1440w" sizes="(max-width: 720px) 100vw, 440px" width="1440" height="3551" loading="lazy" decoding="async" alt="Detalle de la escalera de Casa San Isidro con tira LED integrada bajo cada escalón">
+        </figure>
+        <div class="panel__block-text">
+          <h3>Cada escalón, un punto de luz</h3>
+          <p>La misma lógica de escenas que controla el resto de la casa, llevada hasta el último detalle de la escalera.</p>
+        </div>
       </div>
       <div class="panel__cta reveal">
         <a class="btn btn-outline" href="contacto.html">Quiero un caso como este →</a>
