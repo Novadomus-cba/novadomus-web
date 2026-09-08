@@ -7,9 +7,20 @@ pierden, y el material rechazado vuelve a aparecer como candidato en el siguient
 ## Cómo se elige una foto
 
 1. Los originales viven en `Fotos/` (ignorada por git: traen GPS y son pesadas).
-2. `python scripts/foto_audit.py --src Fotos` mide todo y genera láminas de contacto
-   numeradas en `Fotos/_laminas/`, al **tamaño real de render** y con el degradado y el
-   título encima.
+2. `scripts/foto_audit.py` mide todo y genera láminas de contacto numeradas en
+   `Fotos/_laminas/`, al **tamaño real de render** y con el degradado y el título encima.
+   Con muchos candidatos va en dos etapas, porque elegir entre 36 opciones es peor que
+   elegir entre 12:
+
+   ```bash
+   # 1. preseleccion: un solo recorte por candidato
+   python scripts/foto_audit.py --src Fotos --servicio redes --anchor centro
+   # 2. ajuste de encuadre: las tres anclas, solo de las finalistas
+   python scripts/foto_audit.py --src Fotos --servicio redes --solo v-03,v-07
+   ```
+
+   Los números **no se renumeran** entre etapas: si en la preselección algo es el 7, en la
+   segunda lámina sigue siendo el 7.
 3. **Una persona elige por número.** Ni el pipeline ni Claude Code eligen.
 4. La elección se anota acá, con el recorte y el ancla.
 5. Recién entonces se generan los WebP y se commitean.

@@ -18,6 +18,13 @@ Uso:
     pip install pillow pillow-heif numpy
     python scripts/foto_audit.py --src Fotos --out Fotos/_laminas
     python scripts/foto_audit.py --src Fotos --servicio videovigilancia
+
+Seleccion en dos etapas, para no tener que elegir entre 36 opciones de una:
+
+    # 1. preseleccion: un recorte por candidato
+    python scripts/foto_audit.py --src Fotos --servicio redes --anchor centro
+    # 2. ajuste de encuadre: las tres anclas, solo de las finalistas
+    python scripts/foto_audit.py --src Fotos --servicio redes --solo v-03,v-07
 """
 from __future__ import annotations
 
@@ -124,6 +131,16 @@ def card_preview(im: Image.Image, title: str) -> Image.Image:
     return c
 
 
+def etiqueta(nombre: str, servicio: str, slot: str) -> str:
+    """Saca el prefijo comun nd-srv-<servicio>-<slot>- y la doble extension:
+    'nd-srv-videovigilancia-tarjeta-v-02.jpg.jpg' -> 'v-02'. Sin esto la
+    etiqueta se trunca justo antes de lo que distingue a cada candidato."""
+    corto = re.sub(rf"^nd-srv-{re.escape(servicio)}-{re.escape(slot)}-", "", nombre,
+                   flags=re.IGNORECASE)
+    corto = re.sub(r"(\.(jpe?g|png|heic|heif|webp|mp4|mov))+$", "", corto, flags=re.IGNORECASE)
+    return corto or nombre
+
+
 def sheet(tiles: list[tuple[Image.Image, str]], out: Path, cols: int = 4) -> None:
     if not tiles:
         return
@@ -148,6 +165,14 @@ def main() -> None:
     ap.add_argument("--out", default=None, help="carpeta de laminas (default: <src>/_laminas)")
     ap.add_argument("--servicio", default=None, help="filtrar por codigo de servicio")
     ap.add_argument("--no-sheets", action="store_true", help="solo inventario, sin laminas")
+    ap.add_argument("--anchor", default="todas", choices=["todas", "arriba", "centro", "abajo"],
+                    help="que recortes 3:4 mostrar en las laminas de tarjeta. "
+                         "'centro' para la preseleccion; 'todas' para ajustar encuadre "
+                         "(default: todas)")
+    ap.add_argument("--solo", default=None,
+                    help="coma-separada: mostrar solo los archivos que contengan alguno de "
+                         "estos textos. Los numeros NO se renumeran, siguen siendo los de la "
+                         "lamina completa")
     args = ap.parse_args()
 
     src = Path(args.src)
@@ -250,20 +275,41 @@ def main() -> None:
         if r["servicio"] and r["slot"]:
             grupos.setdefault((r["servicio"], r["slot"]), []).append(r)
 
+    anchors = ("arriba", "centro", "abajo") if args.anchor == "todas" else (args.anchor,)
+    solo = [t.strip().lower() for t in args.solo.split(",")] if args.solo else None
+
     for (servicio, slot), items in sorted(grupos.items()):
+        # El indice se asigna sobre el grupo COMPLETO y antes de filtrar: asi el
+        # numero de una foto es el mismo en la lamina de preseleccion y en la de
+        # ajuste de encuadre.
+        numerados = list(enumerate(sorted(items, key=lambda r: r["archivo"]), start=1))
+        if solo:
+            numerados = [(i, r) for i, r in numerados
+                         if any(t in r["archivo"].lower() for t in solo)]
+        if not numerados:
+            continue
+
         tiles = []
-        for i, r in enumerate(sorted(items, key=lambda r: r["archivo"]), start=1):
+        for i, r in numerados:
             im = load(src / r["archivo"])
             if slot == "tarjeta":
-                for j, anchor in enumerate(("arriba", "centro", "abajo")):
+                for anchor in anchors:
+                    letra = {"arriba": "a", "centro": "b", "abajo": "c"}[anchor]
                     tiles.append((card_preview(crop_34(im, anchor), servicio),
-                                  f"{i}{chr(97 + j)}  {anchor}  ({r['archivo'][:28]})"))
+                                  f"{i}{letra}  {anchor}  ({etiqueta(r['archivo'], servicio, slot)})"))
             else:
-                th = round(HERO_W * r["h"] / r["w"]) // 2
-                tiles.append((im.resize((HERO_W // 2, max(th, 1)), Image.LANCZOS),
-                              f"{i}  {r['archivo'][:34]}"))
+                th = max(round(HERO_W * r["h"] / r["w"]) // 2, 1)
+                tiles.append((im.resize((HERO_W // 2, th), Image.LANCZOS),
+                              f"{i}  {etiqueta(r['archivo'], servicio, slot)}"))
+
         cols = 4 if slot == "tarjeta" else 2
-        sheet(tiles, out / f"lamina-{servicio}-{slot}.png", cols=cols)
+        if slot == "tarjeta" and len(anchors) == 3:
+            cols = 3          # una fila por candidato: arriba / centro / abajo
+        sufijo = f"-{args.anchor}" if args.anchor != "todas" else ""
+        sheet(tiles, out / f"lamina-{servicio}-{slot}{sufijo}.png", cols=cols)
+
+        print(f"    {servicio}/{slot}: " + ", ".join(
+            f"{i}={etiqueta(r['archivo'], servicio, slot)}" for i, r in numerados))
 
     print("\nElegir por numero mirando las laminas. Registrar la eleccion y los "
           "vetos en scripts/DECISIONES.md antes de generar los WebP.")
