@@ -2,5 +2,19 @@
 /Fotos/
 /Página/
 
+# originales de camara: nunca al repo, en ninguna carpeta
+*.heic
+*.HEIC
+*.mp4
+*.mov
+*.MOV
+
+# en assets/img solo entran los webp procesados
+assets/img/*
+!assets/img/*.webp
+
 # material de trabajo del pipeline de imagenes, no se versiona
 /assets/img/manifest.json
+
+# material de trabajo de la auditoria de fotos
+Fotos/_laminas/
