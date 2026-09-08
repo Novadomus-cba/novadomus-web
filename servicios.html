@@ -156,6 +156,109 @@ body.menu-open,body.scroll-lock{overflow:hidden;}
 .panel__highlight h3{font-size:1rem;margin-bottom:8px;}
 .panel__highlight p{color:var(--text-secondary);font-size:.88rem;margin:0;max-width:none;}
 
+/* ============ Variante takeover ============
+   Nota: aca el margin:auto del panel centrado se REEMPLAZA por margin:0.
+   Es el gotcha #1 al reves -- ver criterio-diseno.md de la skill. */
+.panel--takeover{
+  width:100vw;max-width:none;
+  height:100vh;height:100dvh;max-height:none;   /* dvh para la barra de URL de mobile */
+  margin:0;border-radius:0;box-shadow:none;
+  background:var(--azul-profundo);
+}
+.panel--takeover::backdrop{background:var(--azul-profundo);}
+.panel--takeover .panel__scroll{height:100vh;height:100dvh;max-height:none;}
+
+/* La animacion de escala desde la tarjeta (--ox/--oy) no sirve a pantalla completa:
+   a 100vw un scale(.9) muestra los bordes del fondo. Se usa un rise corto. */
+.panel--takeover[open]{animation:takeover-in .42s cubic-bezier(.16,1,.3,1) both;transform-origin:center;}
+.panel--takeover.is-closing{animation:takeover-out .22s ease both;}
+@keyframes takeover-in{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+@keyframes takeover-out{to{opacity:0;transform:translateY(12px)}}
+
+/* Portada full-bleed con titulo encima */
+.panel--takeover .panel__hero{position:relative;margin:0;background:var(--azul-nova);}
+.panel--takeover .panel__hero img{
+  width:100%;height:min(62dvh,560px);max-height:none;object-fit:cover;display:block;
+}
+.panel--takeover .panel__hero::after{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(to top,var(--azul-profundo) 0%,rgba(11,19,43,.45) 42%,transparent 78%);
+}
+.panel--takeover .panel__hero-caption{
+  position:absolute;inset:auto 0 0 0;z-index:1;
+  padding:0 clamp(22px,6vw,48px) clamp(24px,5vw,40px);
+}
+.panel--takeover .panel__hero-caption .panel__title{margin:0;font-size:clamp(1.5rem,6vw,2.4rem);line-height:1.15;}
+.panel--takeover .panel__head{padding:clamp(24px,5vw,36px) clamp(22px,6vw,48px) 8px;}
+.panel--takeover .panel__lede{max-width:62ch;}
+
+/* Botones flotantes: absolute contra el dialog (que no scrollea) => quedan fijos
+   sin necesidad de position:sticky ni de JS. */
+.panel--takeover .panel__close{
+  top:calc(14px + env(safe-area-inset-top));
+  right:calc(14px + env(safe-area-inset-right));
+}
+.panel__pager{
+  position:absolute;z-index:6;left:50%;transform:translateX(-50%);
+  bottom:calc(16px + env(safe-area-inset-bottom));
+  display:flex;align-items:center;gap:4px;padding:6px;
+  border-radius:999px;border:1px solid var(--border);
+  background:rgba(11,19,43,.82);backdrop-filter:blur(8px);
+}
+.panel__pager[hidden]{display:none;}
+.panel__pager-btn{
+  display:flex;align-items:center;justify-content:center;width:44px;height:44px;
+  border:none;border-radius:50%;background:transparent;color:var(--crema);cursor:pointer;
+  transition:background .3s,color .3s;
+}
+.panel__pager-btn svg{width:22px;height:22px;}
+.panel__pager-btn:hover:not([hidden]){background:var(--dorado);color:var(--azul-profundo);}
+.panel__pager-btn[hidden]{display:none;}
+.panel__pager-count{
+  font-family:'Michroma';font-size:.62rem;letter-spacing:.08em;color:var(--text-secondary);
+  padding:0 8px;min-width:5ch;text-align:center;
+}
+
+/* Tercer layout de bloque: foto full-bleed + texto angosto centrado */
+.panel__block[data-layout="center"]{
+  grid-template-columns:1fr;padding:clamp(28px,6vw,48px) 0;gap:clamp(20px,4vw,28px);
+}
+@media (min-width:720px){
+  .panel__block[data-layout="center"]{grid-template-columns:1fr;}
+}
+.panel__block[data-layout="center"] .panel__block-media{border-radius:0;}
+.panel__block[data-layout="center"] .panel__block-media img{
+  width:100%;height:min(70dvh,620px);max-height:none;object-fit:cover;
+}
+.panel__block[data-layout="center"] .panel__block-text{
+  max-width:58ch;margin:0 auto;padding:0 clamp(22px,6vw,48px);text-align:center;
+}
+
+/* Tarjeta de cierre al siguiente panel */
+.panel__next{
+  display:flex;align-items:center;gap:16px;
+  margin:clamp(24px,5vw,40px) clamp(22px,6vw,48px) calc(88px + env(safe-area-inset-bottom));
+  padding:12px;border:1px solid var(--border);border-radius:16px;
+  background:var(--azul-nova);color:var(--crema);text-decoration:none;
+  transition:border-color .3s,transform .4s cubic-bezier(.16,1,.3,1);
+}
+.panel__next:hover,.panel__next:focus-visible{border-color:var(--dorado);transform:translateX(4px);}
+.panel__next img{flex:none;width:72px;height:96px;object-fit:cover;border-radius:10px;display:block;}
+.panel__next-text{display:flex;flex-direction:column;gap:4px;}
+.panel__next-tag{
+  font-family:'Michroma';font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--dorado);
+}
+.panel__next strong{font-size:1.05rem;font-weight:600;}
+
+/* El margen inferior grande del ultimo elemento evita que la pildora tape el CTA.
+   Si un panel no tiene .panel__next, aplicarlo al .panel__cta. */
+.panel--takeover .panel__scroll > :last-child{margin-bottom:calc(88px + env(safe-area-inset-bottom));}
+
+@media (prefers-reduced-motion:reduce){
+  .panel--takeover[open],.panel--takeover.is-closing{animation:none!important;}
+  .panel__next{transition:none;}
+}
+
 .reveal{opacity:1;}
 .js .reveal{opacity:0;transform:translateY(24px);}
 .js .reveal.is-in{opacity:1;transform:none;transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1);}
@@ -202,7 +305,12 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
 .panel{display:block;position:static;max-height:none;width:auto;margin:2rem auto;}
 .panel__close,.panel__progress{display:none;}
 .panel__scroll{max-height:none;overflow:visible;}
-.carousel__nav,.carousel__progress{display:none;}</style></noscript>
+.carousel__nav,.carousel__progress{display:none;}
+.panel--takeover{width:auto;height:auto;margin:2rem auto;border-radius:20px;}
+.panel--takeover .panel__scroll{height:auto;}
+.panel--takeover .panel__hero img{height:auto;}
+.panel--takeover .panel__block[data-layout="center"] .panel__block-media img{height:auto;}
+.panel__pager{display:none;}</style></noscript>
 </head>
 <body>
 
@@ -354,16 +462,18 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
     </div>
   </section>
 
-  <dialog class="panel" id="panel-instalacion-electrica" aria-labelledby="panel-instalacion-electrica-title">
+  <dialog class="panel panel--takeover" id="panel-instalacion-electrica" aria-labelledby="panel-instalacion-electrica-title">
     <div class="panel__progress" aria-hidden="true"><span></span></div>
     <button type="button" class="panel__close" data-panel-close aria-label="Cerrar detalle">✕</button>
     <div class="panel__scroll" data-lenis-prevent>
       <figure class="panel__hero reveal">
-        <img src="assets/img/servicio-instalacion-electrica-1440.webp" srcset="assets/img/servicio-instalacion-electrica-960.webp 960w, assets/img/servicio-instalacion-electrica-1440.webp 1440w" sizes="880px" width="1440" height="2559" loading="lazy" decoding="async" alt="Tablero eléctrico con térmicas identificadas por circuito y medidor digital de tensión y corriente">
+        <img src="assets/img/servicio-instalacion-electrica-1440.webp" srcset="assets/img/servicio-instalacion-electrica-960.webp 960w, assets/img/servicio-instalacion-electrica-1440.webp 1440w" sizes="100vw" width="1440" height="2559" loading="lazy" decoding="async" alt="Tablero eléctrico con térmicas identificadas por circuito y medidor digital de tensión y corriente">
+        <figcaption class="panel__hero-caption">
+          <p class="eyebrow">Servicio</p>
+          <h2 class="panel__title" id="panel-instalacion-electrica-title">Instalación Eléctrica</h2>
+        </figcaption>
       </figure>
       <header class="panel__head reveal">
-        <p class="eyebrow">Servicio</p>
-        <h2 class="panel__title" id="panel-instalacion-electrica-title">Instalación Eléctrica</h2>
         <p class="panel__lede">Instalamos y certificamos obra eléctrica como servicio en sí mismo, no solo como paso previo a otra cosa: electricistas matriculados propios se encargan del cableado, tableros, protecciones y puesta a tierra en la mayoría de nuestras obras activas. Cuando el proyecto además incluye tecnología, diseñamos esa misma instalación pensando en señales débiles, redes y domótica desde el tablero — para no tener que romper pared dos veces.</p>
       </header>
       <div class="panel__highlight reveal">
@@ -374,35 +484,71 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
       <div class="panel__cta reveal">
         <a class="btn btn-outline" href="contacto.html">Pedir una visita técnica</a>
       </div>
+      <a class="panel__next reveal" href="#panel-redes" data-panel-next>
+        <img src="assets/img/servicio-redes-640.webp" alt="" width="640" height="288" loading="lazy" decoding="async">
+        <span class="panel__next-text">
+          <span class="panel__next-tag">Siguiente servicio</span>
+          <strong>Redes</strong>
+        </span>
+      </a>
+    </div>
+    <div class="panel__pager" aria-hidden="false">
+      <button type="button" class="panel__pager-btn" data-panel-prev aria-label="Servicio anterior">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </button>
+      <span class="panel__pager-count" data-panel-count>1 / 8</span>
+      <button type="button" class="panel__pager-btn" data-panel-next aria-label="Servicio siguiente">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </button>
     </div>
   </dialog>
-  <dialog class="panel" id="panel-redes" aria-labelledby="panel-redes-title">
+  <dialog class="panel panel--takeover" id="panel-redes" aria-labelledby="panel-redes-title">
     <div class="panel__progress" aria-hidden="true"><span></span></div>
     <button type="button" class="panel__close" data-panel-close aria-label="Cerrar detalle">✕</button>
     <div class="panel__scroll" data-lenis-prevent>
       <figure class="panel__hero reveal">
-        <img src="assets/img/servicio-redes-1440.webp" srcset="assets/img/servicio-redes-960.webp 960w, assets/img/servicio-redes-1440.webp 1440w" sizes="880px" width="1440" height="648" loading="lazy" decoding="async" alt="Rack de networking prolijo, con switch administrado TP-Link Omada y grabador Hikvision cableados">
+        <img src="assets/img/servicio-redes-1440.webp" srcset="assets/img/servicio-redes-960.webp 960w, assets/img/servicio-redes-1440.webp 1440w" sizes="100vw" width="1440" height="648" loading="lazy" decoding="async" alt="Rack de networking prolijo, con switch administrado TP-Link Omada y grabador Hikvision cableados">
+        <figcaption class="panel__hero-caption">
+          <p class="eyebrow">Servicio</p>
+          <h2 class="panel__title" id="panel-redes-title">Redes</h2>
+        </figcaption>
       </figure>
       <header class="panel__head reveal">
-        <p class="eyebrow">Servicio</p>
-        <h2 class="panel__title" id="panel-redes-title">Redes</h2>
         <p class="panel__lede">Cada cámara, sensor y dispositivo domótico depende de una red que no se caiga. Diseñamos la LAN, el WiFi y las VPN de cada obra con equipamiento profesional, dimensionado para la cantidad real de dispositivos conectados — no para lo mínimo que funcione hoy, sino para lo que la casa va a sumar mañana.</p>
       </header>
       <div class="panel__cta reveal">
         <a class="btn btn-outline" href="contacto.html">Pedir una visita técnica</a>
       </div>
+      <a class="panel__next reveal" href="#panel-domotica" data-panel-next>
+        <img src="assets/img/servicio-domotica-640.webp" alt="" width="640" height="360" loading="lazy" decoding="async">
+        <span class="panel__next-text">
+          <span class="panel__next-tag">Siguiente servicio</span>
+          <strong>Domótica</strong>
+        </span>
+      </a>
+    </div>
+    <div class="panel__pager" aria-hidden="false">
+      <button type="button" class="panel__pager-btn" data-panel-prev aria-label="Servicio anterior">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </button>
+      <span class="panel__pager-count" data-panel-count>2 / 8</span>
+      <button type="button" class="panel__pager-btn" data-panel-next aria-label="Servicio siguiente">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </button>
     </div>
   </dialog>
-  <dialog class="panel" id="panel-domotica" aria-labelledby="panel-domotica-title">
+  <dialog class="panel panel--takeover" id="panel-domotica" aria-labelledby="panel-domotica-title">
     <div class="panel__progress" aria-hidden="true"><span></span></div>
     <button type="button" class="panel__close" data-panel-close aria-label="Cerrar detalle">✕</button>
     <div class="panel__scroll" data-lenis-prevent>
       <figure class="panel__hero reveal">
-        <img src="assets/img/servicio-domotica-1440.webp" srcset="assets/img/servicio-domotica-960.webp 960w, assets/img/servicio-domotica-1440.webp 1440w" sizes="880px" width="1440" height="811" loading="lazy" decoding="async" alt="Equipamiento de domótica en un cielorraso técnico: access point, hub de alarma Ajax y controlador Home Assistant">
+        <img src="assets/img/servicio-domotica-1440.webp" srcset="assets/img/servicio-domotica-960.webp 960w, assets/img/servicio-domotica-1440.webp 1440w" sizes="100vw" width="1440" height="811" loading="lazy" decoding="async" alt="Equipamiento de domótica en un cielorraso técnico: access point, hub de alarma Ajax y controlador Home Assistant">
+        <figcaption class="panel__hero-caption">
+          <p class="eyebrow">Servicio</p>
+          <h2 class="panel__title" id="panel-domotica-title">Domótica</h2>
+        </figcaption>
       </figure>
       <header class="panel__head reveal">
-        <p class="eyebrow">Servicio</p>
-        <h2 class="panel__title" id="panel-domotica-title">Domótica</h2>
         <p class="panel__lede">Domótica real es que todo se controle desde un solo lugar: luces, clima, seguridad y entretenimiento en la misma app, el mismo panel de pared, la misma voz. Por debajo corre una red de sensores que se avisan entre sí — de presencia, de apertura, de consumo — para que las rutinas pasen solas: apagar todo al salir, encender la luz al entrar a un ambiente. Trabajamos con sistemas abiertos (Wi-Fi, Zigbee, Z-Wave), sin depender de un solo fabricante, para que la casa quede funcionando como un sistema, no como aparatos sueltos.</p>
       </header>
       <div class="panel__highlight reveal">
@@ -413,35 +559,71 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
       <div class="panel__cta reveal">
         <a class="btn btn-outline" href="contacto.html">Pedir una visita técnica</a>
       </div>
+      <a class="panel__next reveal" href="#panel-climatizacion" data-panel-next>
+        <img src="assets/img/servicio-climatizacion-tarjeta-640.webp" alt="" width="640" height="853" loading="lazy" decoding="async">
+        <span class="panel__next-text">
+          <span class="panel__next-tag">Siguiente servicio</span>
+          <strong>Climatización</strong>
+        </span>
+      </a>
+    </div>
+    <div class="panel__pager" aria-hidden="false">
+      <button type="button" class="panel__pager-btn" data-panel-prev aria-label="Servicio anterior">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </button>
+      <span class="panel__pager-count" data-panel-count>3 / 8</span>
+      <button type="button" class="panel__pager-btn" data-panel-next aria-label="Servicio siguiente">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </button>
     </div>
   </dialog>
-  <dialog class="panel" id="panel-climatizacion" aria-labelledby="panel-climatizacion-title">
+  <dialog class="panel panel--takeover" id="panel-climatizacion" aria-labelledby="panel-climatizacion-title">
     <div class="panel__progress" aria-hidden="true"><span></span></div>
     <button type="button" class="panel__close" data-panel-close aria-label="Cerrar detalle">✕</button>
     <div class="panel__scroll" data-lenis-prevent>
       <figure class="panel__hero reveal">
-        <img src="assets/img/servicio-climatizacion-960.webp" srcset="assets/img/servicio-climatizacion-960.webp 960w, assets/img/servicio-climatizacion-1440.webp 1440w" sizes="880px" width="2252" height="4000" loading="lazy" decoding="async" alt="Controlador Sensibo instalado en la pared para automatizar el aire acondicionado">
+        <img src="assets/img/servicio-climatizacion-960.webp" srcset="assets/img/servicio-climatizacion-960.webp 960w, assets/img/servicio-climatizacion-1440.webp 1440w" sizes="100vw" width="2252" height="4000" loading="lazy" decoding="async" alt="Controlador Sensibo instalado en la pared para automatizar el aire acondicionado">
+        <figcaption class="panel__hero-caption">
+          <p class="eyebrow">Servicio</p>
+          <h2 class="panel__title" id="panel-climatizacion-title">Climatización</h2>
+        </figcaption>
       </figure>
       <header class="panel__head reveal">
-        <p class="eyebrow">Servicio</p>
-        <h2 class="panel__title" id="panel-climatizacion-title">Climatización</h2>
         <p class="panel__lede">Sumamos control inteligente al aire acondicionado y la calefacción que ya tenés, sin cambiar el equipo: un controlador se integra al split o al radiador y lo suma a la misma app y a las mismas rutinas del resto de la casa — temperatura por horario, por presencia, o coordinada con las persianas para no enfriar con el sol entrando.</p>
       </header>
       <div class="panel__cta reveal">
         <a class="btn btn-outline" href="contacto.html">Pedir una visita técnica</a>
       </div>
+      <a class="panel__next reveal" href="#panel-videovigilancia" data-panel-next>
+        <img src="assets/img/servicio-videovigilancia-tarjeta-640.webp" alt="" width="640" height="853" loading="lazy" decoding="async">
+        <span class="panel__next-text">
+          <span class="panel__next-tag">Siguiente servicio</span>
+          <strong>Videovigilancia</strong>
+        </span>
+      </a>
+    </div>
+    <div class="panel__pager" aria-hidden="false">
+      <button type="button" class="panel__pager-btn" data-panel-prev aria-label="Servicio anterior">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </button>
+      <span class="panel__pager-count" data-panel-count>4 / 8</span>
+      <button type="button" class="panel__pager-btn" data-panel-next aria-label="Servicio siguiente">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </button>
     </div>
   </dialog>
-  <dialog class="panel" id="panel-videovigilancia" aria-labelledby="panel-videovigilancia-title">
+  <dialog class="panel panel--takeover" id="panel-videovigilancia" aria-labelledby="panel-videovigilancia-title">
     <div class="panel__progress" aria-hidden="true"><span></span></div>
     <button type="button" class="panel__close" data-panel-close aria-label="Cerrar detalle">✕</button>
     <div class="panel__scroll" data-lenis-prevent>
       <figure class="panel__hero reveal">
-        <img src="assets/img/servicio-videovigilancia-960.webp" srcset="assets/img/servicio-videovigilancia-960.webp 960w, assets/img/servicio-videovigilancia-1440.webp 1440w" sizes="880px" width="4080" height="2296" loading="lazy" decoding="async" alt="Cámara domo de videovigilancia instalada en el borde de un edificio, con la fachada completa de fondo">
+        <img src="assets/img/servicio-videovigilancia-960.webp" srcset="assets/img/servicio-videovigilancia-960.webp 960w, assets/img/servicio-videovigilancia-1440.webp 1440w" sizes="100vw" width="4080" height="2296" loading="lazy" decoding="async" alt="Cámara domo de videovigilancia instalada en el borde de un edificio, con la fachada completa de fondo">
+        <figcaption class="panel__hero-caption">
+          <p class="eyebrow">Servicio</p>
+          <h2 class="panel__title" id="panel-videovigilancia-title">Videovigilancia</h2>
+        </figcaption>
       </figure>
       <header class="panel__head reveal">
-        <p class="eyebrow">Servicio</p>
-        <h2 class="panel__title" id="panel-videovigilancia-title">Videovigilancia</h2>
         <p class="panel__lede">Cámaras que graban en un NVR propio, no en la nube de un tercero. Diseñamos la cobertura por ambiente y por acceso, con grabación continua y acceso remoto desde el celular para ver en vivo o revisar lo grabado desde cualquier lado.</p>
       </header>
       <div class="panel__highlight reveal">
@@ -452,35 +634,71 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
       <div class="panel__cta reveal">
         <a class="btn btn-outline" href="contacto.html">Pedir una visita técnica</a>
       </div>
+      <a class="panel__next reveal" href="#panel-alarmas" data-panel-next>
+        <img src="assets/img/servicio-alarmas-640.webp" alt="" width="640" height="1137" loading="lazy" decoding="async">
+        <span class="panel__next-text">
+          <span class="panel__next-tag">Siguiente servicio</span>
+          <strong>Alarmas</strong>
+        </span>
+      </a>
+    </div>
+    <div class="panel__pager" aria-hidden="false">
+      <button type="button" class="panel__pager-btn" data-panel-prev aria-label="Servicio anterior">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </button>
+      <span class="panel__pager-count" data-panel-count>5 / 8</span>
+      <button type="button" class="panel__pager-btn" data-panel-next aria-label="Servicio siguiente">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </button>
     </div>
   </dialog>
-  <dialog class="panel" id="panel-cerraduras" aria-labelledby="panel-cerraduras-title">
+  <dialog class="panel panel--takeover" id="panel-cerraduras" aria-labelledby="panel-cerraduras-title">
     <div class="panel__progress" aria-hidden="true"><span></span></div>
     <button type="button" class="panel__close" data-panel-close aria-label="Cerrar detalle">✕</button>
     <div class="panel__scroll" data-lenis-prevent>
       <figure class="panel__hero reveal">
-        <img src="assets/img/servicio-cerraduras-1440.webp" srcset="assets/img/servicio-cerraduras-960.webp 960w, assets/img/servicio-cerraduras-1440.webp 1440w" sizes="880px" width="1440" height="1920" loading="lazy" decoding="async" alt="Cerradura digital con teclado y lector integrados, instalada en una puerta de madera maciza">
+        <img src="assets/img/servicio-cerraduras-1440.webp" srcset="assets/img/servicio-cerraduras-960.webp 960w, assets/img/servicio-cerraduras-1440.webp 1440w" sizes="100vw" width="1440" height="1920" loading="lazy" decoding="async" alt="Cerradura digital con teclado y lector integrados, instalada en una puerta de madera maciza">
+        <figcaption class="panel__hero-caption">
+          <p class="eyebrow">Servicio</p>
+          <h2 class="panel__title" id="panel-cerraduras-title">Cerraduras Digitales</h2>
+        </figcaption>
       </figure>
       <header class="panel__head reveal">
-        <p class="eyebrow">Servicio</p>
-        <h2 class="panel__title" id="panel-cerraduras-title">Cerraduras Digitales</h2>
         <p class="panel__lede">Nada de llaves para copiar ni perder. Instalamos cerraduras digitales que abren por código, huella, tarjeta de proximidad o la app del celular, con registro de cada ingreso — quién entró y cuándo. Ideal para alquileres temporarios, personal de servicio o simplemente para no volver a preguntarte si cerraste la puerta.</p>
       </header>
       <div class="panel__cta reveal">
         <a class="btn btn-outline" href="contacto.html">Pedir una visita técnica</a>
       </div>
+      <a class="panel__next reveal" href="#panel-audio-video" data-panel-next>
+        <img src="assets/img/servicio-audio-video-tarjeta-640.webp" alt="" width="640" height="853" loading="lazy" decoding="async">
+        <span class="panel__next-text">
+          <span class="panel__next-tag">Siguiente servicio</span>
+          <strong>Audio &amp; Video</strong>
+        </span>
+      </a>
+    </div>
+    <div class="panel__pager" aria-hidden="false">
+      <button type="button" class="panel__pager-btn" data-panel-prev aria-label="Servicio anterior">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </button>
+      <span class="panel__pager-count" data-panel-count>7 / 8</span>
+      <button type="button" class="panel__pager-btn" data-panel-next aria-label="Servicio siguiente">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </button>
     </div>
   </dialog>
-  <dialog class="panel" id="panel-alarmas" aria-labelledby="panel-alarmas-title">
+  <dialog class="panel panel--takeover" id="panel-alarmas" aria-labelledby="panel-alarmas-title">
     <div class="panel__progress" aria-hidden="true"><span></span></div>
     <button type="button" class="panel__close" data-panel-close aria-label="Cerrar detalle">✕</button>
     <div class="panel__scroll" data-lenis-prevent>
       <figure class="panel__hero reveal">
-        <img src="assets/img/servicio-alarmas-1440.webp" srcset="assets/img/servicio-alarmas-960.webp 960w, assets/img/servicio-alarmas-1440.webp 1440w" sizes="880px" width="1440" height="2559" loading="lazy" decoding="async" alt="Sensores de movimiento de alarma instalados en la unión de dos paredes de un ambiente con ventanal">
+        <img src="assets/img/servicio-alarmas-1440.webp" srcset="assets/img/servicio-alarmas-960.webp 960w, assets/img/servicio-alarmas-1440.webp 1440w" sizes="100vw" width="1440" height="2559" loading="lazy" decoding="async" alt="Sensores de movimiento de alarma instalados en la unión de dos paredes de un ambiente con ventanal">
+        <figcaption class="panel__hero-caption">
+          <p class="eyebrow">Servicio</p>
+          <h2 class="panel__title" id="panel-alarmas-title">Alarmas</h2>
+        </figcaption>
       </figure>
       <header class="panel__head reveal">
-        <p class="eyebrow">Servicio</p>
-        <h2 class="panel__title" id="panel-alarmas-title">Alarmas</h2>
         <p class="panel__lede">Una alarma que no habla con el resto del sistema es una isla. Integramos los sensores de intrusión, pánico y humo al mismo panel que controla luces y accesos, para que una alerta dispare acciones reales — encender luces, notificar por app — no solo una sirena.</p>
       </header>
       <div class="panel__highlight reveal">
@@ -491,23 +709,50 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
       <div class="panel__cta reveal">
         <a class="btn btn-outline" href="contacto.html">Pedir una visita técnica</a>
       </div>
+      <a class="panel__next reveal" href="#panel-cerraduras" data-panel-next>
+        <img src="assets/img/servicio-cerraduras-640.webp" alt="" width="640" height="853" loading="lazy" decoding="async">
+        <span class="panel__next-text">
+          <span class="panel__next-tag">Siguiente servicio</span>
+          <strong>Cerraduras Digitales</strong>
+        </span>
+      </a>
+    </div>
+    <div class="panel__pager" aria-hidden="false">
+      <button type="button" class="panel__pager-btn" data-panel-prev aria-label="Servicio anterior">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </button>
+      <span class="panel__pager-count" data-panel-count>6 / 8</span>
+      <button type="button" class="panel__pager-btn" data-panel-next aria-label="Servicio siguiente">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </button>
     </div>
   </dialog>
-  <dialog class="panel" id="panel-audio-video" aria-labelledby="panel-audio-video-title">
+  <dialog class="panel panel--takeover" id="panel-audio-video" aria-labelledby="panel-audio-video-title">
     <div class="panel__progress" aria-hidden="true"><span></span></div>
     <button type="button" class="panel__close" data-panel-close aria-label="Cerrar detalle">✕</button>
     <div class="panel__scroll" data-lenis-prevent>
       <figure class="panel__hero reveal">
-        <img src="assets/img/servicio-audio-video-960.webp" srcset="assets/img/servicio-audio-video-960.webp 960w, assets/img/servicio-audio-video-1440.webp 1440w" sizes="880px" width="4032" height="3024" loading="lazy" decoding="async" alt="Amplificador multizona VSSL y parlantes de techo empotrables, listos para instalar en cielorraso">
+        <img src="assets/img/servicio-audio-video-960.webp" srcset="assets/img/servicio-audio-video-960.webp 960w, assets/img/servicio-audio-video-1440.webp 1440w" sizes="100vw" width="4032" height="3024" loading="lazy" decoding="async" alt="Amplificador multizona VSSL y parlantes de techo empotrables, listos para instalar en cielorraso">
+        <figcaption class="panel__hero-caption">
+          <p class="eyebrow">Servicio</p>
+          <h2 class="panel__title" id="panel-audio-video-title">Audio &amp; Video</h2>
+        </figcaption>
       </figure>
       <header class="panel__head reveal">
-        <p class="eyebrow">Servicio</p>
-        <h2 class="panel__title" id="panel-audio-video-title">Audio &amp; Video</h2>
         <p class="panel__lede">Sonido ambiental en cada habitación, controlado desde la misma app que el resto de la casa — sin parlantes bluetooth sueltos ni un control remoto por equipo. Integramos audio multizona y video con amplificadores de la misma familia de sistemas abiertos que usamos en domótica, para que el volumen de la cocina y la escena de "película" del living respondan al mismo panel.</p>
       </header>
       <div class="panel__cta reveal">
         <a class="btn btn-outline" href="contacto.html">Pedir una visita técnica</a>
       </div>
+    </div>
+    <div class="panel__pager" aria-hidden="false">
+      <button type="button" class="panel__pager-btn" data-panel-prev aria-label="Servicio anterior">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </button>
+      <span class="panel__pager-count" data-panel-count>8 / 8</span>
+      <button type="button" class="panel__pager-btn" data-panel-next aria-label="Servicio siguiente">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </button>
     </div>
   </dialog>
 

@@ -8,6 +8,8 @@
   var openDialog = null;
   var openTrigger = null;
   var closedByPopstate = false;
+  var panelOrder = [];   // ids de panel, en el orden en que estan las tarjetas del carrusel
+  var triggerFor = {};   // id de panel -> tarjeta que lo abre
 
   function lockScroll() {
     if (window.lenis) window.lenis.stop();
@@ -120,6 +122,62 @@
     setTimeout(onEnd, 320);
   }
 
+  function siblingId(id, dir) {
+    var i = panelOrder.indexOf(id);
+    if (i < 0) return null;
+    return panelOrder[i + dir] || null;
+  }
+
+  // Desmonta el panel actual y monta el siguiente sin soltar el lock de scroll.
+  // No pasa por closePanel() a proposito: no queremos animacion de cierre, ni
+  // history.back(), ni devolver el foco a la tarjeta.
+  function goToPanel(dir) {
+    if (!openDialog) return;
+    var nextId = siblingId(openDialog.id, dir);
+    if (!nextId) return;
+    var next = document.getElementById(nextId);
+    if (!next) return;
+
+    var prev = openDialog;
+    if (prev._io) prev._io.disconnect();
+    if (prev._unbindProgress) prev._unbindProgress();
+    var prevScroller = prev.querySelector('.panel__scroll');
+    if (prevScroller) prevScroller.scrollTop = 0;
+    resetReveals(prev);
+    prev.classList.remove('is-closing');
+    prev.close();
+    if (openTrigger) openTrigger.setAttribute('aria-expanded', 'false');
+
+    openDialog = next;
+    openTrigger = triggerFor[nextId] || null;
+    next.showModal();
+    if (openTrigger) {
+      openTrigger.setAttribute('aria-expanded', 'true');
+      // Deja la tarjeta correcta a la vista para cuando se cierre el panel.
+      if (openTrigger.scrollIntoView) {
+        openTrigger.scrollIntoView({ block: 'nearest', inline: 'center',
+          behavior: reducedMotion() ? 'auto' : 'smooth' });
+      }
+    }
+
+    // replaceState, NO pushState -- si cada salto pushea, recorrer varios
+    // paneles deja una entrada de historial por salto y el "atras" los
+    // camina al reves en vez de salir.
+    history.replaceState({ panel: nextId }, '', '#' + nextId);
+
+    var scroller = next.querySelector('.panel__scroll');
+    if (scroller) scroller.scrollTop = 0;
+    next._io = observeReveals(next, scroller);
+    next._unbindProgress = bindReadingProgress(scroller, next.querySelector('.panel__progress span'));
+
+    // Anuncia el cambio: mueve el foco al titulo del panel nuevo.
+    var title = next.querySelector('.panel__title');
+    if (title) {
+      title.setAttribute('tabindex', '-1');
+      title.focus({ preventScroll: true });
+    }
+  }
+
   function init() {
     document.querySelectorAll('.card__link[data-panel]').forEach(function (link) {
       link.addEventListener('click', function (e) {
@@ -128,6 +186,13 @@
         e.preventDefault();
         openPanel(dialog, link);
       });
+    });
+
+    // Orden de paneles = orden de las tarjetas en el carrusel.
+    document.querySelectorAll('.card__link[data-panel]').forEach(function (link) {
+      var id = link.getAttribute('data-panel');
+      panelOrder.push(id);
+      triggerFor[id] = link;
     });
 
     document.querySelectorAll('dialog.panel').forEach(function (dialog) {
@@ -142,6 +207,35 @@
         e.preventDefault();
         closePanel(dialog);
       });
+
+      var i = panelOrder.indexOf(dialog.id);
+      var hasPrev = i > 0;
+      var hasNext = i > -1 && i < panelOrder.length - 1;
+
+      dialog.querySelectorAll('[data-panel-prev]').forEach(function (btn) {
+        if (!hasPrev) { btn.hidden = true; return; }
+        btn.addEventListener('click', function (e) { e.preventDefault(); goToPanel(-1); });
+      });
+      dialog.querySelectorAll('[data-panel-next]').forEach(function (btn) {
+        if (!hasNext) { btn.hidden = true; return; }
+        btn.addEventListener('click', function (e) { e.preventDefault(); goToPanel(1); });
+      });
+
+      var count = dialog.querySelector('[data-panel-count]');
+      if (count && i > -1) count.textContent = (i + 1) + ' / ' + panelOrder.length;
+
+      // Si el panel es el unico, la pildora entera no tiene sentido.
+      var pager = dialog.querySelector('.panel__pager');
+      if (pager && !hasPrev && !hasNext) pager.hidden = true;
+    });
+
+    // Teclado: flechas solo con un takeover abierto y fuera de un campo de texto.
+    document.addEventListener('keydown', function (e) {
+      if (!openDialog || !openDialog.classList.contains('panel--takeover')) return;
+      var t = e.target;
+      if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
+      if (e.key === 'ArrowRight') { e.preventDefault(); goToPanel(1); }
+      else if (e.key === 'ArrowLeft') { e.preventDefault(); goToPanel(-1); }
     });
 
     window.addEventListener('popstate', function () {
