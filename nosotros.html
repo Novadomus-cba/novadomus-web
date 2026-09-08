@@ -108,6 +108,28 @@ body.menu-open{overflow:hidden;}
 .stat-cell p{font-size:.8rem;color:var(--text-secondary);margin:0;}
 @media (max-width:820px){.stat-grid{grid-template-columns:repeat(2,1fr);}}
 
+.split{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;margin-top:8px;}
+.split-media{border-radius:20px;overflow:hidden;background:var(--surface);box-shadow:0 20px 50px rgba(0,0,0,.35);}
+.split-media img{width:100%;height:100%;object-fit:cover;display:block;max-height:520px;}
+@media (max-width:820px){.split{grid-template-columns:1fr;gap:24px;} .split-media img{max-height:420px;}}
+
+.stages{margin-top:44px;}
+.stages-row{display:flex;justify-content:space-between;list-style:none;margin:0;padding:0;position:relative;}
+.stages-row::before{content:'';position:absolute;top:19px;left:40px;right:40px;height:1px;background:var(--line);z-index:0;}
+.stage-step{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:10px;flex:1;text-align:center;padding:0 6px;}
+.stage-num{width:40px;height:40px;border-radius:50%;background:var(--surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:'Michroma';font-size:.78rem;color:var(--dorado);flex:none;}
+.stage-label{font-size:.82rem;color:var(--text-secondary);max-width:12ch;}
+.stages-brace{display:block;width:100%;height:28px;margin-top:6px;}
+.stages-caption{text-align:center;margin-top:10px;font-family:'Michroma';font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--dorado);}
+@media (max-width:720px){
+  .stages-row{flex-direction:column;gap:20px;align-items:flex-start;}
+  .stages-row::before{left:19px;top:40px;bottom:40px;right:auto;width:1px;height:auto;}
+  .stage-step{flex-direction:row;text-align:left;max-width:none;}
+  .stage-label{max-width:none;}
+  .stages-brace{display:none;}
+  .stages-caption{text-align:left;}
+}
+
 .faq-item{padding:22px 0;border-top:1px solid var(--line);}
 .faq-item h3{font-size:1rem;margin-bottom:8px;}
 .faq-item p{color:var(--text-secondary);font-size:.92rem;margin:0;}
@@ -192,6 +214,7 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
   <div class="wrap">
     <nav class="anchor-index" aria-label="Conocé todo sobre Nova Domus">
       <a href="#manifiesto">Manifiesto</a>
+      <a href="#direccion-obra">Dirección de Obra</a>
       <a href="#habitaciones">4 habitaciones</a>
       <a href="#respaldo">Respaldo</a>
       <a href="#faq">Preguntas frecuentes</a>
@@ -207,6 +230,34 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
         <span class="chip rv rv4">Electricistas matriculados propios</span>
         <span class="chip rv rv5">Sin subcontratar</span>
         <span class="chip rv rv6">Home Assistant — sistema abierto</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="direccion-obra">
+    <div class="wrap">
+      <p class="eyebrow rv">Un solo responsable</p>
+      <h2 class="rv rv2" style="margin-bottom:18px;">Dirección de Obra</h2>
+      <div class="split">
+        <div class="rv rv3">
+          <p>Coordinar electricista, integrador y arquitecto por separado es donde la mayoría de las obras se traban: cuando algo se demora, cada proveedor señala al de al lado y el cronograma queda en el medio. Dirigimos la obra de punta a punta con instaladores matriculados propios — coordinamos tiempos con el resto de los gremios, resolvemos los cambios de obra en el momento y entregamos la certificación correspondiente al cierre.</p>
+        </div>
+        <figure class="split-media rv rv4">
+          <img src="assets/img/servicio-direccion-obra-960.webp" srcset="assets/img/servicio-direccion-obra-640.webp 640w, assets/img/servicio-direccion-obra-960.webp 960w" sizes="(max-width:820px) 100vw, 480px" width="1440" height="2558" loading="lazy" decoding="async" alt="Electricista instalando una toma de pared durante una obra en construcción">
+        </figure>
+      </div>
+      <div class="stages rv rv5">
+        <ol class="stages-row">
+          <li class="stage-step"><span class="stage-num">1</span><span class="stage-label">Proyecto y tableros</span></li>
+          <li class="stage-step"><span class="stage-num">2</span><span class="stage-label">Cableado y protecciones</span></li>
+          <li class="stage-step"><span class="stage-num">3</span><span class="stage-label">Redes e iluminación</span></li>
+          <li class="stage-step"><span class="stage-num">4</span><span class="stage-label">Automatización</span></li>
+          <li class="stage-step"><span class="stage-num">5</span><span class="stage-label">Entrega documentada</span></li>
+        </ol>
+        <svg class="stages-brace" viewBox="0 0 1000 28" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M0,0 Q0,28 20,28 L480,28 Q500,28 500,10 Q500,28 520,28 L980,28 Q1000,28 1000,0" fill="none" stroke="var(--dorado)" stroke-width="1.5"/>
+        </svg>
+        <p class="stages-caption">Un solo responsable</p>
       </div>
     </div>
   </section>
