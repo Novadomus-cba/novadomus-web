@@ -161,6 +161,11 @@ body.scroll-lock{overflow:hidden;}
 .panel__block[data-format="portrait"] .panel__block-media{aspect-ratio:4/5;}
 .panel__block[data-format="landscape"] .panel__block-media{aspect-ratio:16/10;}
 .panel__block[data-format="square"] .panel__block-media{aspect-ratio:1/1;}
+/* Recorte de estas dos fotos puntuales: la accion (manos, taladro) esta cerca
+   del borde superior del encuadre 9:16 original, y el object-position:center
+   por defecto se la comia. Escapado por id a proposito -- no es el default
+   para "square" en general, es para estas dos fotos de Instalacion Electrica. */
+#panel-instalacion-electrica .panel__block[data-format="square"] .panel__block-media img{object-position:50% 15%;}
 .panel__block-text h3{font-size:1.05rem;margin-bottom:8px;}
 .panel__block-text p{color:var(--text-secondary);font-size:.9rem;margin:0;max-width:none;}
 
@@ -576,7 +581,7 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
       <header class="panel__head reveal">
         <p class="panel__lede">Instalamos y certificamos obra eléctrica como servicio en sí mismo, no solo como paso previo a otra cosa: electricistas matriculados propios se encargan del cableado, tableros, protecciones y puesta a tierra en la mayoría de nuestras obras activas. Cuando el proyecto además incluye tecnología, diseñamos esa misma instalación pensando en señales débiles, redes y domótica desde el tablero — para no tener que romper pared dos veces.</p>
       </header>
-      <div class="panel__block reveal" data-format="portrait-9x16">
+      <div class="panel__block reveal" data-format="square">
         <figure class="panel__block-media">
           <img src="assets/img/servicio-instalacion-electrica-galeria-1-960.webp" srcset="assets/img/servicio-instalacion-electrica-galeria-1-640.webp 640w, assets/img/servicio-instalacion-electrica-galeria-1-960.webp 960w, assets/img/servicio-instalacion-electrica-galeria-1-1440.webp 1440w" sizes="(max-width: 760px) 100vw, 42vw" width="1440" height="2558" loading="lazy" decoding="async" alt="Perfilería de durlock con caños corrugados a la vista antes de cerrar la pared, losa premoldeada de fondo">
         </figure>
@@ -585,7 +590,7 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
           <p>La cañería se define antes de que exista una pared, y ahí se juega todo. En Campo Chico estuvimos en obra el día que llenaron la losa, arreglando en el momento las cajas que se movían con el hormigón; en Chacras de la Villa hicimos lo mismo con la carpeta. No es igual un ladrillo común que uno hueco, ni una losa que una loseta: cada caso se canaliza distinto.</p>
         </div>
       </div>
-      <div class="panel__block reveal" data-format="portrait-9x16" data-flip>
+      <div class="panel__block reveal" data-format="square" data-flip>
         <figure class="panel__block-media">
           <img src="assets/img/servicio-instalacion-electrica-galeria-3-960.webp" srcset="assets/img/servicio-instalacion-electrica-galeria-3-640.webp 640w, assets/img/servicio-instalacion-electrica-galeria-3-960.webp 960w, assets/img/servicio-instalacion-electrica-galeria-3-1440.webp 1440w" sizes="(max-width: 760px) 100vw, 42vw" width="1440" height="2558" loading="lazy" decoding="async" alt="Dos técnicos de Nova Domus trabajando en el cielorraso de un ambiente en obra, con vista al paisaje serrano">
         </figure>
