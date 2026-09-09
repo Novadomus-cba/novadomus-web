@@ -695,8 +695,16 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
     <div class="panel__progress" aria-hidden="true"><span></span></div>
     <button type="button" class="panel__close" data-panel-close aria-label="Cerrar detalle">✕</button>
     <div class="panel__scroll" data-lenis-prevent>
-      <figure class="panel__hero reveal">
+      <figure class="panel__hero panel__hero--video reveal"
+              data-panel-video="assets/video/servicio-domotica-hero"
+              data-panel-video-landscape="assets/video/servicio-domotica-hero-16x9"
+              data-panel-video-portrait="assets/video/servicio-domotica-hero-3x4"
+              data-panel-poster-landscape="assets/img/servicio-domotica-hero-poster-16x9.webp"
+              data-panel-poster-portrait="assets/img/servicio-domotica-hero-poster-3x4.webp"
+              data-panel-video-once>
+        <!-- capa de fallback: se queda visible si no hay JS, hay reduced-motion, o el autoplay se bloquea -->
         <img src="assets/img/servicio-domotica-1440.webp" srcset="assets/img/servicio-domotica-960.webp 960w, assets/img/servicio-domotica-1440.webp 1440w" sizes="100vw" width="1440" height="811" loading="lazy" decoding="async" alt="Equipamiento de domótica en un cielorraso técnico: access point, hub de alarma Ajax y controlador Home Assistant">
+        <!-- el <video> lo inyecta service-panel.js al abrir el panel -->
         <figcaption class="panel__hero-caption">
           <p class="eyebrow">Servicio</p>
           <h2 class="panel__title" id="panel-domotica-title">Domótica</h2>
