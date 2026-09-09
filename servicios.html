@@ -259,6 +259,35 @@ body.scroll-lock{overflow:hidden;}
   top:calc(14px + env(safe-area-inset-top));
   right:calc(14px + env(safe-area-inset-right));
 }
+
+/* Barra de titulo condensada. Mismo patron absolute-contra-el-dialog de arriba --
+   NO sticky: .panel__hero--video tiene overflow:hidden y la recortaria. */
+.panel--takeover .panel__bar{
+  position:absolute;z-index:5;
+  top:2px;                     /* deja ver la linea de .panel__progress */
+  left:0;right:0;
+  display:flex;align-items:center;
+  min-height:52px;
+  padding:0 clamp(22px,6vw,48px);
+  padding-right:64px;          /* despeja el .panel__close */
+  padding-top:env(safe-area-inset-top);
+  background:rgba(11,19,43,.82);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);
+  opacity:0;transform:translateY(-100%);
+  transition:opacity .22s ease,transform .22s ease;
+  pointer-events:none;
+}
+.panel--takeover.is-scrolled .panel__bar{opacity:1;transform:none;}
+.panel__bar-text{
+  font-family:'Michroma';
+  font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--crema);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+@media (prefers-reduced-motion:reduce){
+  .panel--takeover .panel__bar{transition:none;transform:none;}
+}
 .panel__pager{
   position:absolute;z-index:6;left:50%;transform:translateX(-50%);
   bottom:calc(16px + env(safe-area-inset-bottom));
@@ -523,6 +552,9 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
   <dialog class="panel panel--takeover" id="panel-instalacion-electrica" aria-labelledby="panel-instalacion-electrica-title">
     <div class="panel__progress" aria-hidden="true"><span></span></div>
     <button type="button" class="panel__close" data-panel-close aria-label="Cerrar detalle">✕</button>
+    <div class="panel__bar" aria-hidden="true">
+      <span class="panel__bar-text">Instalación Eléctrica</span>
+    </div>
     <div class="panel__scroll" data-lenis-prevent>
       <figure class="panel__hero panel__hero--video reveal"
               data-panel-video="assets/video/servicio-instalacion-electrica-hero"

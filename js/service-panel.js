@@ -113,6 +113,36 @@
     dialog._video = null;
   }
 
+  // Observa el caption del hero: cuando sale de vista, aparece la barra condensada.
+  // Observer propio y persistente -- observeReveals() hace unobserve al disparar,
+  // asi que no sirve para esto.
+  function mountPanelBar(dialog) {
+    var bar = dialog.querySelector('.panel__bar');
+    var caption = dialog.querySelector('.panel__hero-caption');
+    var scroller = dialog.querySelector('.panel__scroll');
+    if (!bar || !caption || !scroller) return;
+
+    if (!('IntersectionObserver' in window)) {
+      dialog.classList.add('is-scrolled');   // sin IO, la barra queda siempre visible
+      return;
+    }
+
+    var io = new IntersectionObserver(function (entries) {
+      for (var i = 0; i < entries.length; i++) {
+        if (entries[i].isIntersecting) dialog.classList.remove('is-scrolled');
+        else dialog.classList.add('is-scrolled');
+      }
+    }, { root: scroller, threshold: 0 });
+
+    io.observe(caption);
+    dialog._barIo = io;
+  }
+
+  function unmountPanelBar(dialog) {
+    if (dialog._barIo) { dialog._barIo.disconnect(); dialog._barIo = null; }
+    dialog.classList.remove('is-scrolled');
+  }
+
   function openPanel(dialog, trigger) {
     if (openDialog) return;
     openTrigger = trigger;
@@ -137,6 +167,7 @@
     dialog._io = observeReveals(dialog, scroller);
     dialog._unbindProgress = bindReadingProgress(scroller, dialog.querySelector('.panel__progress span'));
     mountPanelVideo(dialog);
+    mountPanelBar(dialog);
   }
 
   function closePanel(dialog, viaPopstate) {
@@ -156,6 +187,7 @@
       resetReveals(dialog);
       if (dialog._io) dialog._io.disconnect();
       unmountPanelVideo(dialog);
+      unmountPanelBar(dialog);
       if (dialog._unbindProgress) dialog._unbindProgress();
       openDialog = null;
       openTrigger = null;
@@ -200,6 +232,7 @@
     if (prevScroller) prevScroller.scrollTop = 0;
     resetReveals(prev);
     unmountPanelVideo(prev);
+    unmountPanelBar(prev);
     prev.classList.remove('is-closing');
     prev.close();
     if (openTrigger) openTrigger.setAttribute('aria-expanded', 'false');
@@ -226,6 +259,7 @@
     next._io = observeReveals(next, scroller);
     next._unbindProgress = bindReadingProgress(scroller, next.querySelector('.panel__progress span'));
     mountPanelVideo(next);
+    mountPanelBar(next);
 
     // Anuncia el cambio: mueve el foco al titulo del panel nuevo.
     var title = next.querySelector('.panel__title');
