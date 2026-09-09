@@ -221,10 +221,34 @@ body.scroll-lock{overflow:hidden;}
   content:'';position:absolute;inset:0;pointer-events:none;
   background:linear-gradient(to top,var(--azul-profundo) 0%,rgba(11,19,43,.45) 42%,transparent 78%);
 }
+
+/* Hero en loop de video (panel-instalacion-electrica por ahora).
+   .panel__hero--video se agrega ademas de .panel__hero, asi que estas reglas
+   tienen que empatar o superar la especificidad de las de arriba para ganar. */
+.panel__hero--video{position:relative;overflow:hidden;}
+.panel__hero-video{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;
+  /* Duotono PARCIAL: baja el ambar sin matar la linea de LED calida */
+  filter:saturate(.45) contrast(1.05);
+}
+/* Reemplaza el degrade de arriba por un velo navy solido -- misma especificidad
+   (dos clases + pseudo-elemento), gana por venir despues en la hoja. */
+.panel--takeover .panel__hero--video::after{
+  content:'';position:absolute;inset:0;z-index:2;pointer-events:none;
+  background:#141E61;mix-blend-mode:color;opacity:.38;
+}
+@media (prefers-reduced-motion:reduce){
+  .panel__hero-video{display:none;}
+}
+
 .panel--takeover .panel__hero-caption{
   position:absolute;inset:auto 0 0 0;z-index:1;
   padding:0 clamp(22px,6vw,48px) clamp(24px,5vw,40px);
 }
+/* Misma especificidad que la regla de arriba (dos clases): gana por venir
+   despues. No toca position (ya es absolute ahi arriba), solo sube el
+   z-index por encima del velo (z-index:2). */
+.panel__hero--video .panel__hero-caption{z-index:3;}
 .panel--takeover .panel__hero-caption .panel__title{margin:0;font-size:clamp(1.5rem,6vw,2.4rem);line-height:1.15;}
 .panel--takeover .panel__head{padding:clamp(24px,5vw,36px) clamp(22px,6vw,48px) 8px;}
 .panel--takeover .panel__lede{max-width:62ch;}
