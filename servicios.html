@@ -174,6 +174,11 @@ body.scroll-lock{overflow:hidden;}
 /* Phone-shot vertical photos are 3:4 or 9:16, not 4:5.
    3/4 is the default for block photos coming from Lucas. */
 .panel__block[data-format="portrait-tall"] .panel__block-media{aspect-ratio:3/4;}
+/* El otro caso ya previsto en el comentario de arriba: telefonos que disparan
+   en 16:9 nativo (sensor horizontal, foto rotada a vertical). Forzar 4:5 o 3:4
+   sobre esto recorta ~25-30% de la foto -- el mismo bug de recorte agresivo
+   que la skill nova-domus-carrusel-panel ya prohibe. */
+.panel__block[data-format="portrait-9x16"] .panel__block-media{aspect-ratio:9/16;}
 
 /* Closing block, full-bleed media with centered text.
    Media loses its radius on purpose: it bleeds to the panel edges. */
@@ -571,16 +576,31 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
       <header class="panel__head reveal">
         <p class="panel__lede">Instalamos y certificamos obra eléctrica como servicio en sí mismo, no solo como paso previo a otra cosa: electricistas matriculados propios se encargan del cableado, tableros, protecciones y puesta a tierra en la mayoría de nuestras obras activas. Cuando el proyecto además incluye tecnología, diseñamos esa misma instalación pensando en señales débiles, redes y domótica desde el tablero — para no tener que romper pared dos veces.</p>
       </header>
-      <div class="panel__block panel__block--solo reveal">
+      <div class="panel__block reveal" data-format="portrait-9x16">
+        <figure class="panel__block-media">
+          <img src="assets/img/servicio-instalacion-electrica-galeria-1-960.webp" srcset="assets/img/servicio-instalacion-electrica-galeria-1-640.webp 640w, assets/img/servicio-instalacion-electrica-galeria-1-960.webp 960w, assets/img/servicio-instalacion-electrica-galeria-1-1440.webp 1440w" sizes="(max-width: 760px) 100vw, 42vw" width="1440" height="2558" loading="lazy" decoding="async" alt="Perfilería de durlock con caños corrugados a la vista antes de cerrar la pared, losa premoldeada de fondo">
+        </figure>
         <div class="panel__block-text">
           <h3>Todo se decide antes del revoque</h3>
           <p>La cañería se define antes de que exista una pared, y ahí se juega todo. En Campo Chico estuvimos en obra el día que llenaron la losa, arreglando en el momento las cajas que se movían con el hormigón; en Chacras de la Villa hicimos lo mismo con la carpeta. No es igual un ladrillo común que uno hueco, ni una losa que una loseta: cada caso se canaliza distinto.</p>
         </div>
       </div>
-      <div class="panel__block panel__block--solo reveal">
+      <div class="panel__block reveal" data-format="portrait-9x16" data-flip>
+        <figure class="panel__block-media">
+          <img src="assets/img/servicio-instalacion-electrica-galeria-3-960.webp" srcset="assets/img/servicio-instalacion-electrica-galeria-3-640.webp 640w, assets/img/servicio-instalacion-electrica-galeria-3-960.webp 960w, assets/img/servicio-instalacion-electrica-galeria-3-1440.webp 1440w" sizes="(max-width: 760px) 100vw, 42vw" width="1440" height="2558" loading="lazy" decoding="async" alt="Dos técnicos de Nova Domus trabajando en el cielorraso de un ambiente en obra, con vista al paisaje serrano">
+        </figure>
         <div class="panel__block-text">
           <h3>Circuitos separados desde el primer caño</h3>
           <p>La separación de circuitos empieza en la canalización, no en el tablero: tomas generales, especiales, iluminación y señales débiles van por caños distintos desde el primer día. Después el tablero se dimensiona contra las bocas reales de la casa —72 en Chacras de la Villa, 32 polos en La Deseada— y no contra un modelo estándar. Si el proyectista pide cambiar componentes, se cambian y queda asentado.</p>
+        </div>
+      </div>
+      <div class="panel__block panel__block--full reveal">
+        <figure class="panel__block-media">
+          <img src="assets/img/servicio-instalacion-electrica-galeria-5-960.webp" srcset="assets/img/servicio-instalacion-electrica-galeria-5-640.webp 640w, assets/img/servicio-instalacion-electrica-galeria-5-960.webp 960w, assets/img/servicio-instalacion-electrica-galeria-5-1440.webp 1440w" sizes="100vw" width="1440" height="811" loading="lazy" decoding="async" alt="Equipo completo de Nova Domus reunido en un vestidor con placares e iluminación LED embutida en el cielorraso, obra terminada">
+        </figure>
+        <div class="panel__block-text">
+          <h3>La cuadrilla, no un tercerizado</h3>
+          <p>Los que cablean tu obra son electricistas matriculados de planta propia de Nova Domus, no una subcontrata que cambia de semana a semana. La misma cuadrilla que abre la primera canalización es la que te entrega la casa terminada. Meses de obra con las mismas caras, no personal rotativo que no conoce lo que se hizo antes.</p>
         </div>
       </div>
       <div class="panel__highlight reveal">
