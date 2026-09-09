@@ -317,6 +317,11 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
 }
 </style>
 <noscript><style>.rv{opacity:1!important;transform:none!important;transition:none!important;}
+.menu-toggle{display:none!important;}
+@media (max-width:820px){
+  .nav-inner{flex-wrap:wrap;}
+  .nav-links.desktop-only{display:flex!important;flex-wrap:wrap;gap:14px;font-size:.8rem;}
+}
 .panel{display:block;position:static;max-height:none;width:auto;margin:2rem auto;}
 .panel__close,.panel__progress{display:none;}
 .panel__scroll{max-height:none;overflow:visible;}
@@ -344,19 +349,22 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
       <a href="contacto.html">Contacto</a>
     </div>
     <a class="btn nav-cta desktop-only" href="https://wa.me/543516747513?text=Hola%20Nova%20Domus%2C%20quiero%20hacer%20una%20consulta" target="_blank" rel="noopener">WhatsApp</a>
-    <button class="menu-toggle" data-menu-toggle aria-expanded="false" aria-label="Abrir menú"><span></span><span></span><span></span></button>
+    <button class="menu-toggle" type="button" data-menu-toggle aria-expanded="false" aria-controls="mobile-menu" aria-label="Abrir menú"><span></span><span></span><span></span></button>
   </div>
 </nav>
 
-<div class="mobile-menu" data-menu>
-  <a href="servicios.html">Servicios</a>
-  <a href="marcas.html">Marcas</a>
-  <a href="obras.html">Obras</a>
-  <a href="vidriera.html">Vidriera</a>
-  <a href="nosotros.html">Nosotros</a>
-  <a href="contacto.html">Contacto</a>
-  <a class="btn btn-outline nav-cta" href="https://wa.me/543516747513?text=Hola%20Nova%20Domus%2C%20quiero%20hacer%20una%20consulta" target="_blank" rel="noopener">Escribinos por WhatsApp</a>
-</div>
+<dialog class="mobile-menu" id="mobile-menu" data-menu aria-label="Menú principal">
+  <div class="mobile-menu__panel">
+    <button class="mobile-menu__close" type="button" data-menu-close aria-label="Cerrar menú"></button>
+    <a href="servicios.html">Servicios</a>
+    <a href="marcas.html">Marcas</a>
+    <a href="obras.html">Obras</a>
+    <a href="vidriera.html">Vidriera</a>
+    <a href="nosotros.html">Nosotros</a>
+    <a href="contacto.html">Contacto</a>
+    <a class="btn btn-outline nav-cta" href="https://wa.me/543516747513?text=Hola%20Nova%20Domus%2C%20quiero%20hacer%20una%20consulta" target="_blank" rel="noopener">Escribinos por WhatsApp</a>
+  </div>
+</dialog>
 
 <main>
   <section class="pagehero">
@@ -413,16 +421,6 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
               <span class="card__plus" aria-hidden="true"><svg viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M7 0V14" stroke="currentColor" stroke-linecap="round"/><path d="M0 7H14" stroke="currentColor" stroke-linecap="round"/></svg></span>
             </span>
             <span class="u-sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);">Ver más sobre Domótica</span>
-          </a>
-        </li>
-        <li class="card">
-          <a class="card__link" href="#panel-climatizacion" id="climatizacion" aria-controls="panel-climatizacion" aria-expanded="false" data-panel="panel-climatizacion">
-            <img src="assets/img/servicio-climatizacion-tarjeta-640.webp" srcset="assets/img/servicio-climatizacion-tarjeta-640.webp 640w, assets/img/servicio-climatizacion-tarjeta-960.webp 960w" sizes="320px" width="2252" height="3003" loading="lazy" decoding="async" alt="">
-            <span class="card__body">
-              <span class="card__title">Climatización</span>
-              <span class="card__plus" aria-hidden="true"><svg viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M7 0V14" stroke="currentColor" stroke-linecap="round"/><path d="M0 7H14" stroke="currentColor" stroke-linecap="round"/></svg></span>
-            </span>
-            <span class="u-sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);">Ver más sobre Climatización</span>
           </a>
         </li>
         <li class="card">

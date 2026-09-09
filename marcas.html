@@ -127,7 +127,12 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
   @view-transition { navigation: auto; }
 }
 </style>
-<noscript><style>.rv{opacity:1!important;transform:none!important;transition:none!important;}</style></noscript>
+<noscript><style>.rv{opacity:1!important;transform:none!important;transition:none!important;}
+.menu-toggle{display:none!important;}
+@media (max-width:820px){
+  .nav-inner{flex-wrap:wrap;}
+  .nav-links.desktop-only{display:flex!important;flex-wrap:wrap;gap:14px;font-size:.8rem;}
+}</style></noscript>
 </head>
 <body>
 
@@ -146,19 +151,22 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
       <a href="contacto.html">Contacto</a>
     </div>
     <a class="btn nav-cta desktop-only" href="https://wa.me/543516747513?text=Hola%20Nova%20Domus%2C%20quiero%20hacer%20una%20consulta" target="_blank" rel="noopener">WhatsApp</a>
-    <button class="menu-toggle" data-menu-toggle aria-expanded="false" aria-label="Abrir menú"><span></span><span></span><span></span></button>
+    <button class="menu-toggle" type="button" data-menu-toggle aria-expanded="false" aria-controls="mobile-menu" aria-label="Abrir menú"><span></span><span></span><span></span></button>
   </div>
 </nav>
 
-<div class="mobile-menu" data-menu>
-  <a href="servicios.html">Servicios</a>
-  <a href="marcas.html">Marcas</a>
-  <a href="obras.html">Obras</a>
-  <a href="vidriera.html">Vidriera</a>
-  <a href="nosotros.html">Nosotros</a>
-  <a href="contacto.html">Contacto</a>
-  <a class="btn btn-outline nav-cta" href="https://wa.me/543516747513?text=Hola%20Nova%20Domus%2C%20quiero%20hacer%20una%20consulta" target="_blank" rel="noopener">Escribinos por WhatsApp</a>
-</div>
+<dialog class="mobile-menu" id="mobile-menu" data-menu aria-label="Menú principal">
+  <div class="mobile-menu__panel">
+    <button class="mobile-menu__close" type="button" data-menu-close aria-label="Cerrar menú"></button>
+    <a href="servicios.html">Servicios</a>
+    <a href="marcas.html">Marcas</a>
+    <a href="obras.html">Obras</a>
+    <a href="vidriera.html">Vidriera</a>
+    <a href="nosotros.html">Nosotros</a>
+    <a href="contacto.html">Contacto</a>
+    <a class="btn btn-outline nav-cta" href="https://wa.me/543516747513?text=Hola%20Nova%20Domus%2C%20quiero%20hacer%20una%20consulta" target="_blank" rel="noopener">Escribinos por WhatsApp</a>
+  </div>
+</dialog>
 
 <main>
   <section class="pagehero">
