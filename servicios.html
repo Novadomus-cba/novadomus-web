@@ -171,6 +171,10 @@ body.scroll-lock{overflow:hidden;}
 }
 .panel__block--solo .panel__block-text p{max-width:68ch;}
 
+/* Phone-shot vertical photos are 3:4 or 9:16, not 4:5.
+   3/4 is the default for block photos coming from Lucas. */
+.panel__block[data-format="portrait-tall"] .panel__block-media{aspect-ratio:3/4;}
+
 /* Closing block, full-bleed media with centered text.
    Media loses its radius on purpose: it bleeds to the panel edges. */
 .panel__block--full{grid-template-columns:1fr;padding:32px 0 40px;gap:24px;}
@@ -515,19 +519,13 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
       <div class="panel__block panel__block--solo reveal">
         <div class="panel__block-text">
           <h3>Circuitos separados desde el primer caño</h3>
-          <p>La separación de circuitos empieza en la canalización, no en el tablero: tomas generales, especiales, iluminación y señales débiles van por caños distintos desde el primer día. Después el tablero se dimensiona contra las bocas reales de la casa —72 en Chacras, 32 polos en La Deseada— y no contra un modelo estándar. Si el proyectista pide cambiar componentes, se cambian y queda asentado.</p>
-        </div>
-      </div>
-      <div class="panel__block panel__block--solo reveal">
-        <div class="panel__block-text">
-          <h3>Cada semana, por escrito</h3>
-          <p>Cada semana emitimos un certificado con lo que se hizo, ítem por ítem. Llevamos 152 certificados emitidos en obra. Cuando aparece trabajo fuera de lo previsto queda escrito aparte y dice de dónde salió: de 93 excedentes, 63 los pidió el cliente y 30 los detectamos nosotros. Nadie discute al final lo que se anotó en el momento.</p>
+          <p>La separación de circuitos empieza en la canalización, no en el tablero: tomas generales, especiales, iluminación y señales débiles van por caños distintos desde el primer día. Después el tablero se dimensiona contra las bocas reales de la casa —72 en Chacras de la Villa, 32 polos en La Deseada— y no contra un modelo estándar. Si el proyectista pide cambiar componentes, se cambian y queda asentado.</p>
         </div>
       </div>
       <div class="panel__highlight reveal">
         <span class="panel__highlight-tag">Para estudios y desarrollos</span>
-        <h3>Proyecto Ejecutivo completo</h3>
-        <p>Informe técnico según AEA 90364, cómputo ítem por ítem y planos, antes de tocar un cable. También auditamos obra eléctrica que ejecuta otro: revisamos el alcance línea por línea y certificamos lo que efectivamente se hizo. El proyectista trabaja con un alcance escrito que puede defender ante su cliente.</p>
+        <h3>Proyecto Ejecutivo, con o sin la obra</h3>
+        <p>El proyecto ejecutivo es un servicio en sí mismo: informe técnico según AEA 90364, cómputo ítem por ítem y planos, antes de que se toque un cable. Lo hicimos para obras en Las Delicias, El Terrón y Campos del Virrey. Después la ejecuta nuestra cuadrilla o el electricista del estudio — y en ese caso auditamos el alcance y certificamos lo que efectivamente se hizo.</p>
       </div>
       <div class="panel__cta reveal">
         <a class="btn btn-outline" href="contacto.html">Pedir una visita técnica</a>
@@ -579,7 +577,7 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
       <div class="panel__block panel__block--solo reveal">
         <div class="panel__block-text">
           <h3>El rack queda documentado</h3>
-          <p>El rack no es donde terminan sobrando los cables: se arma y se organiza como una tarea en sí misma. En Panoramic entregamos el plano de instalación con la topología de red, la distribución del rack de 15U, el plan de VLANs y el checklist de comisionado. Eso queda con la obra. El técnico que venga en tres años abre el documento en vez de seguir cables con la mano.</p>
+          <p>El rack no es donde terminan sobrando los cables: se arma y se organiza como una tarea en sí misma. En Nuevo Malagueño entregamos el plano de instalación con la topología de red, la distribución del rack de 15U, el plan de VLANs y el checklist de comisionado. Eso queda con la obra. El técnico que venga en tres años abre el documento en vez de seguir cables con la mano.</p>
         </div>
       </div>
       <div class="panel__highlight reveal">
@@ -620,33 +618,33 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
         </figcaption>
       </figure>
       <header class="panel__head reveal">
-        <p class="panel__lede">Toda casa inteligente tiene cuatro habitaciones: iluminación, confort, entretenimiento y seguridad — las cuatro apoyadas en los mismos cimientos, la instalación eléctrica y la red. Domótica es lo que las conecta: que las cuatro se controlen desde un solo lugar, la misma app, el mismo panel de pared, la misma voz. Por debajo corre una red de sensores que se avisan entre sí —de presencia, de apertura, de consumo— para que las rutinas pasen solas: apagar todo al salir, encender la luz al entrar a un ambiente. Trabajamos con sistemas abiertos (Wi-Fi, Zigbee, Z-Wave), sin depender de un solo fabricante, para que la casa quede funcionando como un sistema y no como aparatos sueltos.</p>
+        <p class="panel__lede">Pensamos la domótica como cuatro habitaciones de una misma casa: Iluminación, Confort, Seguridad y Entretenimiento. Ninguna funciona sola, y las cuatro se apoyan en el mismo cimiento — la instalación eléctrica y la red, hechas para esto desde el primer caño. Todo se controla desde un solo lugar: la app, el panel de pared o la voz.</p>
       </header>
-      <div class="panel__block reveal" data-format="portrait">
-        <figure class="panel__block-media">
-          <img src="assets/img/servicio-climatizacion-tarjeta-960.webp" srcset="assets/img/servicio-climatizacion-tarjeta-640.webp 640w, assets/img/servicio-climatizacion-tarjeta-960.webp 960w, assets/img/servicio-climatizacion-tarjeta-1440.webp 1440w" sizes="(max-width: 720px) 100vw, 440px" width="1440" height="1920" loading="lazy" decoding="async" alt="Controlador Sensibo instalado en la pared para automatizar el aire acondicionado">
-        </figure>
-        <div class="panel__block-text">
-          <h3>Confort que se anticipa</h3>
-          <p>Sumamos control inteligente al aire acondicionado y la calefacción que ya tenés, sin cambiar el equipo. Un controlador se integra al split o al radiador y lo suma a la misma app y a las mismas rutinas del resto de la casa: temperatura por horario, por presencia, o coordinada con las persianas para no enfriar con el sol entrando.</p>
-        </div>
-      </div>
       <div class="panel__block panel__block--solo reveal">
         <div class="panel__block-text">
           <h3>Tres escenas, todos los días</h3>
           <p>Una casa con iluminación inteligente no se usa desde el celular: se usa con tres o cuatro escenas que quedan hechas y no se toca nada más. Cena, película, salir, dormir. Cada efecto se maneja por separado y la temperatura de color acompaña la hora del día. En una vivienda que hicimos hay 44 efectos en 32 cajas, y el que vive ahí aprieta una tecla.</p>
         </div>
       </div>
+      <div class="panel__block reveal" data-format="portrait-tall" data-flip>
+        <figure class="panel__block-media">
+          <img src="assets/img/servicio-climatizacion-tarjeta-960.webp" srcset="assets/img/servicio-climatizacion-tarjeta-640.webp 640w, assets/img/servicio-climatizacion-tarjeta-960.webp 960w" sizes="(min-width:720px) 45vw, 100vw" width="960" height="1280" loading="lazy" decoding="async" alt="Controlador de clima integrado a un equipo de aire acondicionado existente">
+        </figure>
+        <div class="panel__block-text">
+          <h3>Sumar control sin cambiar el equipo</h3>
+          <p>Sumamos control inteligente al aire acondicionado y la calefacción que ya tenés, sin cambiar el equipo: un controlador se integra al split o al radiador y lo suma a la misma app y a las mismas rutinas del resto de la casa — temperatura por horario, por presencia, o coordinada con las persianas para no enfriar con el sol entrando.</p>
+        </div>
+      </div>
       <div class="panel__block panel__block--solo reveal">
         <div class="panel__block-text">
-          <h3>La misma app que las luces</h3>
-          <p>El audio y el video no viven aparte: entran al mismo sistema que las luces y el clima. Poner una película baja las luces del living, cierra las cortinas y prende el proyector con una sola orden. No es que tengas cuatro apps y un control por equipo. El equipamiento en sí tiene su propia sección; acá lo que importa es que todo obedece al mismo lugar.</p>
+          <h3>Sabe cuándo no queda nadie</h3>
+          <p>La habitación Seguridad no es una alarma aparte: es la casa dándose cuenta de que no queda nadie y actuando sola — luces en cero, clima en reposo, cámaras atentas, la puerta trabada. Si estás de viaje simula presencia, y avisa si algo quedó sin cerrar. La alarma y las cámaras tienen su propia sección; acá importa que la casa reaccione sin que se lo pidas.</p>
         </div>
       </div>
       <div class="panel__block panel__block--solo reveal">
         <div class="panel__block-text">
           <h3>Cuatro habitaciones, un solo cimiento</h3>
-          <p>La habitación Seguridad no es una alarma aparte: es la casa dándose cuenta de que no queda nadie y actuando sola — luces en cero, clima en reposo, cámaras atentas, la puerta trabada. Las cuatro habitaciones se apoyan en el mismo cimiento, la instalación eléctrica y la red, y por eso el sistema corre en la casa y no en un servidor de otro país. Un sistema, una app, un número al que llamar.</p>
+          <p>El audio y el video no viven aparte: poner una película baja las luces, cierra las cortinas y prende el proyector con una sola orden. Es la cuarta habitación de la misma casa, y las cuatro se apoyan en el mismo cimiento — la instalación eléctrica y la red. Por eso el sistema corre acá adentro y no en un servidor de otro país. Un sistema, una app, un número al que llamar.</p>
         </div>
       </div>
       <div class="panel__highlight reveal">
