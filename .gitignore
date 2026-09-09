@@ -9,6 +9,9 @@
 *.mov
 *.MOV
 
+# excepcion: video web ya procesado
+!assets/video/*.mp4
+
 # en assets/img solo entran los webp procesados
 assets/img/*
 !assets/img/*.webp
