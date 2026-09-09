@@ -72,7 +72,9 @@
     var v = document.createElement('video');
     v.className = 'panel__hero-video';
     v.muted = true;
-    v.loop = true;
+    // Por defecto loopea. Los paneles con narrativa direccional se marcan con
+    // data-panel-video-once y se congelan en el ultimo frame.
+    v.loop = !fig.hasAttribute('data-panel-video-once');
     v.playsInline = true;
     v.preload = 'auto';
     v.tabIndex = -1;
