@@ -819,9 +819,18 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
   <dialog class="panel panel--takeover" id="panel-cerraduras" aria-labelledby="panel-cerraduras-title">
     <div class="panel__progress" aria-hidden="true"><span></span></div>
     <button type="button" class="panel__close" data-panel-close aria-label="Cerrar detalle">✕</button>
+    <div class="panel__bar" aria-hidden="true">
+      <span class="panel__bar-text">Cerraduras Digitales</span>
+    </div>
     <div class="panel__scroll" data-lenis-prevent>
-      <figure class="panel__hero reveal">
+      <figure class="panel__hero panel__hero--video reveal"
+              data-panel-video="assets/video/servicio-cerraduras-hero"
+              data-panel-poster-16x9="assets/img/servicio-cerraduras-hero-poster-16x9.webp"
+              data-panel-poster-9x16="assets/img/servicio-cerraduras-hero-poster-9x16.webp"
+              data-panel-video-once>
+        <!-- capa de fallback: se queda visible si no hay JS, hay reduced-motion, o el autoplay se bloquea -->
         <img src="assets/img/servicio-cerraduras-1440.webp" srcset="assets/img/servicio-cerraduras-960.webp 960w, assets/img/servicio-cerraduras-1440.webp 1440w" sizes="100vw" width="1440" height="1920" loading="lazy" decoding="async" alt="Cerradura digital con teclado y lector integrados, instalada en una puerta de madera maciza">
+        <!-- el <video> lo inyecta service-panel.js al abrir el panel -->
         <figcaption class="panel__hero-caption">
           <p class="eyebrow">Servicio</p>
           <h2 class="panel__title" id="panel-cerraduras-title">Cerraduras Digitales</h2>
