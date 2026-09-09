@@ -60,6 +60,59 @@
     return function () { scroller.removeEventListener('scroll', onScroll); };
   }
 
+  function mountPanelVideo(dialog) {
+    if (reducedMotion()) return;
+    var fig = dialog.querySelector('[data-panel-video]');
+    if (!fig || dialog._video) return;
+
+    var vertical = window.matchMedia('(max-aspect-ratio: 1/1)').matches;
+    var ar = vertical ? '-9x16' : '-16x9';
+    var base = fig.getAttribute('data-panel-video');
+
+    var v = document.createElement('video');
+    v.className = 'panel__hero-video';
+    v.muted = true;
+    v.loop = true;
+    v.playsInline = true;
+    v.preload = 'auto';
+    v.tabIndex = -1;
+    // Los atributos, ademas de las propiedades: iOS mira el atributo para el autoplay.
+    v.setAttribute('muted', '');
+    v.setAttribute('playsinline', '');
+    v.setAttribute('aria-hidden', 'true');
+    var poster = fig.getAttribute('data-panel-poster' + ar);
+    if (poster) v.poster = poster;
+
+    var av1 = document.createElement('source');
+    av1.src = base + ar + '.av1.mp4';
+    av1.type = 'video/mp4; codecs=av01.0.05M.08';
+    var h264 = document.createElement('source');
+    h264.src = base + ar + '.h264.mp4';
+    h264.type = 'video/mp4';
+    v.appendChild(av1);
+    v.appendChild(h264);
+
+    fig.insertBefore(v, fig.querySelector('.panel__hero-caption'));
+    dialog._video = v;
+
+    // Si el autoplay se bloquea, queda el poster y debajo la foto real. No se avisa nada.
+    var p = v.play();
+    if (p && p.catch) p.catch(function () {});
+  }
+
+  function unmountPanelVideo(dialog) {
+    var v = dialog._video;
+    if (!v) return;
+    v.pause();
+    while (v.firstChild) v.removeChild(v.firstChild);
+    v.removeAttribute('src');
+    // load() sobre el elemento vaciado es lo que libera el decoder y el buffer.
+    // Sin esto el video sigue en memoria despues de cerrar el panel.
+    v.load();
+    if (v.parentNode) v.parentNode.removeChild(v);
+    dialog._video = null;
+  }
+
   function openPanel(dialog, trigger) {
     if (openDialog) return;
     openTrigger = trigger;
@@ -83,6 +136,7 @@
     var scroller = dialog.querySelector('.panel__scroll');
     dialog._io = observeReveals(dialog, scroller);
     dialog._unbindProgress = bindReadingProgress(scroller, dialog.querySelector('.panel__progress span'));
+    mountPanelVideo(dialog);
   }
 
   function closePanel(dialog, viaPopstate) {
@@ -101,6 +155,7 @@
       if (scroller) scroller.scrollTop = 0;
       resetReveals(dialog);
       if (dialog._io) dialog._io.disconnect();
+      unmountPanelVideo(dialog);
       if (dialog._unbindProgress) dialog._unbindProgress();
       openDialog = null;
       openTrigger = null;
@@ -144,6 +199,7 @@
     var prevScroller = prev.querySelector('.panel__scroll');
     if (prevScroller) prevScroller.scrollTop = 0;
     resetReveals(prev);
+    unmountPanelVideo(prev);
     prev.classList.remove('is-closing');
     prev.close();
     if (openTrigger) openTrigger.setAttribute('aria-expanded', 'false');
@@ -169,6 +225,7 @@
     if (scroller) scroller.scrollTop = 0;
     next._io = observeReveals(next, scroller);
     next._unbindProgress = bindReadingProgress(scroller, next.querySelector('.panel__progress span'));
+    mountPanelVideo(next);
 
     // Anuncia el cambio: mueve el foco al titulo del panel nuevo.
     var title = next.querySelector('.panel__title');
