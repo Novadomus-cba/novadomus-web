@@ -66,8 +66,12 @@
     if (!fig || dialog._video) return;
 
     var vertical = window.matchMedia('(max-aspect-ratio: 1/1)').matches;
-    var ar = vertical ? '-9x16' : '-16x9';
     var base = fig.getAttribute('data-panel-video');
+    // Ruta explicita por orientacion si el panel la declara; si no, se arma por
+    // concatenacion como hasta ahora. Domotica usa -3x4 porque su sujeto no entra en 9:16.
+    var path = fig.getAttribute(vertical ? 'data-panel-video-portrait'
+                                         : 'data-panel-video-landscape')
+            || (base + (vertical ? '-9x16' : '-16x9'));
 
     var v = document.createElement('video');
     v.className = 'panel__hero-video';
@@ -82,14 +86,17 @@
     v.setAttribute('muted', '');
     v.setAttribute('playsinline', '');
     v.setAttribute('aria-hidden', 'true');
-    var poster = fig.getAttribute('data-panel-poster' + ar);
+    var poster = fig.getAttribute(vertical ? 'data-panel-poster-portrait'
+                                           : 'data-panel-poster-landscape')
+              || fig.getAttribute(vertical ? 'data-panel-poster-9x16'
+                                           : 'data-panel-poster-16x9');
     if (poster) v.poster = poster;
 
     var av1 = document.createElement('source');
-    av1.src = base + ar + '.av1.mp4';
+    av1.src = path + '.av1.mp4';
     av1.type = 'video/mp4; codecs=av01.0.05M.08';
     var h264 = document.createElement('source');
-    h264.src = base + ar + '.h264.mp4';
+    h264.src = path + '.h264.mp4';
     h264.type = 'video/mp4';
     v.appendChild(av1);
     v.appendChild(h264);
