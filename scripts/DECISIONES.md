@@ -77,6 +77,8 @@ texto para lector de pantalla.
 | `redes` | bloque 1 | `nd-srv-redes-bloque-h-01.jpg` | sin recorte, 16:10 | rack instalado, coincide con el copy ya publicado |
 | `redes` | bloque 2 | `nd-srv-redes-bloque-v-02.jpeg` | sin recorte, ratio original | rack en banco de armado — original de 720px, calidad justa |
 | `domotica` | bloque 1 | `nd-srv-domotica-bloque-h-02.HEIC` | recorte manual `(1370,680,4032,2344)` para el 16:10 | showroom real. Quedan legibles TP-Link Omada, Sonos, Yale, Philips y WiZ — **confirmado por Agustín que no es problema, la regla de no nombrar marca es para el copy, no para lo que aparece en la foto** (10/09/2026) |
+| `domotica` | bloque 2 (ex-`climatizacion`) | `Climatización 1-Vertical.DNG` (entrega 10/09) | sin recorte, 3:4 nativo | panel de pared con temperatura/humedad/consumo en vivo, reemplaza la foto de producto (Sensibo sobre pared blanca) que tenía este slot. **Climatización deja de ser servicio propio, absorbido como capacidad dentro de Domótica** (decisión de Agustín, 10/09/2026) — resuelve el pendiente de abajo |
+| `cerraduras` | bloque 1 | `nd-srv-cerraduras-bloque-h-01.jpg` | recorte 1:1, `object-position:85% center` | detalle de teclado/huella/llave física sobre stand de producto Yale. **Aprobado por Agustín pese a ser foto de producto, no de obra instalada** (10/09/2026) |
 
 ### Sobre el plano como tarjeta
 
@@ -100,11 +102,6 @@ no se tapa con un rectángulo.
 
 ## Pendiente de decisión
 
-- **`climatizacion`**: publicada, pero la tarjeta es foto de producto (un Sensibo sobre pared
-  blanca), no de obra, y el hero es el mismo objeto en 0,563 a 880 px de ancho. El contraste del
-  título está medido y es apto (11,52:1), así que el problema no es accesibilidad. Opciones:
-  revertir a capacidad dentro de Domótica, cambiar el hero por algo horizontal con ambiente, o
-  pedir una vertical del equipo *en contexto*.
 - **Tarjeta `Servicios` del home** (`home-card-servicios-*`): la foto muestra una caja de EZVIZ
   en primer plano. Es packaging de producto, y el copy de la tarjeta habla de instalación,
   redes, domótica y seguridad. Sirve para Vidriera o Sistemas y marcas, no para Servicios.
@@ -116,9 +113,6 @@ no se tapa con un rectángulo.
 - **`videovigilancia` bloque**: las dos tomas entregadas (`nd-srv-videovigilancia-bloque-v-01/02`)
   no muestran cámara instalada y quedan identificables dos compañeros de fondo. Se pidió material
   nuevo a Lucas. Movidas a `Fotos/_sin_asignar/` — no vetadas para siempre, no sirven para esto.
-- **`cerraduras` bloque**: `nd-srv-cerraduras-bloque-h-01.jpg` es un stand de producto Yale con
-  fondo blanco, no una puerta instalada. Posible detalle de teclado más adelante, no decidido.
-  En `Fotos/_sin_asignar/`.
 - **`domotica` bloque adicional**: `nd-srv-domotica-bloque-h-01.jpeg`, idéntica a
   `nd-srv-domotica-bloque-v-03.jpg.jpeg` (ya evaluada antes), rótulo "Isa Room" (nombre de
   persona) visible en pantalla y sin confirmar si la app que se ve es Home Assistant — el
