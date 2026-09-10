@@ -76,6 +76,7 @@ texto para lector de pantalla.
 | `instalacion-electrica` | hero | el archivo que ya estaba | sin cambios | |
 | `redes` | bloque 1 | `nd-srv-redes-bloque-h-01.jpg` | sin recorte, 16:10 | rack instalado, coincide con el copy ya publicado |
 | `redes` | bloque 2 | `nd-srv-redes-bloque-v-02.jpeg` | sin recorte, ratio original | rack en banco de armado — original de 720px, calidad justa |
+| `domotica` | bloque 1 | `nd-srv-domotica-bloque-h-02.HEIC` | recorte manual `(1370,680,4032,2344)` para el 16:10 | showroom real. Quedan legibles TP-Link Omada, Sonos, Yale, Philips y WiZ — **confirmado por Agustín que no es problema, la regla de no nombrar marca es para el copy, no para lo que aparece en la foto** (10/09/2026) |
 
 ### Sobre el plano como tarjeta
 
@@ -122,20 +123,6 @@ no se tapa con un rectángulo.
   `nd-srv-domotica-bloque-v-03.jpg.jpeg` (ya evaluada antes), rótulo "Isa Room" (nombre de
   persona) visible en pantalla y sin confirmar si la app que se ve es Home Assistant — el
   posicionamiento del sitio es sistema abierto. En `Fotos/_sin_asignar/`.
-- **`domotica` bloque 1 — el recorte propuesto no alcanza**: `nd-srv-domotica-bloque-h-02.HEIC`
-  (showroom real, elegida) tenía un recorte manual planeado en `(1370,680,4032,2344)` para sacar
-  el cartel de marca "Shelly" del cuadro. Probado y **no alcanza**: quedan legibles TP-Link
-  Omada, Sonos, Yale (×2), Philips y WiZ en los dos estantes que bordean el TV — son cajas de
-  producto apiladas en cada estante, no equipo instalado. Se probaron dos recortes más angostos
-  (excluyendo la pared con el cartel de Shelly) y el problema persiste: los dos estantes que
-  flanquean el TV arriba y abajo están cargados de cajas en toda su extensión, no hay una
-  sub-región 16:10 dentro de esta foto libre de marca legible. La foto en sí es una pared de
-  demo/producto, no una instalación terminada — puede no ser la elegida correcta para "showroom
-  real" más allá del recorte. Original en `Fotos/_sin_asignar/nd-srv-domotica-bloque-h-02.HEIC`,
-  intento de recorte fallido guardado como referencia en
-  `Fotos/_sin_asignar/servicio-domotica-bloque-1-INTENTO-con-marcas.jpg`. No se generó WebP ni se
-  tocó `servicios.html` para este bloque — falta que Agustín mire las dos fotos y decida: otra
-  toma, aceptar la marca visible, o pedir una reshoot sin packaging en cuadro.
 
 ## Cerrado
 
