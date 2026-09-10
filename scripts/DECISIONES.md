@@ -74,6 +74,8 @@ texto para lector de pantalla.
 | `videovigilancia` | hero | `nd-srv-videovigilancia-ancha-h-02` | sin recorte, 16:9 | el original tiene GPS, lo despoja el pipeline. **No muestra cámara**: es fachada de edificio, el copy tiene que hacerse cargo |
 | `instalacion-electrica` | tarjeta | `4-ILUMINACION.pdf` pág. 1 (plano propio) | 3:4 del ala densa de planta baja | rótulo **fuera** del recorte, no tapado. Fondo pasado a crema `#FDFBF0` con blend multiply: cambia el papel sin tocar los trazos |
 | `instalacion-electrica` | hero | el archivo que ya estaba | sin cambios | |
+| `redes` | bloque 1 | `nd-srv-redes-bloque-h-01.jpg` | sin recorte, 16:10 | rack instalado, coincide con el copy ya publicado |
+| `redes` | bloque 2 | `nd-srv-redes-bloque-v-02.jpeg` | sin recorte, ratio original | rack en banco de armado — original de 720px, calidad justa |
 
 ### Sobre el plano como tarjeta
 
@@ -92,6 +94,8 @@ no se tapa con un rectángulo.
 | Archivo | Motivo |
 |---|---|
 | `nd-srv-videovigilancia-tarjeta-v-01` | **La cámara está mal instalada.** No entra como tarjeta, ni como hero, ni como bloque, ni en redes sociales. No es un problema de foto |
+| `nd-srv-instalacion-electrica-bloque-h-02` | Sala de exhibición ajena ("Patagonia Flooring" legible), personas identificables — no es obra de Nova Domus |
+| `nd-srv-domotica-bloque-v-01` | Misma sala ajena que la anterior |
 
 ## Pendiente de decisión
 
@@ -108,6 +112,30 @@ no se tapa con un rectángulo.
 - **Videos**: los slots que solo tienen video necesitan extracción de frame (`ffmpeg -vf fps=1/2
   -q:v 1`). Un frame de celular rinde peor que una foto: sirve para hero, para tarjeta hay que
   mirarlo antes.
+- **`videovigilancia` bloque**: las dos tomas entregadas (`nd-srv-videovigilancia-bloque-v-01/02`)
+  no muestran cámara instalada y quedan identificables dos compañeros de fondo. Se pidió material
+  nuevo a Lucas. Movidas a `Fotos/_sin_asignar/` — no vetadas para siempre, no sirven para esto.
+- **`cerraduras` bloque**: `nd-srv-cerraduras-bloque-h-01.jpg` es un stand de producto Yale con
+  fondo blanco, no una puerta instalada. Posible detalle de teclado más adelante, no decidido.
+  En `Fotos/_sin_asignar/`.
+- **`domotica` bloque adicional**: `nd-srv-domotica-bloque-h-01.jpeg`, idéntica a
+  `nd-srv-domotica-bloque-v-03.jpg.jpeg` (ya evaluada antes), rótulo "Isa Room" (nombre de
+  persona) visible en pantalla y sin confirmar si la app que se ve es Home Assistant — el
+  posicionamiento del sitio es sistema abierto. En `Fotos/_sin_asignar/`.
+- **`domotica` bloque 1 — el recorte propuesto no alcanza**: `nd-srv-domotica-bloque-h-02.HEIC`
+  (showroom real, elegida) tenía un recorte manual planeado en `(1370,680,4032,2344)` para sacar
+  el cartel de marca "Shelly" del cuadro. Probado y **no alcanza**: quedan legibles TP-Link
+  Omada, Sonos, Yale (×2), Philips y WiZ en los dos estantes que bordean el TV — son cajas de
+  producto apiladas en cada estante, no equipo instalado. Se probaron dos recortes más angostos
+  (excluyendo la pared con el cartel de Shelly) y el problema persiste: los dos estantes que
+  flanquean el TV arriba y abajo están cargados de cajas en toda su extensión, no hay una
+  sub-región 16:10 dentro de esta foto libre de marca legible. La foto en sí es una pared de
+  demo/producto, no una instalación terminada — puede no ser la elegida correcta para "showroom
+  real" más allá del recorte. Original en `Fotos/_sin_asignar/nd-srv-domotica-bloque-h-02.HEIC`,
+  intento de recorte fallido guardado como referencia en
+  `Fotos/_sin_asignar/servicio-domotica-bloque-1-INTENTO-con-marcas.jpg`. No se generó WebP ni se
+  tocó `servicios.html` para este bloque — falta que Agustín mire las dos fotos y decida: otra
+  toma, aceptar la marca visible, o pedir una reshoot sin packaging en cuadro.
 
 ## Cerrado
 
