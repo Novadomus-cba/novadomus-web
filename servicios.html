@@ -166,6 +166,10 @@ body.scroll-lock{overflow:hidden;}
    por defecto se la comia. Escapado por id a proposito -- no es el default
    para "square" en general, es para estas dos fotos de Instalacion Electrica. */
 #panel-instalacion-electrica .panel__block[data-format="square"] .panel__block-media img{object-position:50% 15%;}
+/* Foto de cerraduras a 4:3 nativo recortada a 1:1: el teclado, el lector de
+   huella y la mano quedan sobre el lado derecho del encuadre original, la
+   izquierda es pared en blanco de sobra para recortar. */
+#panel-cerraduras .panel__block[data-format="square"] .panel__block-media img{object-position:85% center;}
 .panel__block-text h3{font-size:1.05rem;margin-bottom:8px;}
 .panel__block-text p{color:var(--text-secondary);font-size:.9rem;margin:0;max-width:none;}
 
@@ -782,7 +786,13 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
       </div>
       <div class="panel__block reveal" data-format="portrait-tall" data-flip>
         <figure class="panel__block-media">
-          <img src="assets/img/servicio-climatizacion-tarjeta-960.webp" srcset="assets/img/servicio-climatizacion-tarjeta-640.webp 640w, assets/img/servicio-climatizacion-tarjeta-960.webp 960w" sizes="(min-width:720px) 45vw, 100vw" width="960" height="1280" loading="lazy" decoding="async" alt="Controlador de clima integrado a un equipo de aire acondicionado existente">
+          <img src="assets/img/servicio-domotica-bloque-2-960.webp"
+               srcset="assets/img/servicio-domotica-bloque-2-640.webp 640w,
+                       assets/img/servicio-domotica-bloque-2-960.webp 960w,
+                       assets/img/servicio-domotica-bloque-2-1440.webp 1440w"
+               sizes="(min-width:720px) 45vw, 100vw"
+               width="1440" height="1920" loading="lazy" decoding="async"
+               alt="Panel de pared con temperatura, humedad y consumo eléctrico en tiempo real, control de clima integrado a la vivienda">
         </figure>
         <div class="panel__block-text">
           <h3>Sumar control sin cambiar el equipo</h3>
@@ -910,6 +920,21 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
       <header class="panel__head reveal">
         <p class="panel__lede">Nada de llaves para copiar ni perder. Instalamos cerraduras digitales que abren por código, huella, tarjeta de proximidad o la app del celular, con registro de cada ingreso — quién entró y cuándo. Ideal para alquileres temporarios, personal de servicio o simplemente para no volver a preguntarte si cerraste la puerta.</p>
       </header>
+      <div class="panel__block reveal" data-format="square">
+        <figure class="panel__block-media">
+          <img src="assets/img/servicio-cerraduras-bloque-1-960.webp"
+               srcset="assets/img/servicio-cerraduras-bloque-1-640.webp 640w,
+                       assets/img/servicio-cerraduras-bloque-1-960.webp 960w,
+                       assets/img/servicio-cerraduras-bloque-1-1440.webp 1440w"
+               sizes="(max-width: 760px) 100vw, 42vw"
+               width="1440" height="1080" loading="lazy" decoding="async"
+               alt="Cerradura digital Yale con teclado numérico, lector de huella y llave física de emergencia">
+        </figure>
+        <div class="panel__block-text">
+          <h3>Código, huella o llave — la que necesites</h3>
+          <p>Teclado numérico, lector de huella, tarjeta de proximidad y llave física de respaldo, todo en la misma cerradura. Nunca dependés de un solo método para entrar.</p>
+        </div>
+      </div>
       <div class="panel__block panel__block--solo reveal">
         <div class="panel__block-text">
           <h3>Sin llave, y sin quedarte afuera</h3>
