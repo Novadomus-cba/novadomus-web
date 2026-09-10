@@ -232,7 +232,7 @@ body.scroll-lock{overflow:hidden;}
   background:linear-gradient(to top,var(--azul-profundo) 0%,rgba(11,19,43,.45) 42%,transparent 78%);
 }
 
-/* Hero en loop de video (panel-instalacion-electrica por ahora).
+/* Hero de video (instalacion-electrica, redes, domotica, cerraduras).
    .panel__hero--video se agrega ademas de .panel__hero, asi que estas reglas
    tienen que empatar o superar la especificidad de las de arriba para ganar. */
 .panel__hero--video{position:relative;overflow:hidden;}
@@ -241,6 +241,13 @@ body.scroll-lock{overflow:hidden;}
   /* Duotono PARCIAL: baja el ambar sin matar la linea de LED calida */
   filter:saturate(.45) contrast(1.05);
 }
+/* En retrato el object-fit:cover recorta los costados de la fuente 16:9 --
+   cada panel fija que sujeto queda en cuadro. */
+#panel-instalacion-electrica .panel__hero-video{object-position:50% center;}
+#panel-redes .panel__hero-video{object-position:50% center;}
+#panel-domotica .panel__hero-video{object-position:43% center;}
+#panel-cerraduras .panel__hero-video{object-position:60% center;}
+
 /* Reemplaza el degrade de arriba por un velo navy solido -- misma especificidad
    (dos clases + pseudo-elemento), gana por venir despues en la hoja. */
 .panel--takeover .panel__hero--video::after{
