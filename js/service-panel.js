@@ -68,7 +68,8 @@
     var vertical = window.matchMedia('(max-aspect-ratio: 1/1)').matches;
     var base = fig.getAttribute('data-panel-video');
     // Ruta explicita por orientacion si el panel la declara; si no, se arma por
-    // concatenacion como hasta ahora. Domotica usa -3x4 porque su sujeto no entra en 9:16.
+    // concatenacion. Todos los paneles declaran landscape y portrait apuntando
+    // al mismo archivo 16:9 -- el contenedor retrato lo cubre via object-fit.
     var path = fig.getAttribute(vertical ? 'data-panel-video-portrait'
                                          : 'data-panel-video-landscape')
             || (base + (vertical ? '-9x16' : '-16x9'));
