@@ -8,6 +8,10 @@ Escribe manifest.json en --out con las dimensiones y el peso de cada variante.
 Uso:
     pip install pillow pillow-heif
     python build_images.py --src "C:/Users/agust/novadomus-web/Fotos" --out "C:/Users/agust/novadomus-web/assets/img"
+
+    # Procesar solo los archivos nuevos de esta sesion, sin tocar el resto del
+    # root (mas rapido y evita picos de memoria con poca RAM libre):
+    python build_images.py --only servicio-redes-bloque-1,servicio-redes-bloque-2
 """
 
 import argparse
@@ -93,6 +97,12 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--src", default="Fotos", help="Carpeta con los originales (default: Fotos)")
     parser.add_argument("--out", default="assets/img", help="Carpeta de salida (default: assets/img)")
+    parser.add_argument("--only", default=None,
+                        help="coma-separada: procesar solo los archivos del root de --src cuyo "
+                             "nombre contenga alguno de estos textos (case-insensitive). Sin esto "
+                             "se procesa TODO el root -- con muchos originales sueltos eso decodifica "
+                             "todo de una y puede quedarse sin memoria si hay poca RAM libre. Usar "
+                             "--only para correr solo sobre los 1-3 archivos nuevos de la sesion.")
     args = parser.parse_args()
 
     src_dir = Path(args.src)
@@ -113,6 +123,14 @@ def main():
     # Solo el nivel raiz de --src: subcarpetas como _descartadas/ o _sin_asignar/
     # quedan afuera del pipeline a proposito.
     files = sorted(p for p in src_dir.iterdir() if p.is_file())
+
+    if args.only:
+        needles = [t.strip().lower() for t in args.only.split(",") if t.strip()]
+        total = len(files)
+        files = [p for p in files if any(n in p.name.lower() for n in needles)]
+        print(f"--only: {len(files)}/{total} archivos del root coinciden")
+        if not files:
+            sys.exit("ERROR: --only no matcheo ningun archivo")
 
     for path in files:
         ext = path.suffix.lower()
