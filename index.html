@@ -100,10 +100,11 @@ p{line-height:1.6;max-width:62ch;}
 .btn-outline:hover{border-color:var(--dorado);}
 
 /* ---------- STATS ---------- */
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;padding:36px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:20px 0 60px;}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;padding:36px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:20px 0 60px;}
 .stat .stat-ico{width:30px;height:30px;stroke:var(--dorado);fill:none;stroke-width:1.5;margin-bottom:14px;}
 .stat b{font-family:'Inter';font-weight:600;font-size:1.02rem;color:var(--crema);display:block;margin-bottom:6px;}
 .stat span{font-size:.85rem;color:var(--text-secondary);}
+@media (max-width:900px){.stats{grid-template-columns:repeat(2,1fr);}}
 @media (max-width:640px){.stats{grid-template-columns:1fr;gap:24px;text-align:center;}}
 
 /* ---------- CARD GRID (hub) ---------- */
@@ -219,6 +220,11 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
         <svg class="stat-ico" viewBox="0 0 24 24"><circle cx="12" cy="9" r="6"/><path d="M9.5 21h5M12 15v6"/></svg>
         <b>Distribuidor oficial</b>
         <span>Philips Hue</span>
+      </div>
+      <div class="stat">
+        <svg class="stat-ico" viewBox="0 0 24 24"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8z"/></svg>
+        <b>+2.600 bocas eléctricas</b>
+        <span>instaladas en obras propias desde 2024</span>
       </div>
     </div>
   </div>
