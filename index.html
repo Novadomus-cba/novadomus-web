@@ -100,12 +100,15 @@ p{line-height:1.6;max-width:62ch;}
 .btn-outline:hover{border-color:var(--dorado);}
 
 /* ---------- STATS ---------- */
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;padding:36px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:20px 0 60px;}
+.stats-hero{display:grid;grid-template-columns:repeat(2,1fr);gap:32px;padding:8px 0 40px;}
+.stat-big-num{font-family:'Michroma';font-weight:400;font-size:2.15rem;color:var(--dorado);display:block;letter-spacing:.02em;line-height:1.15;margin-bottom:12px;}
+.stat-big-label{font-size:.95rem;color:var(--crema);line-height:1.55;display:block;max-width:36ch;}
+@media (max-width:640px){.stats-hero{grid-template-columns:1fr;text-align:center;gap:28px;}.stat-big-label{margin:0 auto;}}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;padding:36px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:0 0 60px;}
 .stat .stat-ico{width:30px;height:30px;stroke:var(--dorado);fill:none;stroke-width:1.5;margin-bottom:14px;}
 .stat b{font-family:'Inter';font-weight:600;font-size:1.02rem;color:var(--crema);display:block;margin-bottom:6px;}
 .stat span{font-size:.85rem;color:var(--text-secondary);}
-@media (max-width:900px){.stats{grid-template-columns:repeat(2,1fr);}}
-@media (max-width:640px){.stats{grid-template-columns:1fr;gap:24px;text-align:center;}}
+@media (max-width:760px){.stats{grid-template-columns:1fr;gap:24px;text-align:center;}}
 
 /* ---------- CARD GRID (hub) ---------- */
 .section{padding:60px 0;}
@@ -205,6 +208,16 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
   </section>
 
   <div class="wrap">
+    <div class="stats-hero rv">
+      <div class="stat-big">
+        <span class="stat-big-num">+900</span>
+        <span class="stat-big-label">Puntos de domótica e iluminación inteligente instalados en obras propias</span>
+      </div>
+      <div class="stat-big">
+        <span class="stat-big-num">+350</span>
+        <span class="stat-big-label">Dispositivos de seguridad instalados: cámaras, sensores, alarmas y cerraduras</span>
+      </div>
+    </div>
     <div class="stats rv">
       <div class="stat">
         <svg class="stat-ico" viewBox="0 0 24 24"><rect x="4" y="8" width="16" height="13" rx="1"/><path d="M4 8l2-5h12l2 5"/><path d="M10 21v-6h4v6"/></svg>
@@ -215,11 +228,6 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
         <svg class="stat-ico" viewBox="0 0 24 24"><circle cx="12" cy="9" r="6"/><path d="M9 14.5 7 21l5-3 5 3-2-6.5"/></svg>
         <b>Miembros CEDIA</b>
         <span>Desde 2024</span>
-      </div>
-      <div class="stat">
-        <svg class="stat-ico" viewBox="0 0 24 24"><circle cx="12" cy="9" r="6"/><path d="M9.5 21h5M12 15v6"/></svg>
-        <b>Distribuidor oficial</b>
-        <span>Philips Hue</span>
       </div>
       <div class="stat">
         <svg class="stat-ico" viewBox="0 0 24 24"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8z"/></svg>
