@@ -78,7 +78,8 @@ texto para lector de pantalla.
 | `redes` | bloque 2 | `nd-srv-redes-bloque-v-02.jpeg` | sin recorte, ratio original | rack en banco de armado — original de 720px, calidad justa |
 | `domotica` | bloque 1 | `nd-srv-domotica-bloque-h-02.HEIC` | sin recorte — 4:3 nativo, 4032×3024 | showroom real. Quedan legibles TP-Link Omada, Sonos, Yale, Philips y WiZ — la marca visible no se recorta ni se disimula, ver regla general más abajo (corregido 11/09/2026, revierte un recorte manual `(1370,680,4032,2344)` que se había hecho por error para "sacar" una marca del cuadro) |
 | `domotica` | bloque 2 (ex-`climatizacion`) | `Climatización 1-Vertical.DNG` (entrega 10/09) | sin recorte, 3:4 nativo | panel de pared con temperatura/humedad/consumo en vivo, reemplaza la foto de producto (Sensibo sobre pared blanca) que tenía este slot. **Climatización deja de ser servicio propio, absorbido como capacidad dentro de Domótica** (decisión de Agustín, 10/09/2026) — resuelve el pendiente de abajo |
-| `cerraduras` | bloque 1 | `nd-srv-cerraduras-bloque-h-01.jpg` | recorte 1:1, `object-position:85% center` | detalle de teclado/huella/llave física sobre stand de producto Yale. **Aprobado por Agustín pese a ser foto de producto, no de obra instalada** (10/09/2026) |
+| `videovigilancia` | bloque 1 | `nd-srv-videovigilancia-bloque-v-03.jpg.jpeg` | banco de pruebas con cámaras domo reales, no es instalación en fachada — sirve como "así se prueba" mientras se espera material nuevo de Lucas para el hero |
+| `cerraduras` | bloque 1 | `nd-srv-cerraduras-bloque-h-01.jpg` | sin recorte, `data-format="landscape"` (4:3 nativo, 1440×1080) — reemplaza la versión anterior recortada a 1:1 vía CSS. Mismo origen, mismo criterio que el hero real ya publicado (que sí es obra): stand de producto Yale, no puerta instalada. **Aprobado por Agustín** (10/09/2026, actualizado 11/09/2026) |
 
 ### Sobre el plano como tarjeta
 
@@ -117,9 +118,19 @@ recorte ni disimulo.
 - **Videos**: los slots que solo tienen video necesitan extracción de frame (`ffmpeg -vf fps=1/2
   -q:v 1`). Un frame de celular rinde peor que una foto: sirve para hero, para tarjeta hay que
   mirarlo antes.
-- **`videovigilancia` bloque**: las dos tomas entregadas (`nd-srv-videovigilancia-bloque-v-01/02`)
-  no muestran cámara instalada y quedan identificables dos compañeros de fondo. Se pidió material
-  nuevo a Lucas. Movidas a `Fotos/_sin_asignar/` — no vetadas para siempre, no sirven para esto.
+- **`videovigilancia` bloque**: resuelto con `nd-srv-videovigilancia-bloque-v-03.jpg.jpeg`
+  (banco de pruebas, ver tabla de arriba) mientras se consigue una toma real de cámara instalada.
+  Las tomas `nd-srv-videovigilancia-bloque-v-01/02` (HEIC) siguen sin servir — no muestran cámara
+  instalada y quedan identificables dos compañeros de fondo.
+- **`videovigilancia` hero**: sigue sin semilla real (domo instalado en fachada, no banco de
+  pruebas ni pantalla de software) — pendiente de material nuevo de Lucas.
+- **`redes`**: `nd-srv-redes-bloque-v-01.jpg` y `-01-1.jpg` (par contaminado/limpio del mismo
+  archivo) están mal categorizados desde el origen — es un mueble de carpintería en obra, sin
+  ningún equipo de networking. Movidos a `Fotos/_sin_asignar/`. Si se identifica de qué obra es,
+  podría servir para `obras.html`, no para este panel.
+- **`accesos`**: `nd-srv-videovigilancia-bloque-v-02.jpg.jpeg` (pared de porteros/intercomunicadores)
+  es contenido de accesos, no de videovigilancia. Candidato para el día que ese panel tenga
+  bloques de foto propios. Movida a `Fotos/_sin_asignar/`.
 - **`domotica` bloque adicional**: `nd-srv-domotica-bloque-h-01.jpeg`, idéntica a
   `nd-srv-domotica-bloque-v-03.jpg.jpeg` (ya evaluada antes), rótulo "Isa Room" (nombre de
   persona) visible en pantalla y sin confirmar si la app que se ve es Home Assistant — el
@@ -156,3 +167,9 @@ recorte ni disimulo.
   `nd-srv-instalacion-electrica-bloque-*`, `nd-srv-redes-bloque-v-01`,
   `nd-srv-videovigilancia-bloque-v-*` y las 2 VETADA-*) — reemplazados manualmente por
   Agustín, verificados byte a byte, ya limpios.
+- **`build_images.py` nombra por ancho objetivo, no por ancho real.** Si el original es más
+  angosto que 1440px, el archivo generado igual se llama `-1440.webp` (nunca `-1200.webp` ni
+  similar) aunque el contenido adentro quede más chico — el `manifest.json` es la única fuente
+  confiable del ancho real por variante. El `srcset` tiene que usar el nombre de archivo real
+  con el descriptor de ancho real (ej. `servicio-x-1440.webp 1200w`), no inventar un nombre de
+  archivo con el ancho real.
