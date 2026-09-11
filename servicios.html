@@ -284,30 +284,36 @@ body.scroll-lock{overflow:hidden;}
 }
 
 .panel--takeover .panel__hero-caption{
-  position:absolute;inset:auto 0 0 0;z-index:1;
+  position:absolute; inset:auto 0 0 0; z-index:3;
   padding:0 clamp(22px,6vw,48px) clamp(24px,5vw,40px);
+  transition:padding .42s cubic-bezier(.16,1,.3,1);
 }
 /* Misma especificidad que la regla de arriba (dos clases): gana por venir
    despues. No toca position (ya es absolute ahi arriba), solo sube el
    z-index por encima del velo (z-index:2). */
 .panel__hero--video .panel__hero-caption{z-index:3;}
-.panel--takeover .panel__hero-caption .panel__title{margin:0;font-size:clamp(1.5rem,6vw,2.4rem);line-height:1.15;transition:font-size .32s ease;}
+.panel--takeover .panel__hero-caption .eyebrow{
+  margin:0; transition:font-size .42s cubic-bezier(.16,1,.3,1), opacity .42s ease;
+}
+.panel--takeover .panel__hero-caption .panel__title{
+  margin:0; font-size:clamp(1.5rem,6vw,2.4rem); line-height:1.15;
+  transition:font-size .42s cubic-bezier(.16,1,.3,1);
+}
 .panel--takeover .panel__head{padding:clamp(24px,5vw,36px) clamp(22px,6vw,48px) 8px;}
 .panel--takeover .panel__lede{max-width:62ch;}
 
-/* Estado encogido del caption: se re-ancla a toda la cabecera (ya no solo al
-   pie) y centra titulo + eyebrow verticalmente en la tira de 76px. */
+/* Estado encogido del caption: mismo esquema de posicionamiento que el estado
+   grande (absolute, anclado abajo) en los dos estados -- display e inset con
+   "auto" no se pueden animar, asi que el salto en seco se evitaba dejando esas
+   propiedades fijas y animando solo padding/font-size, que si interpolan. */
 .panel--takeover.is-scrolled .panel__hero-caption{
-  padding:0 clamp(22px,6vw,48px);
-  inset:0 0 0 0;
-  display:flex; flex-direction:column; justify-content:center;
-  transition:padding .32s ease;
+  padding:0 clamp(22px,6vw,48px) 14px;
 }
 .panel--takeover.is-scrolled .panel__hero-caption .eyebrow{
-  font-size:.65rem; margin:0; opacity:.85;
+  font-size:.6rem; opacity:.8;
 }
 .panel--takeover.is-scrolled .panel__hero-caption .panel__title{
-  font-size:1rem; line-height:1.2; margin:0;
+  font-size:1rem;
 }
 
 /* Botones flotantes: absolute contra el dialog (que no scrollea) => quedan fijos
@@ -350,14 +356,16 @@ body.scroll-lock{overflow:hidden;}
   .panel--takeover .panel__hero{position:relative;transition:none;}
   .panel--takeover.is-scrolled .panel__hero{height:min(62dvh,560px);}
   .panel--takeover.is-scrolled .panel__hero::after{background:linear-gradient(to top,var(--azul-profundo) 0%,rgba(11,19,43,.45) 42%,transparent 78%);opacity:1;}
-  .panel--takeover.is-scrolled .panel__hero-caption{position:absolute;inset:auto 0 0 0;padding:0 clamp(22px,6vw,48px) clamp(24px,5vw,40px);display:block;}
+  .panel--takeover.is-scrolled .panel__hero-caption{padding:0 clamp(22px,6vw,48px) clamp(24px,5vw,40px);}
+  .panel--takeover.is-scrolled .panel__hero-caption .eyebrow{font-size:.68rem;opacity:1;}
   .panel--takeover.is-scrolled .panel__hero-caption .panel__title{font-size:clamp(1.5rem,6vw,2.4rem);}
   .panel--takeover.is-scrolled .panel__bar{display:flex;opacity:1;transform:none;transition:none;}
 }
 .panel--takeover.no-sticky-hero .panel__hero{position:relative;transition:none;}
 .panel--takeover.no-sticky-hero.is-scrolled .panel__hero{height:min(62dvh,560px);}
 .panel--takeover.no-sticky-hero.is-scrolled .panel__hero::after{background:linear-gradient(to top,var(--azul-profundo) 0%,rgba(11,19,43,.45) 42%,transparent 78%);opacity:1;}
-.panel--takeover.no-sticky-hero.is-scrolled .panel__hero-caption{position:absolute;inset:auto 0 0 0;padding:0 clamp(22px,6vw,48px) clamp(24px,5vw,40px);display:block;}
+.panel--takeover.no-sticky-hero.is-scrolled .panel__hero-caption{padding:0 clamp(22px,6vw,48px) clamp(24px,5vw,40px);}
+.panel--takeover.no-sticky-hero.is-scrolled .panel__hero-caption .eyebrow{font-size:.68rem;opacity:1;}
 .panel--takeover.no-sticky-hero.is-scrolled .panel__hero-caption .panel__title{font-size:clamp(1.5rem,6vw,2.4rem);}
 .panel--takeover.no-sticky-hero.is-scrolled .panel__bar{display:flex;opacity:1;transform:none;}
 .panel__pager{
