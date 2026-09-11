@@ -71,7 +71,7 @@ texto para lector de pantalla.
 | Servicio | Slot | Origen | Recorte | Notas |
 |---|---|---|---|---|
 | `videovigilancia` | tarjeta | `nd-srv-videovigilancia-tarjeta-v-02` | 3:4, **ancla abajo** (opción 2c) | la cámara está en el tercio inferior; centrado o arriba queda casi todo cielo |
-| `videovigilancia` | hero | `nd-srv-videovigilancia-ancha-h-02` | sin recorte, 16:9 | el original tiene GPS, lo despoja el pipeline. **No muestra cámara**: es fachada de edificio, el copy tiene que hacerse cargo |
+| `videovigilancia` | hero | video (3 archivos: av1, h264, poster) | recorte de origen 1120×630 (no 1130×636 como los otros 4 paneles de video — el sello de agua de este clip estaba más a la izquierda, sigue siendo 16:9 válido) | **pasa de foto a video** (11/09/2026). Sin `data-panel-video-once`: loopea, trae el ping-pong horneado |
 | `instalacion-electrica` | tarjeta | `4-ILUMINACION.pdf` pág. 1 (plano propio) | 3:4 del ala densa de planta baja | rótulo **fuera** del recorte, no tapado. Fondo pasado a crema `#FDFBF0` con blend multiply: cambia el papel sin tocar los trazos |
 | `instalacion-electrica` | hero | el archivo que ya estaba | sin cambios | |
 | `redes` | bloque 1 | `nd-srv-redes-bloque-h-01.jpg` | sin recorte, 16:10 | rack instalado, coincide con el copy ya publicado |
@@ -79,7 +79,12 @@ texto para lector de pantalla.
 | `domotica` | bloque 1 | `nd-srv-domotica-bloque-h-02.HEIC` | sin recorte — 4:3 nativo, 4032×3024 | showroom real. Quedan legibles TP-Link Omada, Sonos, Yale, Philips y WiZ — la marca visible no se recorta ni se disimula, ver regla general más abajo (corregido 11/09/2026, revierte un recorte manual `(1370,680,4032,2344)` que se había hecho por error para "sacar" una marca del cuadro) |
 | `domotica` | bloque 2 (ex-`climatizacion`) | `Climatización 1-Vertical.DNG` (entrega 10/09) | sin recorte, 3:4 nativo | panel de pared con temperatura/humedad/consumo en vivo, reemplaza la foto de producto (Sensibo sobre pared blanca) que tenía este slot. **Climatización deja de ser servicio propio, absorbido como capacidad dentro de Domótica** (decisión de Agustín, 10/09/2026) — resuelve el pendiente de abajo |
 | `videovigilancia` | bloque 1 | `nd-srv-videovigilancia-bloque-v-03.jpg.jpeg` | banco de pruebas con cámaras domo reales, no es instalación en fachada — sirve como "así se prueba" mientras se espera material nuevo de Lucas para el hero |
-| `cerraduras` | bloque 1 | `nd-srv-cerraduras-bloque-h-01.jpg` | sin recorte, `data-format="landscape"` (4:3 nativo, 1440×1080) — reemplaza la versión anterior recortada a 1:1 vía CSS. Mismo origen, mismo criterio que el hero real ya publicado (que sí es obra): stand de producto Yale, no puerta instalada. **Aprobado por Agustín** (10/09/2026, actualizado 11/09/2026) |
+| `videovigilancia` | bloque 2 | `nd-srv-videovigilancia-ancha-h-02.jpg.jpg` | sin recorte, 16:9 (1440×810 real) | **la foto que hasta ahora era el hero** baja al cuerpo del panel cuando el hero pasa a video (11/09/2026). Mismo copy/alt que tenía como hero — fachada de edificio, no muestra cámara |
+| `videovigilancia` | bloque 3 | `nd-srv-videovigilancia-ancha-h-03.jpg.jpg` | sin recorte, 16:9 (1440×810 real) | fachada con cámara domo sí visible en el cuadro — complementa el bloque 2, que no la mostraba |
+| `cerraduras` | bloque 1 | `nd-srv-cerraduras-bloque-h-01.jpg` | sin recorte, `data-format="landscape"` (4:3 nativo, 1440×1080) | reemplaza la versión anterior recortada a 1:1 vía CSS. Mismo origen, mismo criterio que el hero real ya publicado (que sí es obra): stand de producto Yale, no puerta instalada. **Aprobado por Agustín** (10/09/2026, actualizado 11/09/2026) |
+| `redes` | bloque 3 | `nd-srv-redes-ancha-h-01.jpg.jpg` | sin recorte, 16:9 (1440×810 real) | rack de pared más chico, con monitor de cámaras a la vista — mismo criterio de cableado que bloque 1 y 2 |
+| `domotica` | bloque 3 | `nd-srv-domotica-ancha-h-01.jpg.jpg` | sin recorte, 16:9 (1440×811 real) | fachada iluminada al atardecer. **Numerada bloque 3, no bloque 2** — ese slot ya lo ocupaba el panel de pared de climatización (ver fila de arriba), el kickoff que la pidió no sabía que ya estaba tomado |
+| `domotica` | bloque 4 | `nd-srv-clima-bloque-v-02.jpg.jpg` | sin recorte, 3:4 nativo (1440×2558 real) | Sensibo instalado sobre pared. **Es el mismo tipo de foto (Sensibo sobre pared blanca) que el bloque 2 ya había reemplazado a propósito** — se agrega igual como bloque 4 por decisión explícita de Agustín (11/09/2026, quedan las dos: el panel de pared con datos en vivo y el dispositivo en sí), no por descuido |
 
 ### Sobre el plano como tarjeta
 
@@ -110,6 +115,15 @@ recorte ni disimulo.
 
 ## Pendiente de decisión
 
+- **`cerraduras` bloque 2**: la foto real de tarjeta Yale (`accesos-v-03`) mide 609×1076px, muy
+  chica para publicar a los tamaños del sitio. Pedirle a Lucas la misma toma en mejor resolución
+  si la tiene. El panel se queda en 1 bloque por ahora.
+- **`alarmas`**: sigue sin resolver qué son los dos artefactos de `alarmas-bloque-v-01`
+  (¿sensores o spots?). No meterla hasta confirmar — sería el mismo error que la foto de redes
+  que resultó ser un mueble de carpintería.
+- **`audio-y-video`**: sigue en cero. Hay 2 archivos HEIC sin auditar — el entorno de Cowork no
+  pudo decodificarlos. Pedir que se resuelva con `pip install pillow-heif` en un entorno con
+  internet, o subirlos por chat como se hizo con las de videovigilancia.
 - **Tarjeta `Servicios` del home** (`home-card-servicios-*`): la foto muestra una caja de EZVIZ
   en primer plano. Es packaging de producto, y el copy de la tarjeta habla de instalación,
   redes, domótica y seguridad. Sirve para Vidriera o Sistemas y marcas, no para Servicios.
