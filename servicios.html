@@ -694,6 +694,21 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
           <p>Cada cable se marca en el armado, antes de instalar el rack en su lugar definitivo. Es el paso que se salta cuando hay apuro, y el que más se agradece el día que hay que hacer un cambio.</p>
         </div>
       </div>
+      <div class="panel__block reveal" data-format="landscape">
+        <figure class="panel__block-media">
+          <img src="assets/img/servicio-redes-bloque-3-960.webp"
+               srcset="assets/img/servicio-redes-bloque-3-640.webp 640w,
+                       assets/img/servicio-redes-bloque-3-960.webp 960w,
+                       assets/img/servicio-redes-bloque-3-1440.webp 1440w"
+               sizes="(max-width: 760px) 100vw, 42vw"
+               width="1440" height="810" loading="lazy" decoding="async"
+               alt="Rack de networking instalado en gabinete de pared, con monitor de cámaras a la vista">
+        </figure>
+        <div class="panel__block-text">
+          <h3>Un rack más, la misma prolijidad</h3>
+          <p>No importa el tamaño de la obra — el criterio de cableado y rotulado es el mismo en todas.</p>
+        </div>
+      </div>
       <div class="panel__block panel__block--solo reveal">
         <div class="panel__block-text">
           <h3>El wifi del router no alcanza</h3>
@@ -796,6 +811,36 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
           <p>Sumamos control inteligente al aire acondicionado y la calefacción que ya tenés, sin cambiar el equipo: un controlador se integra al split o al radiador y lo suma a la misma app y a las mismas rutinas del resto de la casa — temperatura por horario, por presencia, o coordinada con las persianas para no enfriar con el sol entrando.</p>
         </div>
       </div>
+      <div class="panel__block reveal" data-format="landscape" data-flip>
+        <figure class="panel__block-media">
+          <img src="assets/img/servicio-domotica-bloque-3-960.webp"
+               srcset="assets/img/servicio-domotica-bloque-3-640.webp 640w,
+                       assets/img/servicio-domotica-bloque-3-960.webp 960w,
+                       assets/img/servicio-domotica-bloque-3-1440.webp 1440w"
+               sizes="(max-width: 760px) 100vw, 42vw"
+               width="1440" height="811" loading="lazy" decoding="async"
+               alt="Fachada de vivienda al atardecer con iluminación exterior integrada">
+        </figure>
+        <div class="panel__block-text">
+          <h3>La iluminación también es parte del sistema</h3>
+          <p>Adentro y afuera bajo el mismo control — la fachada se enciende con el mismo criterio que cualquier otro ambiente.</p>
+        </div>
+      </div>
+      <div class="panel__block reveal" data-format="portrait-tall">
+        <figure class="panel__block-media">
+          <img src="assets/img/servicio-domotica-bloque-4-960.webp"
+               srcset="assets/img/servicio-domotica-bloque-4-640.webp 640w,
+                       assets/img/servicio-domotica-bloque-4-960.webp 960w,
+                       assets/img/servicio-domotica-bloque-4-1440.webp 1440w"
+               sizes="(max-width: 760px) 100vw, 42vw"
+               width="1440" height="2558" loading="lazy" decoding="async"
+               alt="Controlador de climatización Sensibo instalado en pared">
+        </figure>
+        <div class="panel__block-text">
+          <h3>El clima entra al mismo panel</h3>
+          <p>Climatización, luces y accesos conviven en una sola interfaz — no hay una app por sistema.</p>
+        </div>
+      </div>
       <div class="panel__block panel__block--solo reveal">
         <div class="panel__block-text">
           <h3>Sabe cuándo no queda nadie</h3>
@@ -838,8 +883,15 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
     <div class="panel__progress" aria-hidden="true"><span></span></div>
     <button type="button" class="panel__close" data-panel-close aria-label="Cerrar detalle">✕</button>
     <div class="panel__scroll" data-lenis-prevent>
-      <figure class="panel__hero reveal">
-        <img src="assets/img/servicio-videovigilancia-960.webp" srcset="assets/img/servicio-videovigilancia-960.webp 960w, assets/img/servicio-videovigilancia-1440.webp 1440w" sizes="100vw" width="4080" height="2296" loading="lazy" decoding="async" alt="Cámara domo de videovigilancia instalada en el borde de un edificio, con la fachada completa de fondo">
+      <figure class="panel__hero panel__hero--video reveal"
+              data-panel-video="assets/video/servicio-videovigilancia-hero"
+              data-panel-video-landscape="assets/video/servicio-videovigilancia-hero-16x9"
+              data-panel-video-portrait="assets/video/servicio-videovigilancia-hero-16x9"
+              data-panel-poster-landscape="assets/img/servicio-videovigilancia-hero-poster-16x9.webp"
+              data-panel-poster-portrait="assets/img/servicio-videovigilancia-hero-poster-16x9.webp">
+        <!-- capa de fallback: se queda visible si no hay JS, hay reduced-motion, o el autoplay se bloquea -->
+        <img src="assets/img/servicio-videovigilancia-hero-poster-16x9.webp" width="1120" height="630" loading="lazy" decoding="async" alt="">
+        <!-- el <video> lo inyecta service-panel.js al abrir el panel -->
         <figcaption class="panel__hero-caption">
           <p class="eyebrow">Servicio</p>
           <h2 class="panel__title" id="panel-videovigilancia-title">Videovigilancia</h2>
@@ -861,6 +913,36 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
         <div class="panel__block-text">
           <h3>Cada cámara se prueba antes de instalar</h3>
           <p>Todo equipo pasa por banco antes de llegar a obra: se cablea, se enciende y se verifica que grabe bien. Lo que se instala ya se probó, no se prueba en la pared del cliente.</p>
+        </div>
+      </div>
+      <div class="panel__block reveal" data-format="landscape" data-flip>
+        <figure class="panel__block-media">
+          <img src="assets/img/servicio-videovigilancia-bloque-2-960.webp"
+               srcset="assets/img/servicio-videovigilancia-bloque-2-640.webp 640w,
+                       assets/img/servicio-videovigilancia-bloque-2-960.webp 960w,
+                       assets/img/servicio-videovigilancia-bloque-2-1440.webp 1440w"
+               sizes="(max-width: 760px) 100vw, 42vw"
+               width="1440" height="810" loading="lazy" decoding="async"
+               alt="Cámara domo de videovigilancia instalada en el borde de un edificio, con la fachada completa de fondo">
+        </figure>
+        <div class="panel__block-text">
+          <h3>Cobertura de todo el perímetro</h3>
+          <p>Cada cámara cubre un tramo de fachada, sin puntos ciegos entre una y la siguiente. La posición se define recorriendo el edificio, no desde un plano.</p>
+        </div>
+      </div>
+      <div class="panel__block reveal" data-format="landscape">
+        <figure class="panel__block-media">
+          <img src="assets/img/servicio-videovigilancia-bloque-3-960.webp"
+               srcset="assets/img/servicio-videovigilancia-bloque-3-640.webp 640w,
+                       assets/img/servicio-videovigilancia-bloque-3-960.webp 960w,
+                       assets/img/servicio-videovigilancia-bloque-3-1440.webp 1440w"
+               sizes="(max-width: 760px) 100vw, 42vw"
+               width="1440" height="810" loading="lazy" decoding="async"
+               alt="Cámara de seguridad instalada en la esquina de una fachada, vista desde abajo">
+        </figure>
+        <div class="panel__block-text">
+          <h3>Se ve, y eso también es parte del sistema</h3>
+          <p>Una cámara bien instalada no se esconde — se integra a la fachada sin quedar como un agregado de último momento.</p>
         </div>
       </div>
       <div class="panel__block panel__block--solo reveal">
