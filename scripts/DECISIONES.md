@@ -76,7 +76,7 @@ texto para lector de pantalla.
 | `instalacion-electrica` | hero | el archivo que ya estaba | sin cambios | |
 | `redes` | bloque 1 | `nd-srv-redes-bloque-h-01.jpg` | sin recorte, 16:10 | rack instalado, coincide con el copy ya publicado |
 | `redes` | bloque 2 | `nd-srv-redes-bloque-v-02.jpeg` | sin recorte, ratio original | rack en banco de armado — original de 720px, calidad justa |
-| `domotica` | bloque 1 | `nd-srv-domotica-bloque-h-02.HEIC` | recorte manual `(1370,680,4032,2344)` para el 16:10 | showroom real. Quedan legibles TP-Link Omada, Sonos, Yale, Philips y WiZ — **confirmado por Agustín que no es problema, la regla de no nombrar marca es para el copy, no para lo que aparece en la foto** (10/09/2026) |
+| `domotica` | bloque 1 | `nd-srv-domotica-bloque-h-02.HEIC` | sin recorte — 4:3 nativo, 4032×3024 | showroom real. Quedan legibles TP-Link Omada, Sonos, Yale, Philips y WiZ — la marca visible no se recorta ni se disimula, ver regla general más abajo (corregido 11/09/2026, revierte un recorte manual `(1370,680,4032,2344)` que se había hecho por error para "sacar" una marca del cuadro) |
 | `domotica` | bloque 2 (ex-`climatizacion`) | `Climatización 1-Vertical.DNG` (entrega 10/09) | sin recorte, 3:4 nativo | panel de pared con temperatura/humedad/consumo en vivo, reemplaza la foto de producto (Sensibo sobre pared blanca) que tenía este slot. **Climatización deja de ser servicio propio, absorbido como capacidad dentro de Domótica** (decisión de Agustín, 10/09/2026) — resuelve el pendiente de abajo |
 | `cerraduras` | bloque 1 | `nd-srv-cerraduras-bloque-h-01.jpg` | recorte 1:1, `object-position:85% center` | detalle de teclado/huella/llave física sobre stand de producto Yale. **Aprobado por Agustín pese a ser foto de producto, no de obra instalada** (10/09/2026) |
 
@@ -99,6 +99,13 @@ no se tapa con un rectángulo.
 | `nd-srv-videovigilancia-tarjeta-v-01` | **La cámara está mal instalada.** No entra como tarjeta, ni como hero, ni como bloque, ni en redes sociales. No es un problema de foto |
 | `nd-srv-instalacion-electrica-bloque-h-02` | Sala de exhibición ajena ("Patagonia Flooring" legible), personas identificables — no es obra de Nova Domus |
 | `nd-srv-domotica-bloque-v-01` | Misma sala ajena que la anterior |
+
+## Marcas en fotos: sin restricción
+
+La regla de no nombrar marcas de terceros es sobre el **texto** (copy, alt, títulos) — nunca
+sobre lo fotografiado. Que se vea instalado un producto real de una marca que Nova Domus
+representa (Shelly, Sonos, Hikvision, TP-Link, Yale, Ubiquiti, etc.) es bueno y no requiere
+recorte ni disimulo.
 
 ## Pendiente de decisión
 
