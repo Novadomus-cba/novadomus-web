@@ -123,26 +123,11 @@
     dialog._video = null;
   }
 
-  // CSS.supports existe en todo navegador con IntersectionObserver real, pero el sticky
-  // puede fallar en combinacion con dialog::backdrop en algun WebKit viejo -- si se
-  // detecta eso, cae al bar de siempre en vez de un hero roto.
-  var stickyHeroSupported = CSS.supports('position', 'sticky');
-
-  function ensureStickyFallback(dialog) {
-    if (!stickyHeroSupported) dialog.classList.add('no-sticky-hero');
-  }
-
-  // Observa el centinela justo despues del hero: cuando scrollea por encima del
-  // scroller, agrega is-scrolled al dialog. Eso encoge el hero (sticky) en todo
-  // navegador capaz; .panel__bar es solo el fallback para reduced-motion/
-  // no-sticky-hero, asi que no hace falta que exista para que este observer
-  // arranque -- por eso no se lo pide en el guard.
-  // No se puede observar el caption: como el hero es sticky, el caption que
-  // vive adentro nunca sale del viewport del scroller (un sticky se mantiene
-  // visible por definicion), asi que ese disparador nunca dispararia. El
-  // centinela sigue en flujo normal y sale de vista en el momento correcto.
-  // Observer propio y persistente -- observeReveals() hace unobserve al disparar,
-  // asi que no sirve para esto.
+  // Observa el centinela que sigue al hero: cuando scrollea por encima del
+  // scroller, agrega is-scrolled al dialog y entra .panel__bar. El hero ya no es
+  // sticky ni cambia de alto, asi que el centinela nunca se mueve por efecto del
+  // propio toggle -- no hay bucle posible. Observer propio y persistente:
+  // observeReveals() hace unobserve al disparar, asi que no sirve para esto.
   function mountPanelBar(dialog) {
     var sentinel = dialog.querySelector('.panel__hero-sentinel');
     var scroller = dialog.querySelector('.panel__scroll');
@@ -193,7 +178,6 @@
     dialog._io = observeReveals(dialog, scroller);
     dialog._unbindProgress = bindReadingProgress(scroller, dialog.querySelector('.panel__progress span'));
     mountPanelVideo(dialog);
-    ensureStickyFallback(dialog);
     mountPanelBar(dialog);
   }
 
@@ -203,14 +187,19 @@
 
     function finish() {
       dialog.classList.remove('is-closing');
+      // El reset de scroll va ANTES de close(): un dialog cerrado queda
+      // display:none via UA stylesheet, y escribir scrollTop sobre un
+      // elemento sin layout box no tiene efecto -- al reabrir, el navegador
+      // vuelve a mostrar la posicion de scroll vieja en vez de 0. goToPanel()
+      // ya lo hacia en este orden; aca faltaba.
+      var scroller = dialog.querySelector('.panel__scroll');
+      if (scroller) scroller.scrollTop = 0;
       dialog.close();
       unlockScroll();
       if (trigger) {
         trigger.setAttribute('aria-expanded', 'false');
         trigger.focus();
       }
-      var scroller = dialog.querySelector('.panel__scroll');
-      if (scroller) scroller.scrollTop = 0;
       resetReveals(dialog);
       if (dialog._io) dialog._io.disconnect();
       unmountPanelVideo(dialog);
@@ -286,7 +275,6 @@
     next._io = observeReveals(next, scroller);
     next._unbindProgress = bindReadingProgress(scroller, next.querySelector('.panel__progress span'));
     mountPanelVideo(next);
-    ensureStickyFallback(next);
     mountPanelBar(next);
 
     // Anuncia el cambio: mueve el foco al titulo del panel nuevo.
