@@ -272,6 +272,8 @@ body.scroll-lock{overflow:hidden;}
 #panel-redes .panel__hero-video{object-position:50% center;}
 #panel-domotica .panel__hero-video{object-position:43% center;}
 #panel-cerraduras .panel__hero-video{object-position:60% center;}
+#panel-alarmas .panel__hero-video{object-position:40% center;}
+#panel-audio-video .panel__hero-video{object-position:50% center;}
 
 /* Reemplaza el degrade de arriba por un velo navy solido -- misma especificidad
    (dos clases + pseudo-elemento), gana por venir despues en la hoja. */
@@ -1184,8 +1186,13 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
       <span class="panel__bar-text">Alarmas</span>
     </div>
     <div class="panel__scroll" data-lenis-prevent>
-      <figure class="panel__hero reveal">
-        <img src="assets/img/servicio-alarmas-1440.webp" srcset="assets/img/servicio-alarmas-960.webp 960w, assets/img/servicio-alarmas-1440.webp 1440w" sizes="100vw" width="1440" height="2559" loading="lazy" decoding="async" alt="Sensores de movimiento de alarma instalados en la unión de dos paredes de un ambiente con ventanal">
+      <figure class="panel__hero panel__hero--video"
+              data-panel-video="assets/video/servicio-alarmas-hero"
+              data-panel-video-landscape="assets/video/servicio-alarmas-hero-16x9"
+              data-panel-video-portrait="assets/video/servicio-alarmas-hero-16x9"
+              data-panel-poster-landscape="assets/img/servicio-alarmas-hero-poster-16x9.webp"
+              data-panel-poster-portrait="assets/img/servicio-alarmas-hero-poster-16x9.webp">
+        <img src="assets/img/servicio-alarmas-hero-poster-16x9.webp" alt="" loading="lazy" decoding="async">
         <figcaption class="panel__hero-caption">
           <p class="eyebrow">Servicio</p>
           <h2 class="panel__title" id="panel-alarmas-title">Alarmas</h2>
@@ -1195,6 +1202,21 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
       <header class="panel__head reveal">
         <p class="panel__lede">Una alarma que no habla con el resto del sistema es una isla. Integramos los sensores de intrusión, pánico y humo al mismo panel que controla luces y accesos, para que una alerta dispare acciones reales — encender luces, notificar por app — no solo una sirena.</p>
       </header>
+      <div class="panel__block reveal" data-format="portrait">
+        <figure class="panel__block-media">
+          <img src="assets/img/servicio-alarmas-bloque-1-960.webp"
+               srcset="assets/img/servicio-alarmas-bloque-1-640.webp 640w,
+                       assets/img/servicio-alarmas-bloque-1-960.webp 960w,
+                       assets/img/servicio-alarmas-bloque-1-1440.webp 1440w"
+               sizes="(max-width: 760px) 100vw, 42vw"
+               width="1440" height="2559" loading="lazy" decoding="async"
+               alt="Sensores de movimiento de alarma instalados en la unión de dos paredes de un ambiente con ventanal">
+        </figure>
+        <div class="panel__block-text">
+          <h3>El sensor real, en la casa real</h3>
+          <p>Instalado en el ángulo donde se juntan dos paredes, apuntando al paso — no al medio de la habitación, donde cualquier cortina lo dispara de pedo.</p>
+        </div>
+      </div>
       <div class="panel__block panel__block--solo reveal">
         <div class="panel__block-text">
           <h3>Sensores donde hacen falta</h3>
@@ -1246,8 +1268,13 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
       <span class="panel__bar-text">Audio &amp; Video</span>
     </div>
     <div class="panel__scroll" data-lenis-prevent>
-      <figure class="panel__hero reveal">
-        <img src="assets/img/servicio-audio-video-960.webp" srcset="assets/img/servicio-audio-video-960.webp 960w, assets/img/servicio-audio-video-1440.webp 1440w" sizes="100vw" width="4032" height="3024" loading="lazy" decoding="async" alt="Amplificador multizona VSSL y parlantes de techo empotrables, listos para instalar en cielorraso">
+      <figure class="panel__hero panel__hero--video"
+              data-panel-video="assets/video/servicio-audio-video-hero"
+              data-panel-video-landscape="assets/video/servicio-audio-video-hero-16x9"
+              data-panel-video-portrait="assets/video/servicio-audio-video-hero-16x9"
+              data-panel-poster-landscape="assets/img/servicio-audio-video-hero-poster-16x9.webp"
+              data-panel-poster-portrait="assets/img/servicio-audio-video-hero-poster-16x9.webp">
+        <img src="assets/img/servicio-audio-video-hero-poster-16x9.webp" alt="" loading="lazy" decoding="async">
         <figcaption class="panel__hero-caption">
           <p class="eyebrow">Servicio</p>
           <h2 class="panel__title" id="panel-audio-video-title">Audio &amp; Video</h2>
@@ -1269,6 +1296,21 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
         <div class="panel__block-text">
           <h3>Cine en casa, de punta a punta</h3>
           <p>Pantalla, proyector, procesador y parlantes — todo el sistema de imagen y sonido en un mismo proyecto, en una casa en Despeñaderos.</p>
+        </div>
+      </div>
+      <div class="panel__block reveal" data-format="landscape" data-flip>
+        <figure class="panel__block-media">
+          <img src="assets/img/servicio-audio-video-bloque-2-960.webp"
+               srcset="assets/img/servicio-audio-video-bloque-2-640.webp 640w,
+                       assets/img/servicio-audio-video-bloque-2-960.webp 960w,
+                       assets/img/servicio-audio-video-bloque-2-1440.webp 1440w"
+               sizes="(max-width: 760px) 100vw, 42vw"
+               width="1440" height="1080" loading="lazy" decoding="async"
+               alt="Amplificador multizona VSSL y parlantes de techo empotrables, listos para instalar en cielorraso">
+        </figure>
+        <div class="panel__block-text">
+          <h3>Antes de cerrar el cielorraso</h3>
+          <p>El equipo se define y se cablea con la obra todavía abierta — después no hay forma de agregar una zona sin romper de nuevo.</p>
         </div>
       </div>
       <div class="panel__block panel__block--solo reveal">
