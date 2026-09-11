@@ -149,6 +149,13 @@ body.scroll-lock{overflow:hidden;}
 .panel__scroll{max-height:88vh;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;}
 .panel__hero{background:#000;}
 .panel__hero img{width:100%;height:auto;max-height:60vh;object-fit:contain;display:block;margin:0 auto;}
+/* Marcador invisible justo despues del hero: como el hero pasa a ser sticky
+   (.panel--takeover), el propio caption ya no sirve de disparador porque nunca
+   sale del viewport del scroller -- un sticky se mantiene visible por
+   definicion. Este centinela sigue en flujo normal, en la posicion exacta
+   donde terminaria el hero si no fuera sticky: cuando scrollea por encima del
+   scroller, ahi es cuando corresponde encoger. */
+.panel__hero-sentinel{height:1px;}
 .panel__head{padding:28px 32px 8px;}
 .panel__head .eyebrow{margin-bottom:10px;}
 .panel__title{font-size:1.35rem;margin-bottom:12px;text-transform:none;}
@@ -222,20 +229,38 @@ body.scroll-lock{overflow:hidden;}
 @keyframes takeover-in{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
 @keyframes takeover-out{to{opacity:0;transform:translateY(12px)}}
 
-/* Portada full-bleed con titulo encima */
-.panel--takeover .panel__hero{position:relative;margin:0;background:var(--azul-nova);}
+/* Portada full-bleed con titulo encima. Sticky en la cabecera misma (no en un
+   hijo): .panel__hero es el dueno del overflow:hidden que compartia con
+   .panel__hero--video, asi que no hay ningun ancestro con overflow de por
+   medio que la recorte. Hijo directo de .panel__scroll, que es lo que scrollea. */
+.panel--takeover .panel__hero{
+  position:sticky; top:0; z-index:4;
+  height:min(62dvh,560px);
+  transition:height .32s cubic-bezier(.16,1,.3,1);
+  margin:0; background:var(--azul-nova); overflow:hidden;
+}
+.panel--takeover.is-scrolled .panel__hero{
+  height:76px;
+}
 .panel--takeover .panel__hero img{
-  width:100%;height:min(62dvh,560px);max-height:none;object-fit:cover;display:block;
+  position:absolute; inset:0; width:100%; height:100%;
+  object-fit:cover; display:block;
 }
 .panel--takeover .panel__hero::after{
   content:'';position:absolute;inset:0;pointer-events:none;
   background:linear-gradient(to top,var(--azul-profundo) 0%,rgba(11,19,43,.45) 42%,transparent 78%);
 }
+/* Velo de contraste del estado encogido: con el video/foto todavia corriendo
+   detras a 76px de alto, el degrade de arriba (pensado para la cabecera
+   grande) no alcanza -- el titulo necesita fondo solido a la izquierda. */
+.panel--takeover.is-scrolled .panel__hero::after{
+  background:linear-gradient(to right, rgba(11,19,43,.88) 0%, rgba(11,19,43,.55) 55%, rgba(11,19,43,.3) 100%);
+  opacity:1;
+}
 
 /* Hero de video (instalacion-electrica, redes, domotica, cerraduras).
-   .panel__hero--video se agrega ademas de .panel__hero, asi que estas reglas
-   tienen que empatar o superar la especificidad de las de arriba para ganar. */
-.panel__hero--video{position:relative;overflow:hidden;}
+   El overflow:hidden ya lo pone .panel__hero de arriba (ahora es el dueno,
+   compartido con el caso solo-imagen) -- aca solo queda lo especifico de video. */
 .panel__hero-video{
   position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;
   /* Duotono PARCIAL: baja el ambar sin matar la linea de LED calida */
@@ -266,9 +291,24 @@ body.scroll-lock{overflow:hidden;}
    despues. No toca position (ya es absolute ahi arriba), solo sube el
    z-index por encima del velo (z-index:2). */
 .panel__hero--video .panel__hero-caption{z-index:3;}
-.panel--takeover .panel__hero-caption .panel__title{margin:0;font-size:clamp(1.5rem,6vw,2.4rem);line-height:1.15;}
+.panel--takeover .panel__hero-caption .panel__title{margin:0;font-size:clamp(1.5rem,6vw,2.4rem);line-height:1.15;transition:font-size .32s ease;}
 .panel--takeover .panel__head{padding:clamp(24px,5vw,36px) clamp(22px,6vw,48px) 8px;}
 .panel--takeover .panel__lede{max-width:62ch;}
+
+/* Estado encogido del caption: se re-ancla a toda la cabecera (ya no solo al
+   pie) y centra titulo + eyebrow verticalmente en la tira de 76px. */
+.panel--takeover.is-scrolled .panel__hero-caption{
+  padding:0 clamp(22px,6vw,48px);
+  inset:0 0 0 0;
+  display:flex; flex-direction:column; justify-content:center;
+  transition:padding .32s ease;
+}
+.panel--takeover.is-scrolled .panel__hero-caption .eyebrow{
+  font-size:.65rem; margin:0; opacity:.85;
+}
+.panel--takeover.is-scrolled .panel__hero-caption .panel__title{
+  font-size:1rem; line-height:1.2; margin:0;
+}
 
 /* Botones flotantes: absolute contra el dialog (que no scrollea) => quedan fijos
    sin necesidad de position:sticky ni de JS. */
@@ -277,13 +317,18 @@ body.scroll-lock{overflow:hidden;}
   right:calc(14px + env(safe-area-inset-right));
 }
 
-/* Barra de titulo condensada. Mismo patron absolute-contra-el-dialog de arriba --
-   NO sticky: .panel__hero--video tiene overflow:hidden y la recortaria. */
+/* Barra de titulo condensada: ahora es el FALLBACK, no el mecanismo principal.
+   Solo se muestra si el sticky-shrink del hero no puede correr -- con
+   prefers-reduced-motion (el video ya se oculta del todo, no tiene sentido
+   una cabecera encogida sin nada adentro) o sin position:sticky real
+   (clase .no-sticky-hero que agrega el JS, ver service-panel.js). En ambos
+   casos el hero vuelve a su comportamiento de siempre: scrollea y desaparece,
+   sin sticky ni encogimiento, y esta barra ocupa su lugar de toda la vida. */
 .panel--takeover .panel__bar{
   position:absolute;z-index:5;
   top:2px;                     /* deja ver la linea de .panel__progress */
   left:0;right:0;
-  display:flex;align-items:center;
+  display:none;align-items:center;
   min-height:52px;
   padding:0 clamp(22px,6vw,48px);
   padding-right:64px;          /* despeja el .panel__close */
@@ -295,7 +340,6 @@ body.scroll-lock{overflow:hidden;}
   transition:opacity .22s ease,transform .22s ease;
   pointer-events:none;
 }
-.panel--takeover.is-scrolled .panel__bar{opacity:1;transform:none;}
 .panel__bar-text{
   font-family:'Michroma';
   font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;
@@ -303,8 +347,19 @@ body.scroll-lock{overflow:hidden;}
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
 }
 @media (prefers-reduced-motion:reduce){
-  .panel--takeover .panel__bar{transition:none;transform:none;}
+  .panel--takeover .panel__hero{position:relative;transition:none;}
+  .panel--takeover.is-scrolled .panel__hero{height:min(62dvh,560px);}
+  .panel--takeover.is-scrolled .panel__hero::after{background:linear-gradient(to top,var(--azul-profundo) 0%,rgba(11,19,43,.45) 42%,transparent 78%);opacity:1;}
+  .panel--takeover.is-scrolled .panel__hero-caption{position:absolute;inset:auto 0 0 0;padding:0 clamp(22px,6vw,48px) clamp(24px,5vw,40px);display:block;}
+  .panel--takeover.is-scrolled .panel__hero-caption .panel__title{font-size:clamp(1.5rem,6vw,2.4rem);}
+  .panel--takeover.is-scrolled .panel__bar{display:flex;opacity:1;transform:none;transition:none;}
 }
+.panel--takeover.no-sticky-hero .panel__hero{position:relative;transition:none;}
+.panel--takeover.no-sticky-hero.is-scrolled .panel__hero{height:min(62dvh,560px);}
+.panel--takeover.no-sticky-hero.is-scrolled .panel__hero::after{background:linear-gradient(to top,var(--azul-profundo) 0%,rgba(11,19,43,.45) 42%,transparent 78%);opacity:1;}
+.panel--takeover.no-sticky-hero.is-scrolled .panel__hero-caption{position:absolute;inset:auto 0 0 0;padding:0 clamp(22px,6vw,48px) clamp(24px,5vw,40px);display:block;}
+.panel--takeover.no-sticky-hero.is-scrolled .panel__hero-caption .panel__title{font-size:clamp(1.5rem,6vw,2.4rem);}
+.panel--takeover.no-sticky-hero.is-scrolled .panel__bar{display:flex;opacity:1;transform:none;}
 .panel__pager{
   position:absolute;z-index:6;left:50%;transform:translateX(-50%);
   bottom:calc(16px + env(safe-area-inset-bottom));
@@ -587,6 +642,7 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
           <h2 class="panel__title" id="panel-instalacion-electrica-title">Instalación Eléctrica</h2>
         </figcaption>
       </figure>
+      <div class="panel__hero-sentinel" aria-hidden="true"></div>
       <header class="panel__head reveal">
         <p class="panel__lede">Instalamos y certificamos obra eléctrica como servicio en sí mismo, no solo como paso previo a otra cosa: electricistas matriculados propios se encargan del cableado, tableros, protecciones y puesta a tierra en la mayoría de nuestras obras activas. Cuando el proyecto además incluye tecnología, diseñamos esa misma instalación pensando en señales débiles, redes y domótica desde el tablero — para no tener que romper pared dos veces.</p>
       </header>
@@ -646,6 +702,9 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
   <dialog class="panel panel--takeover" id="panel-redes" aria-labelledby="panel-redes-title">
     <div class="panel__progress" aria-hidden="true"><span></span></div>
     <button type="button" class="panel__close" data-panel-close aria-label="Cerrar detalle">✕</button>
+    <div class="panel__bar" aria-hidden="true">
+      <span class="panel__bar-text">Redes</span>
+    </div>
     <div class="panel__scroll" data-lenis-prevent>
       <figure class="panel__hero panel__hero--video reveal"
               data-panel-video="assets/video/servicio-redes-hero"
@@ -661,6 +720,7 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
           <h2 class="panel__title" id="panel-redes-title">Redes</h2>
         </figcaption>
       </figure>
+      <div class="panel__hero-sentinel" aria-hidden="true"></div>
       <header class="panel__head reveal">
         <p class="panel__lede">Cada cámara, sensor y dispositivo domótico depende de una red que no se caiga. Diseñamos la LAN, el WiFi y las VPN de cada obra con equipamiento profesional, dimensionado para la cantidad real de dispositivos conectados — no para lo mínimo que funcione hoy, sino para lo que la casa va a sumar mañana.</p>
       </header>
@@ -762,6 +822,9 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
   <dialog class="panel panel--takeover" id="panel-domotica" aria-labelledby="panel-domotica-title">
     <div class="panel__progress" aria-hidden="true"><span></span></div>
     <button type="button" class="panel__close" data-panel-close aria-label="Cerrar detalle">✕</button>
+    <div class="panel__bar" aria-hidden="true">
+      <span class="panel__bar-text">Domótica</span>
+    </div>
     <div class="panel__scroll" data-lenis-prevent>
       <figure class="panel__hero panel__hero--video reveal"
               data-panel-video="assets/video/servicio-domotica-hero"
@@ -778,6 +841,7 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
           <h2 class="panel__title" id="panel-domotica-title">Domótica</h2>
         </figcaption>
       </figure>
+      <div class="panel__hero-sentinel" aria-hidden="true"></div>
       <header class="panel__head reveal">
         <p class="panel__lede">Pensamos la domótica como cuatro habitaciones de una misma casa: Iluminación, Confort, Seguridad y Entretenimiento. Ninguna funciona sola, y las cuatro se apoyan en el mismo cimiento — la instalación eléctrica y la red, hechas para esto desde el primer caño. Todo se controla desde un solo lugar: la app, el panel de pared o la voz.</p>
       </header>
@@ -894,6 +958,9 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
   <dialog class="panel panel--takeover" id="panel-videovigilancia" aria-labelledby="panel-videovigilancia-title">
     <div class="panel__progress" aria-hidden="true"><span></span></div>
     <button type="button" class="panel__close" data-panel-close aria-label="Cerrar detalle">✕</button>
+    <div class="panel__bar" aria-hidden="true">
+      <span class="panel__bar-text">Videovigilancia</span>
+    </div>
     <div class="panel__scroll" data-lenis-prevent>
       <figure class="panel__hero panel__hero--video reveal"
               data-panel-video="assets/video/servicio-videovigilancia-hero"
@@ -909,6 +976,7 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
           <h2 class="panel__title" id="panel-videovigilancia-title">Videovigilancia</h2>
         </figcaption>
       </figure>
+      <div class="panel__hero-sentinel" aria-hidden="true"></div>
       <header class="panel__head reveal">
         <p class="panel__lede">Cámaras que graban en un NVR propio, no en la nube de un tercero. Diseñamos la cobertura por ambiente y por acceso, con grabación continua y acceso remoto desde el celular para ver en vivo o revisar lo grabado desde cualquier lado.</p>
       </header>
@@ -1023,6 +1091,7 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
           <h2 class="panel__title" id="panel-cerraduras-title">Cerraduras Digitales</h2>
         </figcaption>
       </figure>
+      <div class="panel__hero-sentinel" aria-hidden="true"></div>
       <header class="panel__head reveal">
         <p class="panel__lede">Nada de llaves para copiar ni perder. Instalamos cerraduras digitales que abren por código, huella, tarjeta de proximidad o la app del celular, con registro de cada ingreso — quién entró y cuándo. Ideal para alquileres temporarios, personal de servicio o simplemente para no volver a preguntarte si cerraste la puerta.</p>
       </header>
@@ -1103,6 +1172,9 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
   <dialog class="panel panel--takeover" id="panel-alarmas" aria-labelledby="panel-alarmas-title">
     <div class="panel__progress" aria-hidden="true"><span></span></div>
     <button type="button" class="panel__close" data-panel-close aria-label="Cerrar detalle">✕</button>
+    <div class="panel__bar" aria-hidden="true">
+      <span class="panel__bar-text">Alarmas</span>
+    </div>
     <div class="panel__scroll" data-lenis-prevent>
       <figure class="panel__hero reveal">
         <img src="assets/img/servicio-alarmas-1440.webp" srcset="assets/img/servicio-alarmas-960.webp 960w, assets/img/servicio-alarmas-1440.webp 1440w" sizes="100vw" width="1440" height="2559" loading="lazy" decoding="async" alt="Sensores de movimiento de alarma instalados en la unión de dos paredes de un ambiente con ventanal">
@@ -1111,6 +1183,7 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
           <h2 class="panel__title" id="panel-alarmas-title">Alarmas</h2>
         </figcaption>
       </figure>
+      <div class="panel__hero-sentinel" aria-hidden="true"></div>
       <header class="panel__head reveal">
         <p class="panel__lede">Una alarma que no habla con el resto del sistema es una isla. Integramos los sensores de intrusión, pánico y humo al mismo panel que controla luces y accesos, para que una alerta dispare acciones reales — encender luces, notificar por app — no solo una sirena.</p>
       </header>
@@ -1161,6 +1234,9 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
   <dialog class="panel panel--takeover" id="panel-audio-video" aria-labelledby="panel-audio-video-title">
     <div class="panel__progress" aria-hidden="true"><span></span></div>
     <button type="button" class="panel__close" data-panel-close aria-label="Cerrar detalle">✕</button>
+    <div class="panel__bar" aria-hidden="true">
+      <span class="panel__bar-text">Audio &amp; Video</span>
+    </div>
     <div class="panel__scroll" data-lenis-prevent>
       <figure class="panel__hero reveal">
         <img src="assets/img/servicio-audio-video-960.webp" srcset="assets/img/servicio-audio-video-960.webp 960w, assets/img/servicio-audio-video-1440.webp 1440w" sizes="100vw" width="4032" height="3024" loading="lazy" decoding="async" alt="Amplificador multizona VSSL y parlantes de techo empotrables, listos para instalar en cielorraso">
@@ -1169,6 +1245,7 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
           <h2 class="panel__title" id="panel-audio-video-title">Audio &amp; Video</h2>
         </figcaption>
       </figure>
+      <div class="panel__hero-sentinel" aria-hidden="true"></div>
       <header class="panel__head reveal">
         <p class="panel__lede">Sonido ambiental en cada habitación, controlado desde la misma app que el resto de la casa — sin parlantes bluetooth sueltos ni un control remoto por equipo. Integramos audio multizona y video con amplificadores de la misma familia de sistemas abiertos que usamos en domótica, para que el volumen de la cocina y la escena de "película" del living respondan al mismo panel.</p>
       </header>
