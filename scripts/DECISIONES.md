@@ -145,3 +145,14 @@ recorte ni disimulo.
 - **Los nombres de Lucas pueden mentir sobre la orientación pero no sobre el servicio.** Y las
   dobles extensiones (`.jpg.jpg`, `.jpg.mp4`) son normales en la entrega: manda el tipo real,
   no el nombre.
+- **C2PA/JUMBF vía `device_commit_files` (canal de escritura remota).** Igual que con las
+  herramientas de imagen, el canal que escribe archivos remotamente en Fotos/ inyecta un
+  manifiesto C2PA/JUMBF espurio al escribir (+5771 bytes en JPEG, +5876 en HEIC) — no es un
+  problema de la herramienta de conversión, es del transporte. Mismo síntoma, canal distinto.
+  Si un archivo pesa "de más" sin explicación después de escribirse por ese canal, sospechar
+  esto antes que un bug de compresión. Se resuelve reemplazando el archivo desde el filesystem
+  local directamente (sin pasar por ese canal) o corriendo strip_webp_chunks.py / equivalente
+  después. Afectó 11 archivos de la limpieza del 2026-09-11 (los
+  `nd-srv-instalacion-electrica-bloque-*`, `nd-srv-redes-bloque-v-01`,
+  `nd-srv-videovigilancia-bloque-v-*` y las 2 VETADA-*) — reemplazados manualmente por
+  Agustín, verificados byte a byte, ya limpios.
