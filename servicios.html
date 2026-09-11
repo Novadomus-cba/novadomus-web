@@ -149,12 +149,10 @@ body.scroll-lock{overflow:hidden;}
 .panel__scroll{max-height:88vh;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;}
 .panel__hero{background:#000;}
 .panel__hero img{width:100%;height:auto;max-height:60vh;object-fit:contain;display:block;margin:0 auto;}
-/* Marcador invisible justo despues del hero: como el hero pasa a ser sticky
-   (.panel--takeover), el propio caption ya no sirve de disparador porque nunca
-   sale del viewport del scroller -- un sticky se mantiene visible por
-   definicion. Este centinela sigue en flujo normal, en la posicion exacta
-   donde terminaria el hero si no fuera sticky: cuando scrollea por encima del
-   scroller, ahi es cuando corresponde encoger. */
+/* Marcador invisible justo despues del hero. Cuando scrollea por encima del
+   scroller, el hero termino de salir de cuadro: ahi entra .panel__bar. El
+   centinela esta en flujo y NADA en flujo cambia de tamano al togglear el
+   estado, asi que el disparador nunca se mueve solo. */
 .panel__hero-sentinel{height:1px;}
 .panel__head{padding:28px 32px 8px;}
 .panel__head .eyebrow{margin-bottom:10px;}
@@ -229,18 +227,14 @@ body.scroll-lock{overflow:hidden;}
 @keyframes takeover-in{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
 @keyframes takeover-out{to{opacity:0;transform:translateY(12px)}}
 
-/* Portada full-bleed con titulo encima. Sticky en la cabecera misma (no en un
-   hijo): .panel__hero es el dueno del overflow:hidden que compartia con
-   .panel__hero--video, asi que no hay ningun ancestro con overflow de por
-   medio que la recorte. Hijo directo de .panel__scroll, que es lo que scrollea. */
+/* Portada full-bleed con titulo encima. En flujo normal: scrollea y sale de
+   cuadro. NO sticky y NO cambia de alto -- animar el height de un elemento en
+   flujo movia ~480px de contenido de golpe (ver KICKOFF G). La cabecera
+   condensada la resuelve .panel__bar, que esta fuera del flujo. */
 .panel--takeover .panel__hero{
-  position:sticky; top:0; z-index:4;
+  position:relative; z-index:1;
   height:min(62dvh,560px);
-  transition:height .32s cubic-bezier(.16,1,.3,1);
   margin:0; background:var(--azul-nova); overflow:hidden;
-}
-.panel--takeover.is-scrolled .panel__hero{
-  height:76px;
 }
 .panel--takeover .panel__hero img{
   position:absolute; inset:0; width:100%; height:100%;
@@ -249,13 +243,6 @@ body.scroll-lock{overflow:hidden;}
 .panel--takeover .panel__hero::after{
   content:'';position:absolute;inset:0;pointer-events:none;
   background:linear-gradient(to top,var(--azul-profundo) 0%,rgba(11,19,43,.45) 42%,transparent 78%);
-}
-/* Velo de contraste del estado encogido: con el video/foto todavia corriendo
-   detras a 76px de alto, el degrade de arriba (pensado para la cabecera
-   grande) no alcanza -- el titulo necesita fondo solido a la izquierda. */
-.panel--takeover.is-scrolled .panel__hero::after{
-  background:linear-gradient(to right, rgba(11,19,43,.88) 0%, rgba(11,19,43,.55) 55%, rgba(11,19,43,.3) 100%);
-  opacity:1;
 }
 
 /* Hero de video (instalacion-electrica, redes, domotica, cerraduras).
@@ -288,35 +275,14 @@ body.scroll-lock{overflow:hidden;}
 .panel--takeover .panel__hero-caption{
   position:absolute; inset:auto 0 0 0; z-index:3;
   padding:0 clamp(22px,6vw,48px) clamp(24px,5vw,40px);
-  transition:padding .42s cubic-bezier(.16,1,.3,1);
 }
-/* Misma especificidad que la regla de arriba (dos clases): gana por venir
-   despues. No toca position (ya es absolute ahi arriba), solo sube el
-   z-index por encima del velo (z-index:2). */
 .panel__hero--video .panel__hero-caption{z-index:3;}
-.panel--takeover .panel__hero-caption .eyebrow{
-  margin:0; transition:font-size .42s cubic-bezier(.16,1,.3,1), opacity .42s ease;
-}
+.panel--takeover .panel__hero-caption .eyebrow{margin:0;}
 .panel--takeover .panel__hero-caption .panel__title{
   margin:0; font-size:clamp(1.5rem,6vw,2.4rem); line-height:1.15;
-  transition:font-size .42s cubic-bezier(.16,1,.3,1);
 }
 .panel--takeover .panel__head{padding:clamp(24px,5vw,36px) clamp(22px,6vw,48px) 8px;}
 .panel--takeover .panel__lede{max-width:62ch;}
-
-/* Estado encogido del caption: mismo esquema de posicionamiento que el estado
-   grande (absolute, anclado abajo) en los dos estados -- display e inset con
-   "auto" no se pueden animar, asi que el salto en seco se evitaba dejando esas
-   propiedades fijas y animando solo padding/font-size, que si interpolan. */
-.panel--takeover.is-scrolled .panel__hero-caption{
-  padding:0 clamp(22px,6vw,48px) 14px;
-}
-.panel--takeover.is-scrolled .panel__hero-caption .eyebrow{
-  font-size:.6rem; opacity:.8;
-}
-.panel--takeover.is-scrolled .panel__hero-caption .panel__title{
-  font-size:1rem;
-}
 
 /* Botones flotantes: absolute contra el dialog (que no scrollea) => quedan fijos
    sin necesidad de position:sticky ni de JS. */
@@ -325,18 +291,14 @@ body.scroll-lock{overflow:hidden;}
   right:calc(14px + env(safe-area-inset-right));
 }
 
-/* Barra de titulo condensada: ahora es el FALLBACK, no el mecanismo principal.
-   Solo se muestra si el sticky-shrink del hero no puede correr -- con
-   prefers-reduced-motion (el video ya se oculta del todo, no tiene sentido
-   una cabecera encogida sin nada adentro) o sin position:sticky real
-   (clase .no-sticky-hero que agrega el JS, ver service-panel.js). En ambos
-   casos el hero vuelve a su comportamiento de siempre: scrollea y desaparece,
-   sin sticky ni encogimiento, y esta barra ocupa su lugar de toda la vida. */
+/* Barra de titulo condensada: es EL mecanismo de cabecera, no un fallback.
+   position:absolute contra el dialog (que no scrollea) => fuera del flujo, asi
+   que mostrarla y ocultarla no cuesta layout. Solo anima opacity + transform. */
 .panel--takeover .panel__bar{
   position:absolute;z-index:5;
   top:2px;                     /* deja ver la linea de .panel__progress */
   left:0;right:0;
-  display:none;align-items:center;
+  display:flex;align-items:center;
   min-height:52px;
   padding:0 clamp(22px,6vw,48px);
   padding-right:64px;          /* despeja el .panel__close */
@@ -348,6 +310,7 @@ body.scroll-lock{overflow:hidden;}
   transition:opacity .22s ease,transform .22s ease;
   pointer-events:none;
 }
+.panel--takeover.is-scrolled .panel__bar{opacity:1;transform:none;}
 .panel__bar-text{
   font-family:'Michroma';
   font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;
@@ -355,20 +318,8 @@ body.scroll-lock{overflow:hidden;}
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
 }
 @media (prefers-reduced-motion:reduce){
-  .panel--takeover .panel__hero{position:relative;transition:none;}
-  .panel--takeover.is-scrolled .panel__hero{height:min(62dvh,560px);}
-  .panel--takeover.is-scrolled .panel__hero::after{background:linear-gradient(to top,var(--azul-profundo) 0%,rgba(11,19,43,.45) 42%,transparent 78%);opacity:1;}
-  .panel--takeover.is-scrolled .panel__hero-caption{padding:0 clamp(22px,6vw,48px) clamp(24px,5vw,40px);}
-  .panel--takeover.is-scrolled .panel__hero-caption .eyebrow{font-size:.68rem;opacity:1;}
-  .panel--takeover.is-scrolled .panel__hero-caption .panel__title{font-size:clamp(1.5rem,6vw,2.4rem);}
-  .panel--takeover.is-scrolled .panel__bar{display:flex;opacity:1;transform:none;transition:none;}
+  .panel--takeover .panel__bar{transition:none;}
 }
-.panel--takeover.no-sticky-hero .panel__hero{position:relative;transition:none;}
-.panel--takeover.no-sticky-hero.is-scrolled .panel__hero{height:min(62dvh,560px);}
-.panel--takeover.no-sticky-hero.is-scrolled .panel__hero::after{background:linear-gradient(to top,var(--azul-profundo) 0%,rgba(11,19,43,.45) 42%,transparent 78%);opacity:1;}
-.panel--takeover.no-sticky-hero.is-scrolled .panel__hero-caption{padding:0 clamp(22px,6vw,48px) clamp(24px,5vw,40px);}
-.panel--takeover.no-sticky-hero.is-scrolled .panel__hero-caption .eyebrow{font-size:.68rem;opacity:1;}
-.panel--takeover.no-sticky-hero.is-scrolled .panel__hero-caption .panel__title{font-size:clamp(1.5rem,6vw,2.4rem);}
 .panel--takeover.no-sticky-hero.is-scrolled .panel__bar{display:flex;opacity:1;transform:none;}
 .panel__pager{
   position:absolute;z-index:6;left:50%;transform:translateX(-50%);
@@ -481,6 +432,7 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
 }
 .panel{display:block;position:static;max-height:none;width:auto;margin:2rem auto;}
 .panel__close,.panel__progress{display:none;}
+.panel--takeover .panel__bar{display:none;}
 .panel__scroll{max-height:none;overflow:visible;}
 .carousel__nav,.carousel__progress{display:none;}
 .panel--takeover{width:auto;height:auto;margin:2rem auto;border-radius:20px;}
