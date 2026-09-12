@@ -79,6 +79,31 @@
     items.forEach(function (el) { obs.observe(el); });
   }
 
+  // Orden de posicionamiento de marca (no alfabético, no por volumen de obra) --
+  // ver nova-domus-jerarquia-marcas-dispositivos.md y decision de Agustin (12/09/2026):
+  // 1) las 6 marcas headline por credencial real (dealer/distribuidor/showroom/
+  //    especializacion), en el orden de peso de marca acordado; 2) infraestructura
+  //    de soporte; 3) audio premium (canal Dystech/ADI + VSSL); 4) audio de reventa
+  //    (canal Melman: Sonos, Bose, etc.) -- estas ultimas nunca deben liderar la
+  //    grilla, es justamente lo que se corrigio aca.
+  var BRAND_PRIORITY = [
+    'CONTROL4', 'HOME ASSISTANT', 'SHELLY', 'YALE', 'PHILIPS HUE', 'HIKVISION',
+    'TP-LINK', 'EZVIZ', 'SENSIBO',
+    'VSSL',
+    'SONOS', 'BOSE'
+  ];
+
+  function brandPriority(marca) {
+    var i = BRAND_PRIORITY.indexOf((marca || '').toUpperCase());
+    return i === -1 ? BRAND_PRIORITY.length : i;
+  }
+
+  function sortByPriority(items) {
+    return items.slice().sort(function (a, b) {
+      return brandPriority(a.marca) - brandPriority(b.marca);
+    });
+  }
+
   function render(items) {
     var host = document.getElementById('respaldo-grid');
     if (!host) return;
@@ -99,8 +124,10 @@
       var res = await client
         .from('marcas_respaldo')
         .select('marca,video_url,descripcion_corta')
-        .eq('video_estado', 'cargado')
-        .order('marca', { ascending: true });
+        .eq('video_estado', 'cargado');
+        // El orden real de la grilla lo define sortByPriority() más abajo, no esta
+        // consulta -- alfabético puro (lo que había antes) es lo que hacía aparecer
+        // a Bose primero, sin relación con el peso real de la marca.
       if (res.error) throw res.error;
       // Ubiquiti: Tier 5 "no publicar" (nova-domus-jerarquia-marcas-dispositivos.md) — 0
       // apariciones en inventario real, compite con TP-Link Omada que es la línea vigente.
@@ -108,7 +135,7 @@
       var items = (res.data || []).filter(function (i) {
         return NO_PUBLICAR.indexOf((i.marca || '').toUpperCase()) === -1;
       });
-      render(items);
+      render(sortByPriority(items));
     } catch (err) {
       host.innerHTML = '<p class="muted">No pudimos cargar esta sección ahora.</p>';
       console.error('marcas_respaldo:', err);
