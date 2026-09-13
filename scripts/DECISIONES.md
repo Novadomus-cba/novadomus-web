@@ -92,6 +92,35 @@ texto para lector de pantalla.
 | `audio-video` | hero (video) | Generado Gemini, texto puro (3 archivos: av1, h264, poster) | recorte de origen 1120×630 (misma tanda que alarmas/videovigilancia) | **pasa de foto a video** (11/09/2026). Home theater premium, pantalla con contenido abstracto. Sin `data-panel-video-once`: loopea. `object-position:50% center` |
 | `audio-video` | bloque 2 | la foto que hasta ahora era el hero (fuente original no localizada en `Fotos/`, se regeneró desde el `-1440.webp` ya publicado) | 4:3 (1440×1080 real) | **la foto que hasta ahora era el hero** baja al cuerpo del panel cuando el hero pasa a video (11/09/2026), mismo copy/alt que tenía como hero. Amplificador VSSL y parlantes de techo |
 
+## `nosotros.html` — reescritura completa (13/09/2026, KICKOFF_L)
+
+Material identificado por Cowork en el export de Instagram, entregado en
+`2026-09-13_nosotros-paquete-completo.zip`. De los candidatos, dos pares eran alternativas del
+mismo evento — la elección de composición entre ambos la hizo Code (no una selección entre
+material de origen distinto, que sigue siendo decisión humana):
+
+| Slot | Origen | Recorte | Notas |
+|---|---|---|---|
+| `#origen`, cierre — foto de equipo | `nosotros-equipo-2026.jpeg` (WhatsApp, subida por Agustín 13/09/2026) | sin recorte, 1600×899 nativo | **Reemplaza** la elección original de Cowork (`nosotros-equipo-asado-2025`, candid de asado, 1440×955) — Agustín subió esta directamente. Foto posada del equipo con remeras de isotipo actual, sin el wordmark viejo. Sin pie de foto (la imagen habla sola). Supersede también a las dos `BAJA-RES` (360×300/310, cuadrilla en obra) — con esta foto ya no hacen falta como único registro del equipo completo |
+| `#respaldo` / Dónde nos viste — Proyectar 2026 | `nosotros-proyectar-2026-stand.png` | sin recorte, 720×960 | Elegida sobre la alternativa `-mostrador` (persona sola a cámara, menos dinámica): esta muestra el stand con cartel de marca, un integrante atendiendo a dos visitantes, cajas de Yale/Philips Hue/WiZ visibles |
+| `#respaldo` / Dónde nos viste — Casa FOA 2026 | `nosotros-casafoa-2026-espacio18.png` | sin recorte, 720×1280 | Elegida sobre la alternativa `-detalle` (mural decorativo, sin tecnología a la vista): esta muestra la estantería con perfil LED integrado — trabajo real de iluminación, no solo ambiente |
+| `#respaldo` / Dónde nos viste — Proyectar/Yale 2024 | `nosotros-yale-naos-2024.png` | sin recorte, 1080×1920 | Cerradura Yale YMF30 instalada en la puerta del stand de NAOS Aberturas |
+| `#para-quien` columna B | `nosotros-obra-electrica.png` | sin recorte, 720×960 | Obra en bruto (paredes de hormigón visto, escalera sin terminar) — refuerza "entramos en anteproyecto, antes de que se pique la pared" |
+| `#respaldo` / Dónde nos viste — Proyectar 2026 (prensa) | `nosotros-prensa-canalc.png` | sin recorte, 720×406 | Agustín Dávila entrevistado por Canal C |
+
+**Descartadas del zip, no usadas:** `nosotros-proyectar-2026-mostrador.png`,
+`nosotros-casafoa-2026-detalle.png` (alternativas de composición, ver arriba),
+`nosotros-equipo-asado-2025.png`, `nosotros-equipo-obra-BAJA-RES.png`,
+`nosotros-equipo-escalera-BAJA-RES.png` (superadas por `nosotros-equipo-2026.jpeg`). Quedan en
+`Fotos/` (gitignored) por si hacen falta después, no se borraron.
+
+**`-1440.webp` duplicado de `-960.webp` en 4 de las 6:** `nosotros-prensa-canalc`,
+`nosotros-proyectar-2026-stand`, `nosotros-casafoa-2026-espacio18` y `nosotros-obra-electrica`
+son originales de 720px de ancho — `build_images.py` generó el bucket 960 y el 1440 al mismo
+ancho real (720), archivos idénticos. El `srcset` de estas cuatro omite el descriptor 1440 y
+usa el nombre de archivo real con el ancho real (`...-960.webp 720w`), no `1440w` — ver gotcha
+de nombrado más abajo en este documento.
+
 ### Sobre el plano como tarjeta
 
 El set eléctrico (`1-Diagrama unifilar`, `2-ACU y TUE`, `3-TUG y Cortineros`, `4-ILUMINACION`,
