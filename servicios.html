@@ -403,6 +403,9 @@ body.scroll-lock{overflow:hidden;}
 .tabs button.active{border-color:var(--dorado);color:var(--dorado);}
 .gallery-empty{border:1px dashed var(--border);border-radius:14px;padding:48px 24px;text-align:center;color:var(--text-secondary);}
 .gallery-empty b{display:block;color:var(--crema);font-family:'Michroma';font-size:.85rem;margin-bottom:8px;text-transform:uppercase;}
+.gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;}
+.gallery-grid figure{margin:0;border-radius:14px;overflow:hidden;background:var(--azul-nova);aspect-ratio:9/16;}
+.gallery-grid img{width:100%;height:100%;object-fit:cover;display:block;}
 
 .btn{display:inline-flex;align-items:center;gap:8px;padding:13px 24px;border-radius:999px;font-weight:600;font-size:.92rem;transition:transform .2s,border-color .2s;}
 .btn-outline{border:1px solid var(--line);color:var(--crema);}
@@ -1368,16 +1371,22 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
           <button data-tab="int">Fotos internas</button>
         </div>
         <div data-tab-panel="todas">
-          <div class="gallery-empty">
-            <b>Fotos de obra — próximamente</b>
-            Estamos documentando cada instalación en obra. Esta galería se completa con fotografía propia real, nunca de catálogo.
+          <div class="gallery-grid">
+            <figure><img src="assets/img/gallery-externa-cartel-360.webp" width="360" height="640" loading="lazy" decoding="async" alt="Cartel iluminado de Nova Domus sobre la fachada de Av. Colón 3835, con efecto de color RGB controlado por WiZ"></figure>
+            <figure><img src="assets/img/gallery-interna-rack-360.webp" width="360" height="640" loading="lazy" decoding="async" alt="Rack de seguridad con NVR y monitor mostrando cámaras en vivo de una obra"></figure>
+            <figure><img src="assets/img/gallery-interna-tablero-360.webp" width="360" height="640" loading="lazy" decoding="async" alt="Tablero eléctrico abierto con las llaves térmicas identificadas, durante la instalación de un módulo Shelly"></figure>
           </div>
         </div>
         <div data-tab-panel="ext" hidden>
-          <div class="gallery-empty"><b>Fotos externas — próximamente</b>Fachadas, ploteo de vehículos y cartelería de obra.</div>
+          <div class="gallery-grid">
+            <figure><img src="assets/img/gallery-externa-cartel-360.webp" width="360" height="640" loading="lazy" decoding="async" alt="Cartel iluminado de Nova Domus sobre la fachada de Av. Colón 3835, con efecto de color RGB controlado por WiZ"></figure>
+          </div>
         </div>
         <div data-tab-panel="int" hidden>
-          <div class="gallery-empty"><b>Fotos internas — próximamente</b>Racks, tableros y terminaciones en ambiente.</div>
+          <div class="gallery-grid">
+            <figure><img src="assets/img/gallery-interna-rack-360.webp" width="360" height="640" loading="lazy" decoding="async" alt="Rack de seguridad con NVR y monitor mostrando cámaras en vivo de una obra"></figure>
+            <figure><img src="assets/img/gallery-interna-tablero-360.webp" width="360" height="640" loading="lazy" decoding="async" alt="Tablero eléctrico abierto con las llaves térmicas identificadas, durante la instalación de un módulo Shelly"></figure>
+          </div>
         </div>
       </div>
     </div>
