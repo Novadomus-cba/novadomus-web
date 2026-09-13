@@ -112,6 +112,8 @@ body.scroll-lock{overflow:hidden;}
 .card__link img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s cubic-bezier(.16,1,.3,1);}
 .card__link:hover img,.card__link:focus-visible img{transform:scale(1.1);}
 .card__link::after{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(to top,rgba(11,19,43,.9) 0%,rgba(11,19,43,.35) 40%,transparent 62%);}
+.card__preview-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .3s ease;pointer-events:none;}
+.card__link:hover .card__preview-video{opacity:1;}
 .card__body{position:absolute;inset:auto 0 0 0;z-index:1;display:flex;align-items:flex-end;justify-content:space-between;gap:12px;padding:20px;}
 .card__title{font-family:'Michroma';font-size:.82rem;line-height:1.35;color:var(--crema);max-width:14ch;}
 .card__plus{flex:none;display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:12px;border:1px solid rgba(253,251,240,.4);background:rgba(253,251,240,.1);transition:background .3s,border-color .3s,color .3s,transform .4s;}
@@ -389,6 +391,7 @@ body.scroll-lock{overflow:hidden;}
 @media (prefers-reduced-motion:reduce){
   .card__link img,.card__plus,.carousel__nav{transition:none!important;}
   .card__link:hover img{transform:none;}
+  .card__preview-video{display:none;}
   .panel[open],.panel.is-closing{animation:none!important;}
   .js .reveal{opacity:1;transform:none;}
   .carousel__track{scroll-behavior:auto;}
@@ -502,7 +505,7 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
       </button>
       <ul class="carousel__track" id="services-track" role="list" tabindex="0" aria-label="Servicios de Nova Domus">
         <li class="card">
-          <a class="card__link" href="#panel-instalacion-electrica" id="instalacion-electrica" aria-controls="panel-instalacion-electrica" aria-expanded="false" data-panel="panel-instalacion-electrica">
+          <a class="card__link" href="#panel-instalacion-electrica" id="instalacion-electrica" aria-controls="panel-instalacion-electrica" aria-expanded="false" data-panel="panel-instalacion-electrica" data-preview-video="assets/video/servicio-instalacion-electrica-hero">
             <img src="assets/img/servicio-instalacion-electrica-tarjeta-640.webp" width="640" height="857" loading="lazy" decoding="async" alt="">
             <span class="card__body">
               <span class="card__title">Instalación<br>Eléctrica</span>
@@ -512,7 +515,7 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
           </a>
         </li>
         <li class="card">
-          <a class="card__link" href="#panel-redes" id="redes" aria-controls="panel-redes" aria-expanded="false" data-panel="panel-redes">
+          <a class="card__link" href="#panel-redes" id="redes" aria-controls="panel-redes" aria-expanded="false" data-panel="panel-redes" data-preview-video="assets/video/servicio-redes-hero">
             <img src="assets/img/servicio-redes-640.webp" srcset="assets/img/servicio-redes-640.webp 640w, assets/img/servicio-redes-960.webp 960w" sizes="320px" width="1440" height="648" loading="lazy" decoding="async" alt="">
             <span class="card__body">
               <span class="card__title">Redes</span>
@@ -522,7 +525,7 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
           </a>
         </li>
         <li class="card">
-          <a class="card__link" href="#panel-domotica" id="domotica" aria-controls="panel-domotica" aria-expanded="false" data-panel="panel-domotica">
+          <a class="card__link" href="#panel-domotica" id="domotica" aria-controls="panel-domotica" aria-expanded="false" data-panel="panel-domotica" data-preview-video="assets/video/servicio-domotica-hero">
             <img src="assets/img/servicio-domotica-640.webp" srcset="assets/img/servicio-domotica-640.webp 640w, assets/img/servicio-domotica-960.webp 960w" sizes="320px" width="1440" height="811" loading="lazy" decoding="async" alt="">
             <span class="card__body">
               <span class="card__title">Domótica</span>
@@ -532,7 +535,7 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
           </a>
         </li>
         <li class="card">
-          <a class="card__link" href="#panel-videovigilancia" id="videovigilancia" aria-controls="panel-videovigilancia" aria-expanded="false" data-panel="panel-videovigilancia">
+          <a class="card__link" href="#panel-videovigilancia" id="videovigilancia" aria-controls="panel-videovigilancia" aria-expanded="false" data-panel="panel-videovigilancia" data-preview-video="assets/video/servicio-videovigilancia-hero">
             <img src="assets/img/servicio-videovigilancia-tarjeta-640.webp" srcset="assets/img/servicio-videovigilancia-tarjeta-640.webp 640w, assets/img/servicio-videovigilancia-tarjeta-960.webp 960w" sizes="320px" width="2296" height="3061" loading="lazy" decoding="async" alt="">
             <span class="card__body">
               <span class="card__title">Videovigilancia</span>
@@ -542,7 +545,7 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
           </a>
         </li>
         <li class="card">
-          <a class="card__link" href="#panel-alarmas" id="alarmas" aria-controls="panel-alarmas" aria-expanded="false" data-panel="panel-alarmas">
+          <a class="card__link" href="#panel-alarmas" id="alarmas" aria-controls="panel-alarmas" aria-expanded="false" data-panel="panel-alarmas" data-preview-video="assets/video/servicio-alarmas-hero">
             <img src="assets/img/servicio-alarmas-640.webp" srcset="assets/img/servicio-alarmas-640.webp 640w, assets/img/servicio-alarmas-960.webp 960w" sizes="320px" width="1440" height="2559" loading="lazy" decoding="async" alt="">
             <span class="card__body">
               <span class="card__title">Alarmas</span>
@@ -552,7 +555,7 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
           </a>
         </li>
         <li class="card">
-          <a class="card__link" href="#panel-cerraduras" id="cerraduras" aria-controls="panel-cerraduras" aria-expanded="false" data-panel="panel-cerraduras">
+          <a class="card__link" href="#panel-cerraduras" id="cerraduras" aria-controls="panel-cerraduras" aria-expanded="false" data-panel="panel-cerraduras" data-preview-video="assets/video/servicio-cerraduras-hero">
             <img src="assets/img/servicio-cerraduras-640.webp" srcset="assets/img/servicio-cerraduras-640.webp 640w, assets/img/servicio-cerraduras-960.webp 960w" sizes="320px" width="1440" height="1920" loading="lazy" decoding="async" alt="">
             <span class="card__body">
               <span class="card__title">Cerraduras<br>Digitales</span>
@@ -562,7 +565,7 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
           </a>
         </li>
         <li class="card">
-          <a class="card__link" href="#panel-audio-video" id="audio-video" aria-controls="panel-audio-video" aria-expanded="false" data-panel="panel-audio-video">
+          <a class="card__link" href="#panel-audio-video" id="audio-video" aria-controls="panel-audio-video" aria-expanded="false" data-panel="panel-audio-video" data-preview-video="assets/video/servicio-audio-video-hero">
             <img src="assets/img/servicio-audio-video-tarjeta-640.webp" srcset="assets/img/servicio-audio-video-tarjeta-640.webp 640w, assets/img/servicio-audio-video-tarjeta-960.webp 960w" sizes="320px" width="3024" height="4032" loading="lazy" decoding="async" alt="">
             <span class="card__body">
               <span class="card__title">Audio &amp;<br>Video</span>
@@ -1386,6 +1389,7 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
 <script src="js/motion.js"></script>
 <script src="js/site.js"></script>
 <script src="js/services-carousel.js"></script>
+<script src="js/card-preview.js"></script>
 <script src="js/service-panel.js"></script>
 </body>
 </html>
