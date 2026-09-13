@@ -42,8 +42,9 @@ p{line-height:1.6;max-width:62ch;}
 /* ---------- NAV ---------- */
 .nav{position:fixed;top:0;left:0;right:0;z-index:60;background:linear-gradient(180deg,rgba(11,19,43,.96),rgba(11,19,43,.7) 80%,transparent);backdrop-filter:blur(6px);}
 .nav-inner{display:flex;justify-content:space-between;align-items:center;padding:14px 22px;gap:16px;}
-.logo-mini{display:flex;align-items:center;gap:9px;font-family:'Michroma';font-size:.74rem;letter-spacing:.06em;flex:none;}
-.logo-mini img{width:26px;height:26px;}
+.logo-mini{display:flex;align-items:center;gap:16px;font-family:'Michroma';font-size:.74rem;letter-spacing:.06em;flex:none;}
+.logo-plate{width:46px;height:46px;flex:none;display:grid;place-items:center;background:var(--crema);border-radius:13px;box-shadow:0 2px 12px rgba(0,0,0,.3);}
+.logo-plate img{width:34px;height:34px;}
 .nav-links{display:flex;align-items:center;gap:26px;font-size:.86rem;}
 .nav-links a{opacity:.88;padding:6px 0;border-bottom:1px solid transparent;transition:opacity .2s,border-color .2s;}
 .nav-links a:hover,.nav-links a.active{opacity:1;border-color:var(--dorado);}
@@ -145,7 +146,7 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
 .footer-bottom{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;border-top:1px solid var(--line);padding-top:22px;font-size:.78rem;color:var(--text-secondary);}
 @media (max-width:900px){.footer-grid{grid-template-columns:repeat(3,1fr);} .footer-brand{grid-column:1/-1;}}
 @media (max-width:600px){.footer-grid{grid-template-columns:repeat(2,1fr);}}
-.logo-mini img{view-transition-name:nova-logo;}
+.logo-mini .logo-plate{view-transition-name:nova-logo;}
 @media (prefers-reduced-motion: no-preference) {
   @view-transition { navigation: auto; }
 }
@@ -162,7 +163,7 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
 <nav class="nav">
   <div class="wrap nav-inner">
     <a href="index.html" class="logo-mini">
-      <img src="assets/logo/nova-domus-isologo-color-transparente.svg" alt="">
+      <span class="logo-plate"><img src="assets/logo/nova-domus-isologo-color-transparente.svg" alt=""></span>
       <span>NOVA·DOMUS</span>
     </a>
     <div class="nav-links desktop-only">
