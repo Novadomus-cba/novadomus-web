@@ -24,6 +24,8 @@
       + '<path d="M10 8l6 4-6 4z" fill="var(--crema)"/></svg>';
   }
 
+  // Tarjeta con relato + video -- para "Marcas insignia" y "Audio" (los dos
+  // subgrupos). Nunca se usa para Infraestructura, que es solo texto/wordmark.
   function cardHtml(item) {
     var id = escapeHtml(videoId(item.video_url));
     var marca = escapeHtml(item.marca);
@@ -38,6 +40,17 @@
       + '    <h3>' + marca + '</h3>'
       + '    <p>' + desc + '</p>'
       + '  </div>'
+      + '</div>';
+  }
+
+  // Tarjeta compacta sin video -- para "Infraestructura" (soporte, no protagonismo).
+  function infraCardHtml(item) {
+    var marca = escapeHtml(item.marca);
+    var desc = escapeHtml(item.descripcion_corta);
+    return ''
+      + '<div class="infra-card rv">'
+      + '  <h3>' + marca + '</h3>'
+      + '  <p>' + desc + '</p>'
       + '</div>';
   }
 
@@ -79,65 +92,71 @@
     items.forEach(function (el) { obs.observe(el); });
   }
 
-  // Orden de posicionamiento de marca (no alfabético, no por volumen de obra) --
-  // ver nova-domus-jerarquia-marcas-dispositivos.md y decision de Agustin (12/09/2026):
-  // 1) las 6 marcas headline por credencial real (dealer/distribuidor/showroom/
-  //    especializacion), en el orden de peso de marca acordado; 2) infraestructura
-  //    de soporte; 3) audio premium (canal Dystech/ADI + VSSL); 4) audio de reventa
-  //    (canal Melman: Sonos, Bose, etc.) -- estas ultimas nunca deben liderar la
-  //    grilla, es justamente lo que se corrigio aca.
-  var BRAND_PRIORITY = [
-    'CONTROL4', 'HOME ASSISTANT', 'SHELLY', 'YALE', 'PHILIPS HUE', 'HIKVISION',
-    'TP-LINK', 'EZVIZ', 'SENSIBO',
-    'VSSL',
-    'SONOS', 'BOSE'
-  ];
+  // Agrupacion de marcas por rol real con Nova Domus (no por rubro tecnico) --
+  // ver nova-domus-jerarquia-marcas-dispositivos.md y la investigacion de
+  // jerarquia de marcas (13/09/2026, Propuesta A). Cada marca cae en UNA sola
+  // grilla:
+  //  - INSIGNIA: las 6 marcas headline, tarjeta con relato + video.
+  //  - AUDIO_PREMIUM / AUDIO_REVENTA: dos canales de audio explicitos. Sonos y
+  //    Bose van SIEMPRE en "equipos que instalamos", nunca en Insignia ni en
+  //    Credenciales -- sus propios lineamientos de marca (Sonos Platform ToS
+  //    §5, politica de marca de Bose) prohiben sugerir dealer/partnership sin
+  //    certificacion escrita, y esta seccion los trata como mencion de
+  //    producto/servicio, no como credencial.
+  //  - INFRA: soporte, tarjeta compacta sin video (grilla monocroma).
+  var INSIGNIA = ['CONTROL4', 'HOME ASSISTANT', 'SHELLY', 'YALE', 'PHILIPS HUE', 'HIKVISION'];
+  var AUDIO_PREMIUM = ['VSSL'];
+  var AUDIO_REVENTA = ['SONOS', 'BOSE'];
+  var INFRA = ['TP-LINK', 'EZVIZ', 'SENSIBO'];
+  // Ubiquiti: Tier 5 "no publicar" (nova-domus-jerarquia-marcas-dispositivos.md) — 0
+  // apariciones en inventario real, compite con TP-Link Omada que es la línea vigente.
+  var NO_PUBLICAR = ['UBIQUITI'];
 
-  function brandPriority(marca) {
-    var i = BRAND_PRIORITY.indexOf((marca || '').toUpperCase());
-    return i === -1 ? BRAND_PRIORITY.length : i;
+  function norm(marca) { return (marca || '').toUpperCase(); }
+
+  function pick(items, list) {
+    return items
+      .filter(function (i) { return list.indexOf(norm(i.marca)) !== -1; })
+      .sort(function (a, b) { return list.indexOf(norm(a.marca)) - list.indexOf(norm(b.marca)); });
   }
 
-  function sortByPriority(items) {
-    return items.slice().sort(function (a, b) {
-      return brandPriority(a.marca) - brandPriority(b.marca);
-    });
-  }
-
-  function render(items) {
-    var host = document.getElementById('respaldo-grid');
+  function renderInto(hostId, items, builder) {
+    var host = document.getElementById(hostId);
     if (!host) return;
     if (!items.length) {
       host.innerHTML = '<p class="muted">Estamos actualizando esta sección.</p>';
       return;
     }
-    host.innerHTML = items.map(cardHtml).join('');
-    bindPlayButtons(host);
+    host.innerHTML = items.map(builder).join('');
+    if (builder === cardHtml) bindPlayButtons(host);
     reveal(host);
   }
 
+  var HOST_IDS = ['insignia-grid', 'audio-premium-grid', 'audio-reventa-grid', 'infra-grid'];
+
   async function loadRespaldo() {
-    var host = document.getElementById('respaldo-grid');
-    if (!host) return;
+    if (!HOST_IDS.some(function (id) { return document.getElementById(id); })) return;
     try {
       var client = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
       var res = await client
         .from('marcas_respaldo')
         .select('marca,video_url,descripcion_corta')
         .eq('video_estado', 'cargado');
-        // El orden real de la grilla lo define sortByPriority() más abajo, no esta
-        // consulta -- alfabético puro (lo que había antes) es lo que hacía aparecer
-        // a Bose primero, sin relación con el peso real de la marca.
+        // El orden real de cada grilla lo define pick() más abajo, no esta consulta.
       if (res.error) throw res.error;
-      // Ubiquiti: Tier 5 "no publicar" (nova-domus-jerarquia-marcas-dispositivos.md) — 0
-      // apariciones en inventario real, compite con TP-Link Omada que es la línea vigente.
-      var NO_PUBLICAR = ['UBIQUITI'];
       var items = (res.data || []).filter(function (i) {
-        return NO_PUBLICAR.indexOf((i.marca || '').toUpperCase()) === -1;
+        return NO_PUBLICAR.indexOf(norm(i.marca)) === -1;
       });
-      render(sortByPriority(items));
+
+      renderInto('insignia-grid', pick(items, INSIGNIA), cardHtml);
+      renderInto('audio-premium-grid', pick(items, AUDIO_PREMIUM), cardHtml);
+      renderInto('audio-reventa-grid', pick(items, AUDIO_REVENTA), cardHtml);
+      renderInto('infra-grid', pick(items, INFRA), infraCardHtml);
     } catch (err) {
-      host.innerHTML = '<p class="muted">No pudimos cargar esta sección ahora.</p>';
+      HOST_IDS.forEach(function (id) {
+        var host = document.getElementById(id);
+        if (host) host.innerHTML = '<p class="muted">No pudimos cargar esta sección ahora.</p>';
+      });
       console.error('marcas_respaldo:', err);
     }
   }

@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Marcas y sistemas — Nova Domus</title>
-<meta name="description" content="9 familias de producto y las marcas con las que trabajamos: Philips Hue, Hikvision, Shelly, Control4, Home Assistant, Sonos y más.">
+<meta name="description" content="9 familias de producto y las marcas con las que trabajamos: Control4, Home Assistant, Shelly, Yale, Philips Hue, Hikvision y más.">
 <meta property="og:title" content="Marcas y sistemas — Nova Domus">
 <meta property="og:description" content="9 familias, un solo integrador.">
 <meta property="og:type" content="website">
@@ -101,9 +101,29 @@ p{line-height:1.6;max-width:62ch;}
 .brand-body{padding:18px 20px;display:flex;flex-direction:column;gap:8px;flex:1;}
 .brand-body h3{font-family:'Michroma';font-weight:400;font-size:.8rem;letter-spacing:.03em;text-transform:uppercase;color:var(--dorado);}
 .brand-body p{font-size:.82rem;color:var(--text-secondary);line-height:1.55;max-width:none;}
-.cred-note{margin-top:20px;font-size:.8rem;color:var(--text-secondary);}
 @media (max-width:900px){.brand-grid{grid-template-columns:repeat(2,1fr);}}
 @media (max-width:600px){.brand-grid{grid-template-columns:1fr;}}
+
+.cred-mini-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:8px;}
+.cred-mini-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px;}
+.cred-mini-card h3{font-family:'Michroma';font-weight:400;font-size:.72rem;letter-spacing:.03em;text-transform:uppercase;color:var(--dorado);margin-bottom:8px;}
+.cred-mini-card p{font-size:.78rem;color:var(--text-secondary);line-height:1.5;max-width:none;}
+@media (max-width:900px){.cred-mini-grid{grid-template-columns:repeat(2,1fr);}}
+@media (max-width:600px){.cred-mini-grid{grid-template-columns:1fr;}}
+
+.audio-label{font-family:'Michroma';font-weight:400;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--gris);margin-bottom:16px;}
+
+.infra-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:8px;}
+.infra-card{background:var(--surface);border-top:2px solid var(--border);border-left:1px solid var(--border);border-right:1px solid var(--border);border-bottom:1px solid var(--border);border-radius:12px;padding:18px;}
+.infra-card h3{font-family:'Inter';font-weight:600;font-size:.86rem;margin-bottom:6px;}
+.infra-card p{font-size:.78rem;color:var(--text-secondary);line-height:1.5;max-width:none;}
+@media (max-width:900px){.infra-grid{grid-template-columns:repeat(2,1fr);}}
+@media (max-width:600px){.infra-grid{grid-template-columns:1fr;}}
+
+.subnav-anchors{display:flex;gap:16px;flex-wrap:wrap;font-size:.78rem;}
+.subnav-anchors a{opacity:.8;transition:opacity .2s;}
+.subnav-anchors a:hover{opacity:1;}
+@media (max-width:700px){.subnav-anchors{display:none;}}
 
 .btn{display:inline-flex;align-items:center;gap:8px;padding:13px 24px;border-radius:999px;font-weight:600;font-size:.92rem;transition:transform .2s,border-color .2s;}
 .btn-outline{border:1px solid var(--line);color:var(--crema);}
@@ -180,6 +200,12 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
   <div class="subnav" data-subnav>
     <div class="wrap subnav-inner">
       <span class="subnav-title">Marcas y sistemas</span>
+      <nav class="subnav-anchors" aria-label="Secciones de esta página">
+        <a href="#credenciales">Credenciales</a>
+        <a href="#insignia">Insignia</a>
+        <a href="#audio">Audio</a>
+        <a href="#infraestructura">Infraestructura</a>
+      </nav>
       <a class="btn btn-outline" href="vidriera.html" style="padding:8px 16px;font-size:.8rem;">Ver catálogo</a>
     </div>
   </div>
@@ -248,11 +274,68 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
   <section class="cred" id="credenciales">
     <div class="wrap">
       <p class="eyebrow rv">Respaldo</p>
-      <h2 class="rv rv2" style="margin-bottom:24px;">Marcas y credenciales</h2>
-      <div id="respaldo-grid" class="brand-grid">
+      <h2 class="rv rv2">Quién nos certificó</h2>
+      <p class="muted rv rv3" style="margin:10px 0 24px;">Antes de contarte con qué instalamos, esto es lo que otros verificaron sobre nosotros.</p>
+      <div class="cred-mini-grid">
+        <div class="cred-mini-card rv">
+          <h3>Control4</h3>
+          <p>Dealer oficial desde 2023. Soporte de fábrica y actualizaciones directas, sin intermediarios.</p>
+        </div>
+        <div class="cred-mini-card rv rv2">
+          <h3>Hikvision</h3>
+          <p>Certified Partner desde 2025. Repuestos y soporte técnico garantizado en Argentina.</p>
+        </div>
+        <div class="cred-mini-card rv rv3">
+          <h3>Philips Hue</h3>
+          <p>Distribuidor oficial, con showroom propio. Todo el ecosistema instalado y funcionando antes de que decidas.</p>
+        </div>
+        <div class="cred-mini-card rv">
+          <h3>Yale</h3>
+          <p>Distribuidor e instalador oficial en la provincia. Respondemos nosotros mismos ante cualquier service.</p>
+        </div>
+        <div class="cred-mini-card rv rv2">
+          <h3>CEDIA</h3>
+          <p>Miembro desde 2024. La asociación internacional que certifica a la industria de integración de sistemas para el hogar.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="insignia">
+    <div class="wrap">
+      <p class="eyebrow rv">Ecosistema</p>
+      <h2 class="rv rv2" style="margin-bottom:12px;">Marcas insignia</h2>
+      <p class="muted rv rv3" style="margin-bottom:24px;">Las seis plataformas sobre las que construimos nuestra propuesta técnica — por relación real con cada marca, no por volumen de obra.</p>
+      <div id="insignia-grid" class="brand-grid">
         <p class="muted rv in">Cargando marcas…</p>
       </div>
-      <p class="cred-note">Dealer oficial Control4 desde 2023. Distribuidor oficial Philips Hue. Distribuidor e instalador oficial Yale. Hikvision Certified Partner desde 2025. Miembro CEDIA desde 2024. Las marcas de terceros son credencial, no protagonista — Nova Domus es siempre el responsable de la instalación completa.</p>
+    </div>
+  </section>
+
+  <section class="section" id="audio">
+    <div class="wrap">
+      <p class="eyebrow rv">Audio y entretenimiento</p>
+      <h2 class="rv rv2" style="margin-bottom:12px;">Dos canales, un solo responsable</h2>
+      <p class="muted rv rv3" style="margin-bottom:24px;">Audio premium por el canal Dystech, y equipos reconocidos por el canal Melman — en los dos casos, la instalación y configuración las hacemos nosotros.</p>
+      <p class="audio-label rv">Ecosistema premium</p>
+      <div id="audio-premium-grid" class="brand-grid">
+        <p class="muted rv in">Cargando…</p>
+      </div>
+      <p class="audio-label rv" style="margin-top:32px;">Equipos que instalamos y configuramos</p>
+      <div id="audio-reventa-grid" class="brand-grid">
+        <p class="muted rv in">Cargando…</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="infraestructura" style="padding-bottom:80px;">
+    <div class="wrap">
+      <p class="eyebrow rv">Soporte</p>
+      <h2 class="rv rv2" style="margin-bottom:12px;">Infraestructura</h2>
+      <p class="muted rv rv3" style="margin-bottom:24px;">La base que sostiene todo lo demás: redes, cámaras de entrada y climatización inteligente.</p>
+      <div id="infra-grid" class="infra-grid">
+        <p class="muted rv in">Cargando…</p>
+      </div>
     </div>
   </section>
 </main>
