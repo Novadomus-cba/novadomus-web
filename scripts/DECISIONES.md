@@ -153,24 +153,41 @@ chequeo por lista blanca de chunks RIFF. Se limpió con `scripts/strip_webp_chun
 37.186 B, sin recomprimir). **Verificar por lista blanca cada imagen generada, siempre**, es el mismo
 síntoma ya registrado en "Trampas ya pagadas" pero por un canal nuevo (el zip de handoff).
 
-**Estado (13/09/2026).** Hechas y publicadas 5 de 7: `instalacion-electrica`, `redes`,
-`videovigilancia`, `alarmas`, `audio-video`. Las cuatro últimas llegaron en 3:4 nativo (1792×2400),
-así que llevan `srcset` con 640w y 960w reales.
+**Estado (13/09/2026).** Las 7 tarjetas hechas y publicadas. Las cinco primeras
+(`instalacion-electrica`, `redes`, `videovigilancia`, `alarmas`, `audio-video`) pasaron los
+guardrails sin observaciones. Las dos últimas entraron con una decisión explícita de Agustín, ver
+abajo.
 
-**Rechazadas, pendientes de regenerar — 2:**
+### Las dos tarjetas que entraron con waiver (13/09/2026)
 
-- `cerraduras`: la imagen entregada tiene el **wordmark de Yale legible** sobre la cerradura, más el
-  teclado numérico y la palabra "CARD" en texto legible. Falla dos guardrails a la vez (logo de
-  tercero, y texto en cuadro) y además clona el diseño de un producto real, que es exactamente el
-  riesgo que este kickoff venía a evitar. No se retoca para sacarle el logo: aunque se le borre, sigue
-  siendo una réplica generada del producto. Se regenera con herraje genérico. Llegó 2048×2048, además,
-  fuera de 3:4.
-- `domotica`: la imagen entregada tiene una **tablet mostrando una interfaz con tiles y texto** sobre
-  la mesada — el mismo artefacto de generación que ya tenía el poster del hero y que motivó el
-  guardrail. Llegó 2216×1920, apaisada, también fuera de 3:4. Se regenera sin pantallas en cuadro.
+Ambas se habían rechazado en la auditoría. **Agustín las aprobó igual, explícitamente**, y se
+publicaron con el recorte a 3:4 que les faltaba. Queda anotado qué se levantó y qué no:
 
-Hasta que esas dos estén, sus tarjetas siguen mostrando la foto actual y la excepción está aplicada
-parcialmente. El preview de video en hover les funciona igual.
+**`domotica`** — la imagen entregada tenía una tablet con interfaz y texto sobre la mesada, además
+de venir apaisada (2216×1920). **El recorte a 3:4 dejó la tablet fuera de cuadro**: se tomó el
+sector izquierdo (0,0)–(1440,1920), que es el que tiene el cove LED, la pared de hormigón y el
+ventanal. O sea que el guardrail de "sin UI con texto" terminó cumpliéndose por geometría, no por
+waiver — lo único que se levantó fue el criterio de regenerar en vez de recortar. Queda visible el
+teclado de pared a la izquierda, de unos 5 px a tamaño de tarjeta: mancha, no texto.
+
+**`cerraduras`** — la imagen entregada tiene el **wordmark de Yale legible** sobre la cerradura y
+el teclado numérico con texto ("CARD" y los dígitos), y es una réplica cercana de un producto Yale
+real. Vino cuadrada (2048×2048). Se recortó a 3:4 tomando (512,0)–(2048,2048), el encuadre más
+parecido al del video hero, que además deja el logo más chico dentro del cuadro.
+
+- **Lo que se levantó:** la regla de que una imagen *generada* no clone el diseño de un producto de
+  una marca puntual ni muestre su logo. Nova Domus es partner de Yale y la decisión es de Agustín.
+- **Lo que NO se hizo, a propósito: no se le borró el logo por retoque.** Sacarle la marca no
+  arregla nada — deja un clon sin identificar de un producto real, que es peor que mostrarlo de
+  frente. Si en algún momento se quiere sin marca, se regenera con herraje genérico (la variante
+  del tirador vertical con tira luminosa está en el kickoff), no se retoca esta.
+- **Alcance:** esta tarjeta y nada más. No habilita imágenes generadas con marcas de terceros en
+  ningún otro slot del sitio, ni en propuestas, ni en redes.
+
+**Contraste verificado en navegador** (título crema `#FDFBF0` sobre el píxel más claro que queda
+detrás, con el degradado aplicado): las 7 pasan WCAG AA. La más ajustada es `cerraduras` con
+**7,69:1** y le sigue `domotica` con **11,97:1**; el resto está por encima de 17:1. El mínimo AA es
+4,5:1.
 
 ## Vetadas — no usar nunca
 
