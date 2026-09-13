@@ -131,6 +131,9 @@ body.scroll-lock{overflow:hidden;}
 .carousel__progress{position:relative;height:3px;border-radius:2px;background:var(--line);overflow:hidden;max-width:220px;margin:20px auto 0;}
 .carousel__progress-thumb{position:absolute;inset:0 auto 0 0;width:100%;display:block;background:var(--dorado);border-radius:2px;transform-origin:left center;will-change:transform;}
 
+.photo-card{flex:0 0 auto;height:clamp(240px,46vw,340px);scroll-snap-align:start;}
+.photo-card img{height:100%;width:auto;max-width:78vw;object-fit:cover;display:block;border-radius:16px;background:var(--azul-nova);}
+
 .services-note{margin-top:24px;font-size:.85rem;color:var(--text-secondary);}
 .services-note strong{color:var(--crema);font-weight:600;}
 .services-note a{color:var(--dorado);text-decoration:underline;}
@@ -398,14 +401,6 @@ body.scroll-lock{overflow:hidden;}
 }
 
 .gallery-block{padding:60px 0;}
-.tabs{display:flex;gap:10px;margin-bottom:24px;flex-wrap:wrap;}
-.tabs button{font-size:.82rem;padding:9px 16px;border:1px solid var(--line);border-radius:999px;color:var(--text-secondary);}
-.tabs button.active{border-color:var(--dorado);color:var(--dorado);}
-.gallery-empty{border:1px dashed var(--border);border-radius:14px;padding:48px 24px;text-align:center;color:var(--text-secondary);}
-.gallery-empty b{display:block;color:var(--crema);font-family:'Michroma';font-size:.85rem;margin-bottom:8px;text-transform:uppercase;}
-.gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;}
-.gallery-grid figure{margin:0;border-radius:14px;overflow:hidden;background:var(--azul-nova);aspect-ratio:9/16;}
-.gallery-grid img{width:100%;height:100%;object-fit:cover;display:block;}
 
 .btn{display:inline-flex;align-items:center;gap:8px;padding:13px 24px;border-radius:999px;font-weight:600;font-size:.92rem;transition:transform .2s,border-color .2s;}
 .btn-outline{border:1px solid var(--line);color:var(--crema);}
@@ -1363,32 +1358,29 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
   <section class="gallery-block">
     <div class="wrap">
       <p class="eyebrow rv">Galería</p>
-      <h2 class="rv rv2" style="margin-bottom:24px;">Fotos de obra</h2>
-      <div data-gallery-tabs>
-        <div class="tabs">
-          <button data-tab="todas" class="active">Todas</button>
-          <button data-tab="ext">Fotos externas</button>
-          <button data-tab="int">Fotos internas</button>
-        </div>
-        <div data-tab-panel="todas">
-          <div class="gallery-grid">
-            <figure><img src="assets/img/gallery-externa-cartel-360.webp" width="360" height="640" loading="lazy" decoding="async" alt="Cartel iluminado de Nova Domus sobre la fachada de Av. Colón 3835, con efecto de color RGB controlado por WiZ"></figure>
-            <figure><img src="assets/img/gallery-interna-rack-360.webp" width="360" height="640" loading="lazy" decoding="async" alt="Rack de seguridad con NVR y monitor mostrando cámaras en vivo de una obra"></figure>
-            <figure><img src="assets/img/gallery-interna-tablero-360.webp" width="360" height="640" loading="lazy" decoding="async" alt="Tablero eléctrico abierto con las llaves térmicas identificadas, durante la instalación de un módulo Shelly"></figure>
-          </div>
-        </div>
-        <div data-tab-panel="ext" hidden>
-          <div class="gallery-grid">
-            <figure><img src="assets/img/gallery-externa-cartel-360.webp" width="360" height="640" loading="lazy" decoding="async" alt="Cartel iluminado de Nova Domus sobre la fachada de Av. Colón 3835, con efecto de color RGB controlado por WiZ"></figure>
-          </div>
-        </div>
-        <div data-tab-panel="int" hidden>
-          <div class="gallery-grid">
-            <figure><img src="assets/img/gallery-interna-rack-360.webp" width="360" height="640" loading="lazy" decoding="async" alt="Rack de seguridad con NVR y monitor mostrando cámaras en vivo de una obra"></figure>
-            <figure><img src="assets/img/gallery-interna-tablero-360.webp" width="360" height="640" loading="lazy" decoding="async" alt="Tablero eléctrico abierto con las llaves térmicas identificadas, durante la instalación de un módulo Shelly"></figure>
-          </div>
-        </div>
-      </div>
+      <h2 class="rv rv2" style="margin-bottom:8px;">Fotos de obra</h2>
+      <p class="services__lede rv rv2 muted">Documentación real de instalaciones propias — deslizá para ver más.</p>
+    </div>
+    <div class="carousel wrap">
+      <button type="button" class="carousel__nav prev" aria-label="Fotos anteriores" hidden data-carousel-prev>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <ul class="carousel__track" id="gallery-track" role="list" tabindex="0" aria-label="Fotos de obra de Nova Domus">
+        <li class="photo-card"><img src="assets/img/gallery-externa-cartel-360.webp" width="360" height="640" loading="lazy" decoding="async" alt="Cartel iluminado de Nova Domus sobre la fachada de Av. Colón 3835, con efecto de color RGB controlado por WiZ"></li>
+        <li class="photo-card"><img src="assets/img/gallery-camara-pared-1080.webp" width="1080" height="1350" loading="lazy" decoding="async" alt="Cámara de seguridad domo instalada en una pared exterior, con el cielo despejado de fondo"></li>
+        <li class="photo-card"><img src="assets/img/gallery-rack-omada-720.webp" width="720" height="740" loading="lazy" decoding="async" alt="Switch de red TP-Link Omada con el cableado prolijamente peinado y etiquetado"></li>
+        <li class="photo-card"><img src="assets/img/gallery-monitoreo-720.webp" width="720" height="1280" loading="lazy" decoding="async" alt="Rack de networking con NVR y monitor mostrando la vista aérea de cámaras de seguridad de un edificio"></li>
+        <li class="photo-card"><img src="assets/img/gallery-bombilla-1080.webp" width="1080" height="1350" loading="lazy" decoding="async" alt="Mano sosteniendo un celular que controla la intensidad de una lámpara colgante, con más luces cálidas de fondo"></li>
+        <li class="photo-card"><img src="assets/img/gallery-interna-tablero-360.webp" width="360" height="640" loading="lazy" decoding="async" alt="Tablero eléctrico abierto con las llaves térmicas identificadas, durante la instalación de un módulo Shelly"></li>
+        <li class="photo-card"><img src="assets/img/gallery-camara-cenital-720.webp" width="720" height="770" loading="lazy" decoding="async" alt="Cámara de seguridad exterior vista desde abajo, montada sobre la fachada junto a una ventana con rejas"></li>
+        <li class="photo-card"><img src="assets/img/gallery-potrero-360.webp" width="360" height="640" loading="lazy" decoding="async" alt="Instalador trabajando sobre una escalera en el exterior de una vivienda moderna, durante la etapa de terminaciones"></li>
+        <li class="photo-card"><img src="assets/img/gallery-interna-rack-360.webp" width="360" height="640" loading="lazy" decoding="async" alt="Rack de seguridad con NVR y monitor mostrando cámaras en vivo de una obra"></li>
+        <li class="photo-card"><img src="assets/img/gallery-parlantes-360.webp" width="360" height="640" loading="lazy" decoding="async" alt="Parlante embutido en el cielorraso, con una columna de audio empotrada en el pasillo de fondo"></li>
+      </ul>
+      <button type="button" class="carousel__nav next" aria-label="Fotos siguientes" data-carousel-next>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="carousel__progress" aria-hidden="true"><span class="carousel__progress-thumb"></span></div>
     </div>
   </section>
 </main>

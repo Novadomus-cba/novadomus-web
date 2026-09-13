@@ -138,29 +138,10 @@
     if (el) el.textContent = new Date().getFullYear();
   }
 
-  function initGalleryTabs() {
-    var tabGroups = document.querySelectorAll('[data-gallery-tabs]');
-    tabGroups.forEach(function (group) {
-      var buttons = group.querySelectorAll('[data-tab]');
-      var panels = group.querySelectorAll('[data-tab-panel]');
-      buttons.forEach(function (btn) {
-        btn.addEventListener('click', function () {
-          buttons.forEach(function (b) { b.classList.remove('active'); });
-          btn.classList.add('active');
-          var target = btn.getAttribute('data-tab');
-          panels.forEach(function (p) {
-            p.hidden = p.getAttribute('data-tab-panel') !== target;
-          });
-        });
-      });
-    });
-  }
-
   document.addEventListener('DOMContentLoaded', function () {
     initMobileMenu();
     initStickySubnav();
     initReveal();
     initFooterYear();
-    initGalleryTabs();
   });
 })();
