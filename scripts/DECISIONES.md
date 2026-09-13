@@ -72,7 +72,7 @@ texto para lector de pantalla.
 |---|---|---|---|---|
 | `videovigilancia` | tarjeta | `nd-srv-videovigilancia-tarjeta-v-02` | 3:4, **ancla abajo** (opción 2c) | la cámara está en el tercio inferior; centrado o arriba queda casi todo cielo |
 | `videovigilancia` | hero | video (3 archivos: av1, h264, poster) | recorte de origen 1120×630 (no 1130×636 como los otros 4 paneles de video — el sello de agua de este clip estaba más a la izquierda, sigue siendo 16:9 válido) | **pasa de foto a video** (11/09/2026). Sin `data-panel-video-once`: loopea, trae el ping-pong horneado |
-| `instalacion-electrica` | tarjeta | `4-ILUMINACION.pdf` pág. 1 (plano propio) | 3:4 del ala densa de planta baja | rótulo **fuera** del recorte, no tapado. Fondo pasado a crema `#FDFBF0` con blend multiply: cambia el papel sin tocar los trazos |
+| `instalacion-electrica` | tarjeta | ~~`4-ILUMINACION.pdf` pág. 1 (plano propio)~~ → **imagen generada** | 3:4 nativo (640×857) | **SUPERSEDIDA el 13/09/2026** por la excepción de tarjetas generadas (ver sección abajo). El criterio del plano — rótulo fuera del recorte, fondo a crema `#FDFBF0` con blend multiply — queda registrado por si se vuelve atrás; el archivo del plano no se borró de `Fotos/` |
 | `instalacion-electrica` | hero | el archivo que ya estaba | sin cambios | |
 | `redes` | bloque 1 | `nd-srv-redes-bloque-h-01.jpg` | sin recorte, 16:10 | rack instalado, coincide con el copy ya publicado |
 | `redes` | bloque 2 | `nd-srv-redes-bloque-v-02.jpeg` | sin recorte, ratio original | rack en banco de armado — original de 720px, calidad justa |
@@ -103,6 +103,59 @@ El rótulo original del plano dice el nombre del estudio, el identificador de la
 barrio, y el PDF hermano de interiorismo nombra al comitente. **Nada de eso entra en el
 recorte.** Lo único legible son leyendas técnicas neutras. Si hay que recortar más, se recorta;
 no se tapa con un rectángulo.
+
+## Excepción: imágenes generadas en las tarjetas de servicios (13/09/2026)
+
+**Qué se decidió.** Las 7 tarjetas del carrusel de `servicios.html` (`.card__link img`) dejan de
+usar foto real propia y pasan a usar una still atmosférica generada con Gemini, coherente en
+estilo con el video hero que cada panel ya tiene.
+
+**Quién y cuándo.** Autorizada explícitamente por **Agustín Davila** (dueño/director), 13/09/2026,
+después de discutir el tradeoff. No es un descuido del pipeline ni una decisión de Claude.
+
+**Por qué.** El hero de cada panel ya es video generado con Gemini/Flow desde el 11/09/2026 —
+ver las filas de `videovigilancia`, `alarmas` y `audio-video` en la tabla de arriba. La tarjeta
+era el último lugar donde seguía vigente la regla de foto real, y el salto visual entre una
+tarjeta documental y un hero atmosférico se notaba. La excepción unifica el lenguaje visual del
+componente, y además permite que la tarjeta y su preview en hover sean literalmente la misma
+escena.
+
+**Alcance exacto — solo esto:**
+
+- Las 7 imágenes de tarjeta (`.card__link img`) de `servicios.html`.
+
+**Lo que NO cubre, y sigue con foto real propia sin ningún cambio:**
+
+- Los bloques documentales dentro de cada panel (`.panel__block img`) — fotos de Lucas, pipeline
+  de `foto_audit.py` intacto. Son la prueba de obra propia; ahí la regla general sigue entera.
+- `obras.html` y `vidriera.html` — ninguna relación con esta tarea.
+- Cualquier pieza fuera del sitio: propuestas comerciales, redes sociales, presentaciones.
+
+**Guardrails que toda tarjeta generada tiene que pasar antes de entrar** (salieron de inspeccionar
+los posters ya en producción, no son hipotéticos):
+
+- Sin texto ni UI en pantalla. El poster real de Domótica muestra una TV con una interfaz de texto
+  inventado — artefacto típico de generación. Si la escena tiene pantalla: apagada o fuera de foco.
+- Sin réplica cercana del diseño de un producto de una marca puntual. Una foto **real** de un Yale
+  instalado está perfecta (ver "Marcas en fotos: sin restricción" más abajo, esa regla no cambia).
+  Una imagen **generada** que clona el diseño de una marca es un riesgo distinto: herraje genérico.
+- Sin logos de terceros visibles, sin personas fabricadas o identificables.
+- Paleta oscura + acento cálido dorado; nunca el dorado como relleno de superficie grande.
+- Composición vertical 3:4 nativa — no generar horizontal y recortar después.
+
+**Procesamiento.** WebP a 640px de ancho, quality ~82. Es el único breakpoint real: el HTML usa
+`sizes="320px"`, así que 640w ya cubre retina 2x. Se suma un `-960.webp` al `srcset` **solo** si la
+nativa de Gemini da 960px o más — si no, va `src` a secas sin `srcset`, sin inventar un 960w falso.
+
+**La trampa del C2PA se repite por este canal.** La imagen de `instalacion-electrica` llegó con un
+manifiesto **C2PA de 5759 bytes** inyectado. `im.info` de PIL **no lo muestra** — solo lo detecta el
+chequeo por lista blanca de chunks RIFF. Se limpió con `scripts/strip_webp_chunks.py` (42.954 B →
+37.186 B, sin recomprimir). **Verificar por lista blanca cada imagen generada, siempre**, es el mismo
+síntoma ya registrado en "Trampas ya pagadas" pero por un canal nuevo (el zip de handoff).
+
+**Estado.** `instalacion-electrica` hecha y publicada. Faltan las 6 restantes: `redes`, `domotica`,
+`videovigilancia`, `cerraduras`, `alarmas`, `audio-video` — hasta que estén, esas 6 tarjetas siguen
+mostrando su foto actual y la excepción está aplicada solo parcialmente.
 
 ## Vetadas — no usar nunca
 
