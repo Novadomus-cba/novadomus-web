@@ -3,13 +3,37 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nosotros — Nova Domus</title>
-<meta name="description" content="Nova Domus integra obra eléctrica, redes y domótica con equipo propio: un solo responsable de punta a punta. Miembros CEDIA, Hikvision Certified, distribuidor oficial Philips Hue.">
+<title>Nosotros — Nova Domus | Domótica e integración tecnológica en Córdoba</title>
+<meta name="description" content="Empresa integradora de tecnología en Córdoba. Electricistas matriculados y programadores certificados propios, Control4 y Home Assistant, obra eléctrica, redes y seguridad. Showroom en Av. Colón 3835, sin cita previa.">
 <meta property="og:title" content="Nosotros — Nova Domus">
 <meta property="og:description" content="Un solo responsable, de la obra a la app.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://nova-domus.com.ar/nosotros.html">
+<meta property="og:url" content="https://novadomus-cba.github.io/novadomus-web/nosotros.html">
+<link rel="canonical" href="https://novadomus-cba.github.io/novadomus-web/nosotros.html">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "Nova Domus",
+  "legalName": "NDWD SAS",
+  "description": "Empresa integradora de tecnología: obra eléctrica, redes, domótica y seguridad, con equipo propio.",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Av. Colón 3835",
+    "addressLocality": "Córdoba",
+    "addressRegion": "Córdoba",
+    "addressCountry": "AR"
+  },
+  "telephone": "+54-351-674-7513",
+  "email": "admin@nova-domus.com.ar",
+  "openingHours": ["Mo-Fr 09:00-17:00"],
+  "sameAs": [
+    "https://www.instagram.com/nova_domus_domotica",
+    "https://www.facebook.com/NovaDomusCba"
+  ]
+}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Michroma&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -36,7 +60,7 @@ input,textarea,select{font:inherit;color:inherit;}
 p{line-height:1.6;max-width:62ch;}
 .rv{opacity:0;transform:translateY(26px);transition:opacity .7s cubic-bezier(.25,.1,.25,1),transform .7s cubic-bezier(.25,.1,.25,1);}
 .rv.in{opacity:1;transform:translateY(0);}
-.rv2{transition-delay:.08s;} .rv3{transition-delay:.16s;} .rv4{transition-delay:.24s;} .rv5{transition-delay:.32s;} .rv6{transition-delay:.4s;}
+.rv2{transition-delay:.08s;} .rv3{transition-delay:.16s;} .rv4{transition-delay:.24s;} .rv5{transition-delay:.32s;} .rv6{transition-delay:.4s;} .rv7{transition-delay:.48s;}
 @media (prefers-reduced-motion:reduce){ .rv{opacity:1 !important;transform:none !important;transition:none !important;} html{scroll-behavior:auto;} }
 
 .nav{position:fixed;top:0;left:0;right:0;z-index:60;background:linear-gradient(180deg,rgba(11,19,43,.96),rgba(11,19,43,.7) 80%,transparent);backdrop-filter:blur(6px);}
@@ -116,16 +140,49 @@ p{line-height:1.6;max-width:62ch;}
 @media (max-width:700px){.room-inner{padding:32px 26px;}}
 
 .stat-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-top:30px;}
+.stat-grid.stat-grid--4{grid-template-columns:repeat(4,1fr);}
 .stat-cell{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px;}
 .stat-cell b{font-family:'Michroma';font-size:.78rem;color:var(--dorado);display:block;margin-bottom:8px;letter-spacing:.03em;}
 .stat-cell span{display:block;font-size:.85rem;font-weight:600;margin-bottom:6px;}
 .stat-cell p{font-size:.8rem;color:var(--text-secondary);margin:0;}
 @media (max-width:820px){.stat-grid{grid-template-columns:repeat(2,1fr);}}
 
+/* Foto de equipo, sin recorte forzado -- una sola, sin pie de foto */
+.origin-photo{margin-top:32px;border-radius:20px;overflow:hidden;background:var(--surface);box-shadow:0 20px 50px rgba(0,0,0,.35);}
+.origin-photo img{width:100%;height:auto;display:block;}
+
+/* #para-quien: dos columnas de HTML plano, funciona sin JS (no son tabs) */
+.trade-split{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:36px;align-items:start;}
+@media (max-width:820px){.trade-split{grid-template-columns:1fr;gap:28px;}}
+.trade-col{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:32px;}
+@media (max-width:700px){.trade-col{padding:28px 24px;}}
+.trade-col h3{font-size:1.05rem;margin-bottom:14px;}
+.trade-col > p:first-of-type{color:var(--text-secondary);font-size:.92rem;margin-bottom:18px;}
+.trade-list{list-style:none;margin:0 0 22px;padding:0;display:flex;flex-direction:column;gap:12px;}
+.trade-list li{font-size:.92rem;padding-left:20px;position:relative;}
+.trade-list li::before{content:'·';position:absolute;left:2px;color:var(--dorado);font-weight:700;}
+.trade-media{border-radius:14px;overflow:hidden;margin-bottom:18px;background:var(--azul-nova);max-width:220px;}
+.trade-media img{width:100%;height:auto;display:block;}
+.trade-secondary{margin-top:14px;font-size:.82rem;color:var(--text-secondary);}
+.trade-secondary p{margin:0 0 6px;max-width:none;}
+.trade-secondary a{color:var(--dorado);text-decoration:underline;}
+
+/* #showroom: caja de horario/dirección */
+.showroom-info{margin-top:22px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:22px 26px;display:inline-flex;flex-direction:column;gap:4px;}
+.showroom-info strong{font-size:.95rem;}
+.showroom-info span{font-size:.85rem;color:var(--text-secondary);}
+
+/* #respaldo, "Dónde nos viste": tira de fotos a alto fijo, sin forzar el mismo recorte
+   en fotos de aspectos muy distintos (720x406 vs 1080x1920) -- mismo criterio que el
+   carrusel de servicios.html. */
+.presence-grid{display:flex;flex-wrap:wrap;gap:14px;margin-top:26px;}
+.presence-grid figure{margin:0;height:220px;border-radius:14px;overflow:hidden;background:var(--azul-nova);}
+.presence-grid img{height:100%;width:auto;max-width:70vw;object-fit:cover;display:block;}
+
 .split{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;margin-top:8px;}
-.split-media{border-radius:20px;overflow:hidden;background:var(--surface);box-shadow:0 20px 50px rgba(0,0,0,.35);}
-.split-media img{width:100%;height:100%;object-fit:cover;display:block;max-height:520px;}
-@media (max-width:820px){.split{grid-template-columns:1fr;gap:24px;} .split-media img{max-height:420px;}}
+.split-media{border-radius:20px;overflow:hidden;background:var(--surface);box-shadow:0 20px 50px rgba(0,0,0,.35);aspect-ratio:4/5;}
+.split-media img{width:100%;height:100%;object-fit:cover;display:block;}
+@media (max-width:820px){.split{grid-template-columns:1fr;gap:24px;} .split-media{aspect-ratio:16/10;}}
 
 .stages{margin-top:44px;}
 .stages-row{display:flex;justify-content:space-between;list-style:none;margin:0;padding:0;position:relative;}
@@ -218,6 +275,7 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
     <div class="wrap">
       <p class="eyebrow rv">Quiénes somos</p>
       <h1 class="rv rv2">Un solo responsable, de la obra a la app</h1>
+      <p class="manifest rv rv3" style="margin-top:14px;font-size:1.05rem;">Somos una empresa integradora de tecnología de Córdoba. Hacemos la obra eléctrica, las redes y la automatización con equipo propio — y respondemos por las tres.</p>
     </div>
   </section>
 
@@ -233,8 +291,10 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
   <div class="wrap">
     <nav class="anchor-index" aria-label="Conocé todo sobre Nova Domus">
       <a href="#manifiesto">Manifiesto</a>
-      <a href="#direccion-obra">Dirección de Obra</a>
+      <a href="#origen">Origen</a>
+      <a href="#direccion-obra">Cómo trabajamos</a>
       <a href="#habitaciones">4 habitaciones</a>
+      <a href="#showroom">Showroom</a>
       <a href="#respaldo">Respaldo</a>
       <a href="#faq">Preguntas frecuentes</a>
     </nav>
@@ -243,12 +303,68 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
   <section class="section" id="manifiesto">
     <div class="wrap">
       <p class="eyebrow rv">Del cable a la app</p>
-      <p class="manifest rv rv2">En una obra con domótica normalmente coordinás tres proveedores distintos: el electricista, el de redes y el integrador. Cuando algo falla, cada uno señala al otro y el problema queda en el medio. <b>Nosotros hacemos las tres cosas con equipo propio:</b> la obra eléctrica con electricistas matriculados, las redes, y la automatización con Home Assistant — sistema abierto, sin ataduras a un fabricante. Un solo responsable de la obra a la app.</p>
+      <p class="manifest rv rv2">En una obra con integración tecnológica normalmente coordinás tres proveedores distintos: el electricista, el de redes y el integrador de automatización. Cuando algo falla, cada uno señala al otro y el problema queda en el medio.</p>
+      <p class="manifest rv rv3" style="margin-top:18px;"><b>Nuestros electricistas son nuestros. Nuestros programadores también.</b> Son dos oficios distintos y, casi siempre, personas distintas: los electricistas matriculados hacen la obra eléctrica; los programadores certificados hacen la automatización — en Control4 cuando el proyecto pide una plataforma cerrada y respaldada por fábrica, y en Home Assistant cuando pide una abierta y sin licencias. No subcontratamos.</p>
+      <div class="incremental rv rv4">
+        <p>Somos la única empresa integradora de tecnología en Argentina que combina, con equipo propio, electricistas matriculados y programadores certificados — tanto en Control4 como en sistemas abiertos como Home Assistant — todo bajo un mismo responsable y sin subcontratar.</p>
+      </div>
       <div class="promise-row">
-        <span class="chip hl rv rv3">Queda funcionando y documentado</span>
-        <span class="chip rv rv4">Electricistas matriculados propios</span>
-        <span class="chip rv rv5">Sin subcontratar</span>
-        <span class="chip rv rv6">Home Assistant — sistema abierto</span>
+        <span class="chip hl rv rv5">Queda funcionando y documentado</span>
+        <span class="chip rv rv6">Electricistas matriculados propios</span>
+        <span class="chip rv rv7">Programadores certificados propios</span>
+        <span class="chip rv">Control4 y Home Assistant</span>
+        <span class="chip rv rv2">Sin subcontratar</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="origen">
+    <div class="wrap">
+      <p class="eyebrow rv">Desde 2023</p>
+      <h2 class="rv rv2" style="margin-bottom:18px;">Nacimos de la fusión de tres oficios</h2>
+      <p class="rv rv3">Nova Domus nació de juntar tres oficios que en Córdoba trabajaban separados: los que piensan la obra, los que la cablean y los que la programan. Arrancamos en Casa FOA 2023, en Manantiales, y de ahí no paramos. La misión no cambió desde el primer día — hacer que la tecnología de automatización y confort que ya existía en el mundo fuera alcanzable acá, en una obra real, con un presupuesto real.</p>
+      <div class="stat-grid stat-grid--4 rv rv4">
+        <div class="stat-cell"><b>2023</b><p><strong style="color:var(--crema);">Casa FOA, Edición Manantiales</strong> — nuestra primera obra como Nova Domus. Primera instalación de cerraduras digitales Yale. Integradores pioneros de Shelly en la provincia. Dealer Control4. Abrimos el showroom de Av. Colón 3835.</p></div>
+        <div class="stat-cell"><b>2024</b><p>Miembros de CEDIA, la asociación internacional de la industria. Casa FOA Edición 40, en Buenos Aires. Proyectar Córdoba, con cerraduras Yale en el stand de NAOS Aberturas.</p></div>
+        <div class="stat-cell"><b>2025</b><p>Hikvision Certified Partner. Casa FOA junto a la Facultad de Arte y Diseño de la UPC.</p></div>
+        <div class="stat-cell"><b>2026</b><p>Cuarto año consecutivo en Casa FOA — Espacio 18, con sistema de audio 3.1. Proyectar Córdoba con stand propio y entrevista de Canal C.</p></div>
+      </div>
+      <figure class="origin-photo rv rv5">
+        <img src="assets/img/nosotros-equipo-2026-1440.webp" srcset="assets/img/nosotros-equipo-2026-640.webp 640w, assets/img/nosotros-equipo-2026-960.webp 960w, assets/img/nosotros-equipo-2026-1440.webp 1440w" sizes="(max-width:1120px) 100vw, 1076px" width="1600" height="899" loading="lazy" decoding="async" alt="Gran parte del equipo de Nova Domus reunido para una foto grupal">
+      </figure>
+    </div>
+  </section>
+
+  <section class="section" id="para-quien">
+    <div class="wrap">
+      <p class="eyebrow rv">Cómo entramos</p>
+      <h2 class="rv rv2" style="margin-bottom:12px;">Dos maneras de trabajar juntos</h2>
+      <p class="rv rv3">Trabajamos con vos, con tu arquitecto y con tu constructor — sobre los mismos planos. Lo que cambia es en qué momento entramos y qué necesitás de nosotros.</p>
+      <div class="trade-split">
+        <div class="trade-col rv rv4">
+          <h3>Si estás construyendo o reformando tu casa</h3>
+          <p>Lo primero que querés saber no es qué marca usamos: es qué pasa el día que algo no prende. Por eso te lo decimos ahora.</p>
+          <ul class="trade-list">
+            <li>Venís al showroom y lo tocás antes de decidir. Sin cita previa.</li>
+            <li>Podés empezar por una habitación e integrar el resto después, sin rehacer nada.</li>
+            <li>Te entregamos el sistema configurado y a tu nombre, con capacitación de uso.</li>
+            <li>Si algo falla en los primeros 12 meses, lo resolvemos nosotros.</li>
+          </ul>
+          <a class="btn btn-primary" href="https://wa.me/543516747513?text=Hola%20Nova%20Domus%2C%20quiero%20coordinar%20una%20visita%20al%20showroom" target="_blank" rel="noopener">Coordinar una visita al showroom</a>
+        </div>
+        <div class="trade-col rv rv5">
+          <h3>Si dirigís la obra</h3>
+          <figure class="trade-media">
+            <img src="assets/img/nosotros-obra-electrica-960.webp" srcset="assets/img/nosotros-obra-electrica-640.webp 640w, assets/img/nosotros-obra-electrica-960.webp 720w" sizes="220px" width="720" height="960" loading="lazy" decoding="async" alt="Estructura de hormigón visto en una obra en construcción, escalera todavía sin terminar">
+          </figure>
+          <p>Para arquitectos, estudios y desarrolladoras.</p>
+          <p>Entramos en anteproyecto, cuando las previsiones todavía se dibujan y no se pican. Coordinamos tiempos con el resto de los gremios, resolvemos los cambios de obra en el momento y al cierre entregás una instalación certificada y documentada — planos de lo que quedó instalado, rotulado y accesible.</p>
+          <a class="btn btn-primary" href="https://wa.me/543516747513?text=Hola%20Nova%20Domus%2C%20quiero%20pedir%20una%20charla%20t%C3%A9cnica%20para%20mi%20estudio" target="_blank" rel="noopener" style="margin-top:16px;">Pedir una charla técnica para tu estudio</a>
+          <div class="trade-secondary">
+            <p>También: llevamos a tu cliente al showroom y se lo mostramos funcionando.</p>
+            <p>Y te pasamos la <a href="assets/docs/nova-domus-planilla-previsiones.xlsx" download>planilla de previsiones eléctricas y de red</a> (.xlsx, 17 KB) para que entre en el pliego.</p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -256,13 +372,14 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
   <section class="section" id="direccion-obra">
     <div class="wrap">
       <p class="eyebrow rv">Un solo responsable</p>
-      <h2 class="rv rv2" style="margin-bottom:18px;">Dirección de Obra</h2>
+      <h2 class="rv rv2" style="margin-bottom:18px;">Cómo trabajamos</h2>
       <div class="split">
         <div class="rv rv3">
-          <p>Coordinar electricista, integrador y arquitecto por separado es donde la mayoría de las obras se traban: cuando algo se demora, cada proveedor señala al de al lado y el cronograma queda en el medio. Dirigimos la obra de punta a punta con instaladores matriculados propios — coordinamos tiempos con el resto de los gremios, resolvemos los cambios de obra en el momento y entregamos la certificación correspondiente al cierre.</p>
+          <p>Coordinar electricista, integrador y arquitecto por separado es donde la mayoría de las obras se traban: cuando algo se demora, cada proveedor señala al de al lado y el cronograma queda en el medio. Dirigimos la obra de punta a punta con instaladores propios, coordinamos tiempos con el resto de los gremios y resolvemos los cambios de obra en el momento.</p>
+          <p style="margin-top:14px;">Y la entregamos documentada. No es un adorno de cierre: es lo que hace que dentro de tres años alguien pueda abrir el tablero y entender qué hay adentro sin romper una pared para averiguarlo.</p>
         </div>
         <figure class="split-media rv rv4">
-          <img src="assets/img/servicio-direccion-obra-960.webp" srcset="assets/img/servicio-direccion-obra-640.webp 640w, assets/img/servicio-direccion-obra-960.webp 960w" sizes="(max-width:820px) 100vw, 480px" width="1440" height="2558" loading="lazy" decoding="async" alt="Electricista instalando una toma de pared durante una obra en construcción">
+          <img src="assets/img/servicio-direccion-obra-960.webp" srcset="assets/img/servicio-direccion-obra-640.webp 640w, assets/img/servicio-direccion-obra-960.webp 960w" sizes="(max-width:820px) 100vw, 480px" width="960" height="1200" loading="lazy" decoding="async" alt="Electricista instalando una toma de pared durante una obra en construcción">
         </figure>
       </div>
       <div class="stages rv rv5">
@@ -331,16 +448,45 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
     </div>
   </section>
 
+  <section class="section" id="showroom">
+    <div class="wrap">
+      <p class="eyebrow rv">Puerta abierta</p>
+      <h2 class="rv rv2" style="margin-bottom:18px;">Vení y tocalo antes de decidir</h2>
+      <p class="rv rv3">En Av. Colón 3835 tenemos el ecosistema Philips Hue completo instalado y funcionando, cerraduras digitales Yale que podés abrir con la mano, y Control4 andando. No es una vitrina: es una instalación real, y está encendida.</p>
+      <div class="showroom-info rv rv4">
+        <strong>Lunes a viernes de 9 a 17 · Sin cita previa</strong>
+        <span>Av. Colón 3835, Córdoba Capital</span>
+      </div>
+      <div style="margin-top:22px;">
+        <a class="btn btn-outline rv rv5" href="https://www.google.com/maps/search/?api=1&query=Av.+Col%C3%B3n+3835%2C+C%C3%B3rdoba" target="_blank" rel="noopener">Cómo llegar</a>
+      </div>
+    </div>
+  </section>
+
   <section class="section" id="respaldo">
     <div class="wrap">
       <p class="eyebrow rv">Nos respalda</p>
-      <h2 class="rv rv2">Certificaciones y alianzas</h2>
+      <h2 class="rv rv2">Quién nos certificó</h2>
       <div class="stat-grid">
-        <div class="stat-cell rv"><b>CEDIA</b><span>Miembros desde 2024</span><p>La asociación mundial del hogar inteligente.</p></div>
-        <div class="stat-cell rv rv2"><b>HIKVISION</b><span>Certified Partner</span><p>Videovigilancia con respaldo de fábrica.</p></div>
-        <div class="stat-cell rv rv3"><b>PHILIPS HUE</b><span>Distribuidor oficial</span><p>Iluminación inteligente sin intermediarios.</p></div>
-        <div class="stat-cell rv rv4"><b>HOME ASSISTANT</b><span>Sistema abierto</span><p>Sin ataduras a un solo fabricante.</p></div>
-        <div class="stat-cell rv rv5"><b>CONTROL4</b><span>Integrador certificado</span><p>Soporte técnico directo y actualizaciones constantes.</p></div>
+        <div class="stat-cell rv"><b>CONTROL4</b><span>Dealer Control4</span><p>Soporte de fábrica y actualizaciones directas, sin intermediarios.</p></div>
+        <div class="stat-cell rv rv2"><b>YALE</b><span>Distribuidor autorizado en Córdoba</span><p>Con dos técnicos certificados por Yale. Respondemos nosotros mismos ante cualquier service.</p></div>
+        <div class="stat-cell rv rv3"><b>PHILIPS HUE</b><span>Distribuidor oficial</span><p>Con showroom propio. Todo el ecosistema instalado y funcionando antes de que decidas.</p></div>
+        <div class="stat-cell rv rv4"><b>HIKVISION</b><span>Certified Partner desde 2025</span><p>Repuestos y soporte técnico garantizado en Argentina.</p></div>
+        <div class="stat-cell rv rv5"><b>CEDIA</b><span>Miembro desde 2024</span><p>La asociación internacional de la industria de integración para el hogar.</p></div>
+      </div>
+
+      <p class="eyebrow rv" style="margin-top:56px;">Presencia</p>
+      <h2 class="rv rv2">Dónde nos viste</h2>
+      <ul class="trade-list rv rv3" style="max-width:70ch;margin-top:18px;">
+        <li>Casa FOA — cuatro años consecutivos. En 2026, el Espacio 18 con sistema de audio 3.1. En 2025, junto a la Facultad de Arte y Diseño de la UPC. En 2024, la Edición 40 en Buenos Aires.</li>
+        <li>Proyectar Córdoba — 2024 y 2026. La última, con stand propio y entrevista de Canal C.</li>
+        <li>CEDIA — miembros desde 2024. Trajimos a Córdoba a Manuel Fernández, director de CEDIA para Sudamérica, para su conversatorio sobre los principios de una casa inteligente.</li>
+      </ul>
+      <div class="presence-grid rv rv4">
+        <figure><img src="assets/img/nosotros-casafoa-2026-espacio18-960.webp" width="720" height="1280" loading="lazy" decoding="async" alt="Estantería con perfil LED integrado en el Espacio 18 de Casa FOA 2026"></figure>
+        <figure><img src="assets/img/nosotros-proyectar-2026-stand-960.webp" width="720" height="960" loading="lazy" decoding="async" alt="Stand de Nova Domus en Proyectar Córdoba 2026, con un integrante atendiendo a dos visitantes"></figure>
+        <figure><img src="assets/img/nosotros-prensa-canalc-960.webp" width="720" height="406" loading="lazy" decoding="async" alt="Agustín Dávila, director de Nova Domus, entrevistado por Canal C en Proyectar Córdoba 2026"></figure>
+        <figure><img src="assets/img/nosotros-yale-naos-2024-1440.webp" srcset="assets/img/nosotros-yale-naos-2024-640.webp 640w, assets/img/nosotros-yale-naos-2024-960.webp 960w, assets/img/nosotros-yale-naos-2024-1440.webp 1080w" width="1080" height="1920" loading="lazy" decoding="async" alt="Cerradura digital Yale YMF30 instalada en la puerta del stand de NAOS Aberturas, Proyectar Córdoba 2024"></figure>
       </div>
     </div>
   </section>
@@ -364,6 +510,28 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
       <div class="faq-item rv rv4">
         <h3>¿Tengo que hacer todo de una vez?</h3>
         <p>No — podés empezar por una habitación (ver arriba) e integrar el resto por etapas, cada avance atado a un hito verificable de obra.</p>
+      </div>
+      <div class="faq-item rv rv5">
+        <h3>¿Hay que romper paredes?</h3>
+        <p>En obra nueva no: dejamos las previsiones antes de que se cierre el tabique. En una casa ya terminada, la mayoría de lo que se puede automatizar es inalámbrico y no requiere obra — y lo que sí la requiere te lo decimos antes, no después.</p>
+      </div>
+      <div class="faq-item rv rv6">
+        <h3>¿Funciona si se cae internet?</h3>
+        <p>Sí. Los sistemas que instalamos procesan localmente: si se cae internet, las luces siguen prendiendo, las escenas siguen andando y las cerraduras siguen abriendo. Lo que se pierde es el control remoto desde afuera de la casa, y vuelve solo.</p>
+      </div>
+      <div class="faq-item rv rv7">
+        <h3>¿Cuánto cuesta?</h3>
+        <p>Depende de cuánto abarques y de si es obra nueva o algo ya construido. Para orientarte: el rango típico de nuestros proyectos de instalación va de unidades puntuales a viviendas completas, y siempre presupuestamos materiales por un lado y mano de obra por otro. Escribinos con los metros y las ganas y te damos un número real.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="cierre" style="text-align:center;border-bottom:none;">
+    <div class="wrap">
+      <h2 class="rv" style="margin-bottom:26px;">¿Empezamos?</h2>
+      <div class="rv rv2" style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+        <a class="btn btn-primary" href="https://wa.me/543516747513?text=Hola%20Nova%20Domus%2C%20quiero%20hacer%20una%20consulta" target="_blank" rel="noopener">Escribinos por WhatsApp</a>
+        <a class="btn btn-outline" href="https://www.google.com/maps/search/?api=1&query=Av.+Col%C3%B3n+3835%2C+C%C3%B3rdoba" target="_blank" rel="noopener">Vení al showroom — Av. Colón 3835, sin cita previa</a>
       </div>
     </div>
   </section>
