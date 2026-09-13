@@ -153,9 +153,24 @@ chequeo por lista blanca de chunks RIFF. Se limpió con `scripts/strip_webp_chun
 37.186 B, sin recomprimir). **Verificar por lista blanca cada imagen generada, siempre**, es el mismo
 síntoma ya registrado en "Trampas ya pagadas" pero por un canal nuevo (el zip de handoff).
 
-**Estado.** `instalacion-electrica` hecha y publicada. Faltan las 6 restantes: `redes`, `domotica`,
-`videovigilancia`, `cerraduras`, `alarmas`, `audio-video` — hasta que estén, esas 6 tarjetas siguen
-mostrando su foto actual y la excepción está aplicada solo parcialmente.
+**Estado (13/09/2026).** Hechas y publicadas 5 de 7: `instalacion-electrica`, `redes`,
+`videovigilancia`, `alarmas`, `audio-video`. Las cuatro últimas llegaron en 3:4 nativo (1792×2400),
+así que llevan `srcset` con 640w y 960w reales.
+
+**Rechazadas, pendientes de regenerar — 2:**
+
+- `cerraduras`: la imagen entregada tiene el **wordmark de Yale legible** sobre la cerradura, más el
+  teclado numérico y la palabra "CARD" en texto legible. Falla dos guardrails a la vez (logo de
+  tercero, y texto en cuadro) y además clona el diseño de un producto real, que es exactamente el
+  riesgo que este kickoff venía a evitar. No se retoca para sacarle el logo: aunque se le borre, sigue
+  siendo una réplica generada del producto. Se regenera con herraje genérico. Llegó 2048×2048, además,
+  fuera de 3:4.
+- `domotica`: la imagen entregada tiene una **tablet mostrando una interfaz con tiles y texto** sobre
+  la mesada — el mismo artefacto de generación que ya tenía el poster del hero y que motivó el
+  guardrail. Llegó 2216×1920, apaisada, también fuera de 3:4. Se regenera sin pantallas en cuadro.
+
+Hasta que esas dos estén, sus tarjetas siguen mostrando la foto actual y la excepción está aplicada
+parcialmente. El preview de video en hover les funciona igual.
 
 ## Vetadas — no usar nunca
 
