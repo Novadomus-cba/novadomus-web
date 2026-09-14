@@ -190,12 +190,12 @@ p{line-height:1.6;max-width:62ch;}
 .showroom-info strong{font-size:.95rem;}
 .showroom-info span{font-size:.85rem;color:var(--text-secondary);}
 
-/* #respaldo, "Dónde nos viste": tira de fotos a alto fijo, sin forzar el mismo recorte
-   en fotos de aspectos muy distintos (720x406 vs 1080x1920) -- mismo criterio que el
-   carrusel de servicios.html. */
-.presence-grid{display:flex;flex-wrap:wrap;gap:14px;margin-top:26px;}
-.presence-grid figure{margin:0;height:220px;border-radius:14px;overflow:hidden;background:var(--azul-nova);}
-.presence-grid img{height:100%;width:auto;max-width:70vw;object-fit:cover;display:block;}
+/* Teaser "ver mas" -- texto + boton en fila, apila en mobile. Clase propia (no
+   reusar .trade-split con un grid-template-columns inline): un inline style le
+   gana a cualquier media query externa, asi que la version apilada de mobile
+   nunca se aplicaria -- mismo bug que ya paso una vez con .stat-grid--4. */
+.teaser-row{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;}
+.teaser-row .btn{white-space:nowrap;}
 
 .split{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;margin-top:8px;}
 .split-media{border-radius:20px;overflow:hidden;background:var(--surface);box-shadow:0 20px 50px rgba(0,0,0,.35);aspect-ratio:4/5;}
@@ -266,6 +266,7 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
       <a href="obras.html">Obras</a>
       <a href="vidriera.html">Vidriera</a>
       <a href="nosotros.html" class="active">Nosotros</a>
+      <a href="participaciones.html">Participaciones</a>
       <a href="contacto.html">Contacto</a>
     </div>
     <button class="menu-toggle" type="button" data-menu-toggle aria-expanded="false" aria-controls="mobile-menu" aria-label="Abrir menú"><span></span><span></span><span></span></button>
@@ -280,6 +281,7 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
     <a href="obras.html">Obras</a>
     <a href="vidriera.html">Vidriera</a>
     <a href="nosotros.html">Nosotros</a>
+    <a href="participaciones.html">Participaciones</a>
     <a href="contacto.html">Contacto</a>
     <a class="btn btn-primary nav-cta" href="https://wa.me/543516747513?text=Hola%20Nova%20Domus%2C%20quiero%20hacer%20una%20consulta" target="_blank" rel="noopener">Escribinos por WhatsApp</a>
   </div>
@@ -493,18 +495,13 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
         <div class="stat-cell rv rv5"><b>CEDIA</b><span>Miembro desde 2024</span><p>La asociación internacional de la industria de integración para el hogar.</p></div>
       </div>
 
-      <p class="eyebrow rv" style="margin-top:56px;">Presencia</p>
-      <h2 class="rv rv2">Dónde nos viste</h2>
-      <ul class="trade-list rv rv3" style="max-width:70ch;margin-top:18px;">
-        <li>Casa FOA — cuatro años consecutivos. En 2026, el Espacio 18 con sistema de audio 3.1. En 2025, junto a la Facultad de Arte y Diseño de la UPC. En 2024, la Edición 40 en Buenos Aires.</li>
-        <li>Proyectar Córdoba — 2024 y 2026. La última, con stand propio y entrevista de Canal C.</li>
-        <li>CEDIA — miembros desde 2024. Trajimos a Córdoba a Manuel Fernández, director de CEDIA para Sudamérica, para su conversatorio sobre los principios de una casa inteligente.</li>
-      </ul>
-      <div class="presence-grid rv rv4">
-        <figure><img src="assets/img/nosotros-casafoa-2026-espacio18-960.webp" width="720" height="1280" loading="lazy" decoding="async" alt="Estantería con perfil LED integrado en el Espacio 18 de Casa FOA 2026"></figure>
-        <figure><img src="assets/img/nosotros-proyectar-2026-stand-960.webp" width="720" height="960" loading="lazy" decoding="async" alt="Stand de Nova Domus en Proyectar Córdoba 2026, con un integrante atendiendo a dos visitantes"></figure>
-        <figure><img src="assets/img/nosotros-prensa-canalc-960.webp" width="720" height="406" loading="lazy" decoding="async" alt="Agustín Dávila, director de Nova Domus, entrevistado por Canal C en Proyectar Córdoba 2026"></figure>
-        <figure><img src="assets/img/nosotros-yale-naos-2024-1440.webp" srcset="assets/img/nosotros-yale-naos-2024-640.webp 640w, assets/img/nosotros-yale-naos-2024-960.webp 960w, assets/img/nosotros-yale-naos-2024-1440.webp 1080w" width="1080" height="1920" loading="lazy" decoding="async" alt="Cerradura digital Yale YMF30 instalada en la puerta del stand de NAOS Aberturas, Proyectar Córdoba 2024"></figure>
+      <div class="teaser-row rv rv3" style="margin-top:56px;">
+        <div>
+          <p class="eyebrow" style="margin-bottom:8px;">Presencia</p>
+          <h2 style="margin-bottom:8px;">Dónde nos viste</h2>
+          <p class="muted" style="margin:0;">Casa FOA, Proyectar Córdoba, Expo Estilo Casa, conferencias y capacitaciones — año por año, con fotos.</p>
+        </div>
+        <a class="btn btn-primary" href="participaciones.html">Ver participaciones →</a>
       </div>
     </div>
   </section>
@@ -586,6 +583,7 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
         <h4>Nosotros</h4>
         <a href="nosotros.html">Quiénes somos</a>
         <a href="nosotros.html#faq">Preguntas frecuentes</a>
+        <a href="participaciones.html">Participaciones</a>
       </div>
       <div class="footer-col">
         <h4>Contacto</h4>
