@@ -121,6 +121,43 @@ ancho real (720), archivos idénticos. El `srcset` de estas cuatro omite el desc
 usa el nombre de archivo real con el ancho real (`...-960.webp 720w`), no `1440w` — ver gotcha
 de nombrado más abajo en este documento.
 
+## `participaciones.html` — pagina nueva (13/09/2026)
+
+Fotos identificadas revisando el export completo de Instagram (1815 historias + posts/reels)
+buscando menciones de ferias, expos, conferencias y capacitaciones. Igual que en `nosotros.html`,
+cuando habia mas de un candidato del mismo evento la eleccion de composicion la hizo Code (no
+una seleccion entre fuentes de origen distinto).
+
+| Slot | Origen | Recorte | Notas |
+|---|---|---|---|
+| Casa FOA 2023, tarjeta 1 | `participacion-casafoa2023-b` (story) | sin recorte, 480x854 | Espacio 6, visitantes junto a la mesa con las luminarias instaladas |
+| Casa FOA 2023, tarjeta 2 | `participacion-casafoa2023-a` (story) | sin recorte, 828x1472 | mismo Espacio 6, luminarias WorldLedsGo ya encendidas |
+| Casa FOA 2024, tarjeta 1 | `participacion-casafoa2024-a` (frame de reel, Espacio 37) | sin recorte, 360x640 -- frame de video, no foto | "Green House Office", cielorraso curvo con luz integrada |
+| Expo Estilo Casa 2023, tarjeta 1 | `participacion-estilocasa2023-a` (frame de reel) | sin recorte, 720x1280 | integrante posando con el logo Nova Domus + Control4 + Philips Hue de fondo, stand 88 |
+| Expo Estilo Casa 2023, tarjeta 2 | `participacion-estilocasa2023-b` (frame de reel) | sin recorte, 720x1280 | el stand con visitantes reales, bajo la cupula geodesica |
+| Expo Estilo Casa 2024, tarjeta 1 | `participacion-estilocasa2024-stand` (frame de story) | sin recorte, 360x640 | equipo armando el stand propio en una terraza |
+| Proyectar Cordoba 2024 | `participacion-proyectar2024` (frame de reel) | sin recorte, 720x1280 | stand de NAOS Aberturas -- toma con leve movimiento de camara, es lo mejor disponible de este evento |
+| Proyectar Cordoba 2026, tarjeta 2 | `participacion-proyectar2026-stand2` (frame de reel) | sin recorte, 720x1280 | stand propio con productos Yale, distinta de `nosotros-proyectar-2026-stand` (que quedo sin uso, ver nota abajo) |
+| Conferencia CEDIA | `participacion-conf-cedia` (frame de story) | sin recorte, 360x640 | conversatorio de Manuel Fernandez, tomado durante Expo Estilo Casa 2024 -- se cuenta como "Conferencias" por tipo de contenido, no por el lugar fisico |
+| Conferencia Dina Asociados | `participacion-conf-dina` (frame de story) | sin recorte, 360x640 | auditorio con la oradora Paula Zuccotti en pantalla |
+| Evento ASETEC | `participacion-conf-asetec` (frame de story) | sin recorte, 360x640 | encuentro informal, confirma presencia pero no muestra una charla |
+| Capacitacion Yale | `participacion-capacit-yale` (frame de story) | sin recorte, 360x640 | 3 personas posando con cajas de producto, Electro Alem |
+| Capacitacion Shelly | `participacion-capacit-shelly` (frame de story) | sin recorte, 360x640 | grupo de ~9 personas alrededor de la mesa de productos |
+| Capacitacion Hikvision | `participacion-capacit-hikvision` (frame de story) | sin recorte, 720x1280 | orador presentando, banner de la marca de fondo |
+
+**Reusadas de `nosotros.html` sin reprocesar:** `nosotros-casafoa-2026-espacio18` (Casa FOA 2026)
+y `nosotros-prensa-canalc` (Proyectar 2026, entrevista Canal C) -- mismos archivos, mismo slot
+conceptual, no hacia falta duplicar el procesamiento.
+
+**Descartada por screenshot de videollamada, no foto real:** la story de TP-Link/Omada
+(4/09/2026, "gran parte del equipo presente") es una captura de una reunion por Zoom/Teams --
+no lee bien como foto de referencia en una tarjeta. Capacitaciones quedo con 3 tarjetas en vez
+de 4 por este motivo.
+
+**`nosotros-proyectar-2026-stand.webp` (las 3 resoluciones) quedan sin uso** tras simplificar
+la seccion "Donde nos viste" de `nosotros.html` a un teaser que linkea a `participaciones.html`
+en vez de repetir las mismas 4 fotos en las dos paginas. No se borraron los archivos.
+
 ### Sobre el plano como tarjeta
 
 El set eléctrico (`1-Diagrama unifilar`, `2-ACU y TUE`, `3-TUG y Cortineros`, `4-ILUMINACION`,
