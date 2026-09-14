@@ -3,16 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nova Domus — Del cable a la app</title>
-<meta name="description" content="Integración tecnológica en Córdoba: obra eléctrica, redes, domótica y seguridad con un solo responsable. Miembros CEDIA · Distribuidor oficial Philips Hue.">
-<meta property="og:title" content="Nova Domus — Del cable a la app">
-<meta property="og:description" content="Integración tecnológica en Córdoba: obra eléctrica, redes, domótica y seguridad con un solo responsable.">
+<title>Nova Domus — Obra eléctrica e integración tecnológica en Córdoba</title>
+<meta name="description" content="Instalación eléctrica y automatización de viviendas con equipo propio en Córdoba: electricistas matriculados y programadores certificados, un solo responsable. Del cable a la app.">
+<meta property="og:title" content="Nova Domus — Obra eléctrica e integración tecnológica en Córdoba">
+<meta property="og:description" content="Del cable a la app: instalación eléctrica y domótica con equipo propio, un solo responsable.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://nova-domus.com.ar/">
+<meta property="og:image" content="https://nova-domus.com.ar/assets/img/home-hero-video-poster-1440.webp">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Michroma&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="assets/img/home-hero-video-poster-1440.webp" fetchpriority="high">
 <style>
 :root{
   --azul-nova:#141E61; --azul-profundo:#0B132B; --gris:#787A91; --crema:#FDFBF0; --dorado:#C8A96E;
@@ -76,21 +78,24 @@ p{line-height:1.6;max-width:62ch;}
   .menu-toggle{display:flex;}
 }
 
-/* ---------- SUBNAV (sticky, internal pages) ---------- */
-.subnav{position:sticky;top:0;z-index:50;background:var(--azul-profundo);border-bottom:1px solid transparent;transition:border-color .2s,box-shadow .2s;}
-.subnav.is-stuck{border-color:var(--line);box-shadow:0 8px 24px rgba(0,0,0,.35);}
-.subnav-inner{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 22px;}
-.subnav-title{font-family:'Michroma';font-size:.82rem;text-transform:uppercase;letter-spacing:.04em;}
-.subnav-cta{display:flex;gap:10px;}
-
 /* ---------- HERO ---------- */
-.hero{position:relative;padding:150px 0 70px;overflow:hidden;}
+.hero{position:relative;padding:150px 0 90px;overflow:hidden;}
+.hero__media-box{position:absolute;inset:0;z-index:0;background:var(--azul-profundo);}
+.hero__media,.hero__media-still{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+.hero__media-still{display:none;}
+@media (prefers-reduced-motion:reduce){
+  .hero__media{display:none;}
+  .hero__media-still{display:block;}
+}
+.hero__scrim{position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,19,43,.55) 0%,rgba(11,19,43,.4) 35%,rgba(11,19,43,.97) 100%);}
+.hero__content{position:relative;z-index:1;}
 .hero h1{font-size:clamp(2.1rem,5vw,3.1rem);margin:14px 0 18px;}
-.hero p{font-size:1.05rem;color:var(--text-secondary);margin-bottom:28px;}
+.hero__lede{font-size:1.05rem;color:var(--crema);margin-bottom:28px;max-width:52ch;}
 .hero-actions{display:flex;gap:14px;flex-wrap:wrap;}
-.tunnel{position:absolute;pointer-events:none;opacity:.22;}
-.tunnel.tr{top:-40px;right:-60px;width:340px;height:340px;}
-.tunnel.bl{bottom:-60px;left:-80px;width:300px;height:300px;}
+@media (max-width:420px){
+  .hero-actions{flex-direction:column;align-items:stretch;}
+  .hero-actions .btn{justify-content:center;text-align:center;}
+}
 
 /* ---------- BUTTONS ---------- */
 .btn{display:inline-flex;align-items:center;gap:8px;padding:13px 24px;border-radius:999px;font-weight:600;font-size:.92rem;transition:transform .2s,border-color .2s,background .2s;}
@@ -99,36 +104,49 @@ p{line-height:1.6;max-width:62ch;}
 .btn-outline{border:1px solid var(--line);color:var(--crema);}
 .btn-outline:hover{border-color:var(--dorado);}
 
-/* ---------- STATS ---------- */
-.stats-hero{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;padding:8px 0 40px;}
-.stat-big-num{font-family:'Michroma';font-weight:400;font-size:2.15rem;color:var(--dorado);display:block;letter-spacing:.02em;line-height:1.15;margin-bottom:12px;}
-.stat-big-label{font-size:.95rem;color:var(--crema);line-height:1.55;display:block;max-width:36ch;}
-@media (max-width:900px){.stats-hero{grid-template-columns:1fr;text-align:center;gap:28px;}.stat-big-label{margin:0 auto;}}
-.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;padding:36px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:0 0 60px;}
-.stat .stat-ico{width:30px;height:30px;stroke:var(--dorado);fill:none;stroke-width:1.5;margin-bottom:14px;}
-.stat b{font-family:'Inter';font-weight:600;font-size:1.02rem;color:var(--crema);display:block;margin-bottom:6px;}
-.stat span{font-size:.85rem;color:var(--text-secondary);}
-@media (max-width:640px){.stats{grid-template-columns:1fr;gap:24px;text-align:center;}}
-
-/* ---------- CARD GRID (hub) ---------- */
+/* ---------- DOORS (bloque "qué hacemos") ---------- */
 .section{padding:60px 0;}
-.card-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
-.card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px;display:flex;flex-direction:column;gap:10px;transition:border-color .25s,transform .25s;min-height:190px;}
-.card:hover{border-color:var(--dorado);transform:translateY(-3px);}
-.card .card-ico{width:28px;height:28px;stroke:var(--dorado);fill:none;stroke-width:1.5;margin-bottom:2px;}
-.card h3{font-size:1.15rem;}
-.card p{font-size:.9rem;color:var(--text-secondary);margin:0;}
-.card .arrow{margin-top:auto;font-size:.85rem;color:var(--dorado);font-weight:600;}
-.card.card-photo{position:relative;padding:0;overflow:hidden;min-height:340px;}
-.card.card-photo>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;transition:transform .5s cubic-bezier(.25,.1,.25,1);}
-.card.card-photo:hover>img,.card.card-photo:focus-visible>img{transform:scale(1.12);}
-.card.card-photo::after{content:'';position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,transparent 30%,rgba(11,19,43,.94) 82%);pointer-events:none;}
-.card.card-photo:hover{transform:none;}
-.card-photo .card-overlay{position:relative;z-index:2;margin-top:auto;padding:22px;display:flex;flex-direction:column;gap:8px;}
-.card-photo .card-overlay p{font-size:.86rem;}
-@media (prefers-reduced-motion:reduce){.card.card-photo>img{transition:none;}}
-@media (max-width:900px){.card-grid{grid-template-columns:repeat(2,1fr);}}
-@media (max-width:600px){.card-grid{grid-template-columns:1fr;}}
+.doors{display:flex;flex-direction:column;gap:22px;}
+.door{display:grid;grid-template-columns:1fr 1fr;background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:border-color .25s,transform .25s;}
+.door:hover,.door:focus-within{border-color:var(--dorado);transform:translateY(-3px);}
+.door__media{position:relative;aspect-ratio:3/2;overflow:hidden;}
+.door__media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .5s cubic-bezier(.25,.1,.25,1);}
+.door:hover .door__media img,.door:focus-within .door__media img{transform:scale(1.08);}
+@media (prefers-reduced-motion:reduce){.door__media img{transition:none;}}
+.door__body{padding:34px;display:flex;flex-direction:column;justify-content:center;gap:12px;}
+.door__body h3{font-size:1.3rem;color:var(--crema);}
+.door__body p{font-size:.94rem;color:var(--text-secondary);margin:0;}
+.door__arrow{margin-top:6px;font-size:.85rem;color:var(--dorado);font-weight:600;}
+.door:nth-child(even){grid-template-columns:1fr 1fr;}
+.door:nth-child(even) .door__media{order:2;}
+@media (max-width:760px){
+  .door,.door:nth-child(even){grid-template-columns:1fr;}
+  .door:nth-child(even) .door__media{order:0;}
+  .door__body{padding:24px;}
+}
+
+/* ---------- DERIVACIÓN ARQUITECTO ---------- */
+.architect-link{display:block;padding:28px 32px;border:1px solid var(--border);border-left:3px solid var(--dorado);border-radius:4px 16px 16px 4px;background:var(--surface);transition:border-color .25s,transform .25s;}
+.architect-link:hover,.architect-link:focus-visible{border-color:var(--dorado);transform:translateY(-2px);}
+.architect-link p{max-width:60ch;font-size:1.02rem;color:var(--crema);margin-bottom:12px;}
+.architect-link .arrow{font-size:.85rem;color:var(--dorado);font-weight:600;}
+
+/* ---------- MARCAS ---------- */
+.brands-row{display:flex;flex-wrap:wrap;align-items:baseline;gap:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:32px 0;margin-bottom:28px;}
+.brand-item{display:flex;flex-direction:column;gap:6px;padding:10px 26px;border-left:1px solid var(--line);}
+.brand-item:first-child{border-left:0;padding-left:0;}
+.brand-word{font-family:'Michroma',sans-serif;font-size:.88rem;letter-spacing:.03em;color:var(--crema);}
+.brand-word--nd{font-size:1.32rem;}
+.brand-caption{font-size:.78rem;color:var(--text-secondary);max-width:24ch;}
+@media (max-width:700px){
+  .brands-row{flex-direction:column;gap:18px;}
+  .brand-item{border-left:0;border-top:1px solid var(--line);padding:18px 0 0;}
+  .brand-item:first-child{border-top:0;padding-top:0;}
+}
+
+/* ---------- CIERRE ---------- */
+.closer h2{margin-bottom:16px;}
+.closer p{margin-bottom:28px;}
 
 /* ---------- WHATSAPP FLOAT ---------- */
 .wa-float{position:fixed;right:20px;bottom:20px;z-index:65;width:56px;height:56px;border-radius:50%;background:var(--azul-nova);border:1px solid var(--dorado);display:flex;align-items:center;justify-content:center;box-shadow:0 10px 24px rgba(0,0,0,.4);}
@@ -153,7 +171,9 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
 <noscript><style>.rv{opacity:1!important;transform:none!important;transition:none!important;}
 .menu-toggle{display:none!important;}
 .nav-inner{flex-wrap:wrap;}
-.nav-links{display:flex!important;flex-wrap:wrap;gap:14px;font-size:.8rem;}</style></noscript>
+.nav-links{display:flex!important;flex-wrap:wrap;gap:14px;font-size:.8rem;}
+.hero__media{display:none;}
+.hero__media-still{display:block;}</style></noscript>
 </head>
 <body>
 
@@ -192,95 +212,104 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
 
 <main>
   <section class="hero">
-    <svg class="tunnel tr" viewBox="0 0 200 200" fill="none" stroke="var(--dorado)" stroke-width="1">
-      <rect x="10" y="10" width="180" height="180"/><rect x="45" y="45" width="110" height="110"/><rect x="78" y="78" width="44" height="44"/>
-    </svg>
-    <div class="wrap">
-      <p class="eyebrow rv">Córdoba, Argentina</p>
-      <h1 class="rv rv2" id="hero-title">Del cable a la app</h1>
-      <p class="rv rv3">Obra eléctrica, redes, domótica y seguridad — con electricistas matriculados propios y un solo responsable de punta a punta.</p>
-      <div class="hero-actions rv rv4">
-        <a class="btn btn-primary" href="https://wa.me/543516747513?text=Hola%20Nova%20Domus%2C%20quiero%20hacer%20una%20consulta" target="_blank" rel="noopener">Escribinos por WhatsApp →</a>
-        <a class="btn btn-outline" href="nosotros.html">Conocé cómo trabajamos</a>
+    <div class="hero__media-box">
+      <video class="hero__media" poster="assets/img/home-hero-video-poster-1440.webp"
+             width="1280" height="720" autoplay muted loop playsinline preload="none" aria-hidden="true">
+        <source src="assets/video/home-hero-video.webm" type="video/webm">
+        <source src="assets/video/home-hero-video.mp4" type="video/mp4">
+      </video>
+      <img class="hero__media-still" src="assets/img/home-hero-video-poster-1440.webp" width="1280" height="720"
+           fetchpriority="high" decoding="async" alt="Frente de una vivienda al atardecer con la tira de luz del alero encendida">
+      <div class="hero__scrim"></div>
+    </div>
+    <div class="wrap hero__content">
+      <p class="eyebrow">Córdoba, Argentina</p>
+      <h1 id="hero-title">Del cable a la app</h1>
+      <p class="hero__lede">Hacemos la instalación eléctrica y programamos la casa. Con equipo propio, un solo responsable, de la zanja hasta el celular.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="obras.html">Mirá una obra →</a>
+        <a class="btn btn-outline" href="contacto.html">Contanos tu obra</a>
       </div>
     </div>
   </section>
 
-  <div class="wrap">
-    <div class="stats-hero rv">
-      <div class="stat-big">
-        <span class="stat-big-num">+900</span>
-        <span class="stat-big-label">Puntos de domótica e iluminación inteligente instalados en obras propias</span>
-      </div>
-      <div class="stat-big">
-        <span class="stat-big-num">+350</span>
-        <span class="stat-big-label">Dispositivos de seguridad instalados: cámaras, sensores, alarmas y cerraduras</span>
-      </div>
-      <div class="stat-big">
-        <span class="stat-big-num">+2.600</span>
-        <span class="stat-big-label">Bocas eléctricas instaladas en obras propias desde 2024</span>
+  <section class="section" aria-label="Qué hacemos">
+    <div class="wrap">
+      <div class="doors">
+        <a class="door rv" href="servicios.html#instalacion-electrica">
+          <span class="door__media">
+            <img src="assets/img/home-puerta-electrica-1440.webp"
+                 srcset="assets/img/home-puerta-electrica-640.webp 640w, assets/img/home-puerta-electrica-960.webp 960w, assets/img/home-puerta-electrica-1440.webp 1440w"
+                 sizes="(max-width: 760px) 100vw, 50vw" width="1440" height="811" loading="lazy" decoding="async"
+                 alt="Equipo de Nova Domus en una obra terminada, con iluminación lineal encendida">
+          </span>
+          <span class="door__body">
+            <h3>Primero, el cable.</h3>
+            <p>La instalación eléctrica la hacemos nosotros, con electricistas matriculados propios. No coordinamos un gremio ajeno para que después, cuando algo falla, cada uno señale al otro.</p>
+            <span class="door__arrow">Ver instalación eléctrica →</span>
+          </span>
+        </a>
+        <a class="door rv rv2" href="servicios.html#redes">
+          <span class="door__media">
+            <img src="assets/img/home-puerta-redes-1440.webp"
+                 srcset="assets/img/home-puerta-redes-640.webp 640w, assets/img/home-puerta-redes-960.webp 960w, assets/img/home-puerta-redes-1440.webp 1440w"
+                 sizes="(max-width: 760px) 100vw, 50vw" width="1440" height="810" loading="lazy" decoding="async"
+                 alt="Rack de comunicaciones abierto con switch, grabador de video y UPS">
+          </span>
+          <span class="door__body">
+            <h3>Después, la red.</h3>
+            <p>Una casa automatizada es, antes que nada, una red que no se cae. Cableado estructurado, WiFi que cubre por ambiente y un rack accesible y ordenado.</p>
+            <span class="door__arrow">Ver redes →</span>
+          </span>
+        </a>
+        <a class="door rv rv3" href="servicios.html#videovigilancia">
+          <span class="door__media">
+            <img src="assets/img/home-puerta-accesos-1440.webp"
+                 srcset="assets/img/home-puerta-accesos-640.webp 640w, assets/img/home-puerta-accesos-960.webp 960w, assets/img/home-puerta-accesos-1440.webp 1440w"
+                 sizes="(max-width: 760px) 100vw, 50vw" width="1440" height="1080" loading="lazy" decoding="async"
+                 alt="Cerradura digital instalada, con una mano marcando el código en el teclado">
+          </span>
+          <span class="door__body">
+            <h3>Lo demás, en el mismo sistema.</h3>
+            <p>Cámaras, control de accesos, cerraduras digitales, climatización y audio distribuido. Integrados al mismo control, no como cuatro islas con cuatro apps.</p>
+            <span class="door__arrow">Ver videovigilancia →</span>
+          </span>
+        </a>
       </div>
     </div>
-    <div class="stats rv">
-      <div class="stat">
-        <svg class="stat-ico" viewBox="0 0 24 24"><rect x="4" y="8" width="16" height="13" rx="1"/><path d="M4 8l2-5h12l2 5"/><path d="M10 21v-6h4v6"/></svg>
-        <b>Primer Showroom Open Doors</b>
-        <span>de Domótica e Iluminación Inteligente del interior del país</span>
-      </div>
-      <div class="stat">
-        <svg class="stat-ico" viewBox="0 0 24 24"><circle cx="12" cy="9" r="6"/><path d="M9 14.5 7 21l5-3 5 3-2-6.5"/></svg>
-        <b>Miembros CEDIA</b>
-        <span>Desde 2024</span>
-      </div>
+  </section>
+
+  <section class="section" style="padding-top:0;">
+    <div class="wrap">
+      <a class="architect-link rv" href="nosotros.html#para-quien">
+        <p>¿Proyectás obra? Las previsiones eléctricas y de red se definen antes de que se cierre el pliego, no después.</p>
+        <span class="arrow">Así trabajamos con tu estudio →</span>
+      </a>
     </div>
-  </div>
+  </section>
 
   <section class="section">
     <div class="wrap">
-      <p class="eyebrow rv">Explorá Nova Domus</p>
-      <h2 class="rv rv2" style="margin-bottom:32px;">¿Qué estás buscando?</h2>
-      <div class="card-grid">
-        <a class="card card-photo rv" href="servicios.html" aria-label="Ver servicios">
-          <img src="assets/img/home-card-servicios-960.webp" srcset="assets/img/home-card-servicios-640.webp 640w, assets/img/home-card-servicios-960.webp 960w, assets/img/home-card-servicios-1440.webp 1440w" sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, 347px" width="1440" height="1920" loading="lazy" decoding="async" alt="">
-          <div class="card-overlay">
-            <h3>Servicios</h3>
-            <p>Instalación eléctrica, redes, domótica, seguridad y dirección de obra — un solo responsable.</p>
-            <span class="arrow">Ver servicios →</span>
-          </div>
-        </a>
-        <a class="card rv rv2" href="marcas.html">
-          <svg class="card-ico" viewBox="0 0 24 24"><path d="M4 21V10l8-6 8 6v11"/><rect x="10" y="14" width="4" height="3"/></svg>
-          <h3>Sistemas y marcas</h3>
-          <p>9 familias de producto y las marcas con las que trabajamos: Hikvision, Philips Hue, Control4 y más.</p>
-          <span class="arrow">Ver marcas →</span>
-        </a>
-        <a class="card card-photo rv rv3" href="obras.html" aria-label="Ver obras">
-          <img src="assets/img/home-card-obras-960.webp" srcset="assets/img/home-card-obras-640.webp 640w, assets/img/home-card-obras-960.webp 960w, assets/img/home-card-obras-1440.webp 1440w" sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, 347px" width="1440" height="2558" loading="lazy" decoding="async" alt="">
-          <div class="card-overlay">
-            <h3>Obras</h3>
-            <p>Proyectos en ejecución y casos reales, documentados de punta a punta.</p>
-            <span class="arrow">Ver obras →</span>
-          </div>
-        </a>
-        <a class="card rv rv4" href="vidriera.html">
-          <svg class="card-ico" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="1"/><path d="M12 4v16M4 9h16M4 14h16"/></svg>
-          <h3>Vidriera</h3>
-          <p>Catálogo de dispositivos que instalamos, agrupados por familia. Consultá por WhatsApp.</p>
-          <span class="arrow">Ver vidriera →</span>
-        </a>
-        <a class="card rv rv5" href="nosotros.html">
-          <svg class="card-ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 11h1v5h1"/></svg>
-          <h3>Nosotros</h3>
-          <p>Quiénes somos, cómo trabajamos, y qué respalda a Nova Domus.</p>
-          <span class="arrow">Conocernos →</span>
-        </a>
-        <a class="card rv rv6" href="contacto.html">
-          <svg class="card-ico" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-4 4V5z"/><path d="M8 9h8M8 12.5h5"/></svg>
-          <h3>Contacto</h3>
-          <p>Contanos tu proyecto y coordinamos una visita al showroom o a tu obra.</p>
-          <span class="arrow">Escribinos →</span>
-        </a>
+      <p class="eyebrow rv">Ecosistema</p>
+      <div class="brands-row rv">
+        <div class="brand-item"><span class="brand-word brand-word--nd">Nova Domus</span></div>
+        <div class="brand-item"><span class="brand-word">Control4</span><span class="brand-caption">Dealer Control4</span></div>
+        <div class="brand-item"><span class="brand-word">Home Assistant</span><span class="brand-caption">Programación e integración propia</span></div>
+        <div class="brand-item"><span class="brand-word">Hikvision</span><span class="brand-caption">Certified Partner desde 2025</span></div>
+        <div class="brand-item"><span class="brand-word">Philips Hue</span><span class="brand-caption">Showroom propio con el ecosistema instalado</span></div>
+        <div class="brand-item"><span class="brand-word">Yale</span><span class="brand-caption">Distribuidor autorizado en Córdoba, con dos técnicos certificados</span></div>
+        <div class="brand-item"><span class="brand-word">Shelly</span><span class="brand-caption">Instaladores pioneros en la provincia</span></div>
+        <div class="brand-item"><span class="brand-word">CEDIA</span><span class="brand-caption">Miembro desde 2024</span></div>
       </div>
+      <a class="btn btn-outline rv rv2" href="marcas.html#insignia">Ver todas las marcas →</a>
+    </div>
+  </section>
+
+  <section class="section closer">
+    <div class="wrap">
+      <h2 class="rv">Contanos qué estás construyendo.</h2>
+      <p class="rv rv2">Obra nueva, refacción, o una casa que ya está habitada y querés que responda. Nos contás la obra y te decimos qué se puede hacer y en qué orden.</p>
+      <a class="btn btn-primary rv rv3" href="https://wa.me/543516747513?text=Hola%20Nova%20Domus%2C%20quiero%20hacer%20una%20consulta" target="_blank" rel="noopener">Escribinos por WhatsApp →</a>
     </div>
   </section>
 </main>
