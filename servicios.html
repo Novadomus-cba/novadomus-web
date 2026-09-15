@@ -206,6 +206,59 @@ body.scroll-lock{overflow:hidden;}
 .panel__block--full .panel__block-text{padding:0 32px;text-align:center;}
 .panel__block--full .panel__block-text p{max-width:62ch;margin:0 auto;}
 
+/* ============ Mosaico escalonado dentro de un panel ============
+   Tres piezas de la misma obra en una sola fila, cada una un escalon mas abajo
+   que la anterior. El escalon va por margin-top y NO por transform a proposito:
+   .reveal ya usa transform para entrar, y las dos reglas se pisan entre si.
+   margin-top ademas reserva el alto en la grilla, asi que el bloque no se come
+   lo que viene abajo. Debajo de 860px la grilla es de una columna y el escalon
+   se anula: un margen suelto en columna unica solo deja un hueco. */
+.panel__mosaic{padding:24px 32px 8px;}
+.panel__mosaic-head{max-width:1000px;margin:0 auto 18px;}
+.panel__mosaic-head h3{font-size:1.05rem;margin-bottom:8px;}
+.panel__mosaic-head p{color:var(--text-secondary);font-size:.9rem;margin:0;}
+.panel__mosaic-grid{display:grid;grid-template-columns:1fr;gap:clamp(14px,1.8vw,20px);align-items:start;max-width:1000px;margin:0 auto;}
+.panel__tile{margin:0;}
+.panel__tile-media{position:relative;border-radius:14px;overflow:hidden;background:var(--azul-nova);}
+.panel__tile-media img,.panel__tile-media video{width:100%;height:100%;object-fit:cover;display:block;}
+.panel__tile[data-ratio="4x5"] .panel__tile-media{aspect-ratio:4/5;}
+.panel__tile[data-ratio="3x4"] .panel__tile-media{aspect-ratio:3/4;}
+/* El video se monta encima de la still y recien ahi aparece (ver inline-video.js).
+   Si el autoplay se bloquea, nunca llega is-playing y queda la foto. */
+.panel__tile-media video{position:absolute;inset:0;opacity:0;transition:opacity .45s ease;}
+.panel__tile-media.is-playing video{opacity:1;}
+.panel__tile figcaption{margin-top:10px;font-size:.82rem;line-height:1.5;color:var(--text-secondary);}
+.panel__tile figcaption b{display:block;font-weight:600;color:var(--crema);font-size:.87rem;margin-bottom:3px;}
+/* El encuadre del clip: el 9:16 entero deja la mano fuera del tile 3:4.
+   Va sobre img y video juntos -- el video lo inyecta el script y no hereda
+   un style inline puesto en la still. */
+.panel__tile--b .panel__tile-media img,
+.panel__tile--b .panel__tile-media video{object-position:50% 38%;}
+/* Celular: el escalon pasa a ser lateral. Tres tiles a ancho completo hacen una
+   columna larguisima, y la mayoria del trafico del sitio entra por celular. */
+@media (max-width:599px){
+  .panel__tile{width:86%;}
+  .panel__tile--b{margin-left:auto;}
+  .panel__tile--c{margin-left:7%;}
+}
+@media (min-width:600px) and (max-width:859px){
+  .panel__mosaic-grid{grid-template-columns:1fr 1fr;}
+  .panel__tile--b{margin-top:clamp(16px,3vw,32px);}
+  .panel__tile--c{grid-column:1 / -1;width:62%;margin-left:auto;}
+}
+@media (min-width:860px){
+  .panel__mosaic-grid{grid-template-columns:repeat(3,1fr);}
+  .panel__tile--b{margin-top:clamp(18px,3.2vw,44px);}
+  .panel__tile--c{margin-top:clamp(36px,6.4vw,88px);}
+}
+/* El retardo del reveal va despues de .js .reveal.is-in, que setea el shorthand
+   transition y por eso resetea el delay a 0. Con una clase mas gana esta. */
+.js .panel__tile--b.reveal.is-in{transition-delay:.09s;}
+.js .panel__tile--c.reveal.is-in{transition-delay:.18s;}
+@media (prefers-reduced-motion:reduce){
+  .js .panel__tile--b.reveal.is-in,.js .panel__tile--c.reveal.is-in{transition-delay:0s;}
+}
+
 .panel__cta{padding:8px 32px 32px;}
 
 .panel__highlight{margin:0 32px 24px;padding:20px 22px;border:1px solid var(--border);border-left:3px solid var(--dorado);border-radius:12px;background:var(--azul-nova);}
@@ -1287,20 +1340,47 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
       <header class="panel__head reveal">
         <p class="panel__lede">Sonido ambiental en cada habitación, controlado desde la misma app que el resto de la casa — sin parlantes bluetooth sueltos ni un control remoto por equipo. Integramos audio multizona y video con amplificadores de la misma familia de sistemas abiertos que usamos en domótica, para que el volumen de la cocina y la escena de "película" del living respondan al mismo panel.</p>
       </header>
-      <div class="panel__block reveal" data-format="portrait">
-        <figure class="panel__block-media">
-          <img src="assets/img/servicio-audio-video-bloque-1-960.webp"
-               srcset="assets/img/servicio-audio-video-bloque-1-640.webp 640w,
-                       assets/img/servicio-audio-video-bloque-1-960.webp 960w"
-               sizes="(max-width: 760px) 100vw, 42vw"
-               width="960" height="1280" loading="lazy" decoding="async"
-               alt="Home cinema en obra: pantalla de proyección, subwoofer y parlante de barra listos para instalar, con procesador Denon">
-        </figure>
-        <div class="panel__block-text">
+      <section class="panel__mosaic" aria-label="Home cinema en Despeñaderos">
+        <div class="panel__mosaic-head reveal">
           <h3>Cine en casa, de punta a punta</h3>
-          <p>Pantalla, proyector, procesador y parlantes — todo el sistema de imagen y sonido en un mismo proyecto, en una casa en Despeñaderos.</p>
+          <p>La misma sala en Despeñaderos: el proyector colgado y alineado, todo el sistema respondiendo desde el celular, y la sala terminada. Pantalla, proyector, procesador y parlantes en un mismo proyecto.</p>
         </div>
-      </div>
+        <div class="panel__mosaic-grid">
+          <figure class="panel__tile panel__tile--a reveal" data-ratio="4x5">
+            <div class="panel__tile-media">
+              <img src="assets/img/servicio-audio-video-bloque-3-960.webp"
+                   srcset="assets/img/servicio-audio-video-bloque-3-640.webp 640w,
+                           assets/img/servicio-audio-video-bloque-3-960.webp 960w"
+                   sizes="(min-width: 860px) 320px, calc(100vw - 64px)"
+                   width="960" height="1200" loading="lazy" decoding="async"
+                   alt="Proyector montado en un soporte a cielorraso de madera, con el parlante surround de pared al lado, en un home cinema en obra">
+            </div>
+            <figcaption><b>El proyector, colgado y alineado</b>Soporte a cielorraso, cableado por dentro y el surround de pared ya en su lugar.</figcaption>
+          </figure>
+          <figure class="panel__tile panel__tile--b reveal" data-ratio="3x4">
+            <div class="panel__tile-media"
+                 data-inline-video="assets/video/servicio-audio-video-bloque-4-9x16"
+                 data-inline-video-poster="assets/img/servicio-audio-video-bloque-4-poster-9x16.webp">
+              <img src="assets/img/servicio-audio-video-bloque-4-poster-9x16.webp"
+                   sizes="(min-width: 860px) 320px, calc(100vw - 64px)"
+                   width="576" height="1024" loading="lazy" decoding="async"
+                   alt="Mano sosteniendo el celular con la app abierta frente a la pantalla de proyección del home cinema, con la barra de parlantes y los surround a la vista">
+            </div>
+            <figcaption><b>Todo desde el celular</b>Pantalla, proyector y sonido responden a la misma app — no hay un control remoto por equipo.</figcaption>
+          </figure>
+          <figure class="panel__tile panel__tile--c reveal" data-ratio="4x5">
+            <div class="panel__tile-media">
+              <img src="assets/img/servicio-audio-video-bloque-1-960.webp"
+                   srcset="assets/img/servicio-audio-video-bloque-1-640.webp 640w,
+                           assets/img/servicio-audio-video-bloque-1-960.webp 960w"
+                   sizes="(min-width: 860px) 320px, calc(100vw - 64px)"
+                   width="960" height="1280" loading="lazy" decoding="async"
+                   alt="Home cinema en obra: pantalla de proyección con el logo de Denon, procesador y barra de parlantes sobre el piso, y la tarima escalonada en primer plano">
+            </div>
+            <figcaption><b>La sala, lista para las butacas</b>Procesador Denon y barra de parlantes montados, con la tarima escalonada ya hecha.</figcaption>
+          </figure>
+        </div>
+      </section>
       <div class="panel__block reveal" data-format="landscape" data-flip>
         <figure class="panel__block-media">
           <img src="assets/img/servicio-audio-video-bloque-2-960.webp"
@@ -1444,5 +1524,6 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
 <script src="js/services-carousel.js"></script>
 <script src="js/card-preview.js"></script>
 <script src="js/service-panel.js"></script>
+<script src="js/inline-video.js"></script>
 </body>
 </html>
