@@ -179,6 +179,35 @@ body.scroll-lock{overflow:hidden;}
    por defecto se la comia. Escapado por id a proposito -- no es el default
    para "square" en general, es para estas dos fotos de Instalacion Electrica. */
 #panel-instalacion-electrica .panel__block[data-format="square"] .panel__block-media img{object-position:50% 15%;}
+/* ---- Tope de alto de la media de un panel__block ----
+   El tope de 60vh estaba puesto en la <img> (max-height) mientras el <figure>
+   tomaba su alto del aspect-ratio del formato. Cuando el ratio pedia mas de
+   60vh -- que es casi siempre en los formatos verticales -- la foto se cortaba
+   a los 60vh y el resto del figure quedaba a la vista con su propio fondo
+   (--azul-nova): la placa azul que sobresalia debajo de la foto.
+   Ahora el tope se aplica limitando el ANCHO del figure a (60vh x ratio), asi
+   el aspect-ratio sigue gobernando el alto y la foto NO se recorta. Recortar
+   por object-fit:cover aca se comeria entre 25% y 50% del encuadre, que es
+   justamente lo que prohibe la regla de recorte agresivo del componente.
+   --media-ar es el ratio del formato expresado como numero (ancho/alto). */
+.panel__block[data-format] .panel__block-media{
+  max-width:calc(60vh * var(--media-ar, 1));
+  margin-inline:auto;
+}
+/* En dos columnas la foto se arrima al texto en vez de quedar suelta en el
+   medio de su columna; el aire sobrante se va al margen exterior del panel.
+   En una columna (celular) queda centrada -- de ahi que esto viva adentro del
+   media query y no en la regla de arriba. */
+@media (min-width:720px){
+  .panel__block[data-format] .panel__block-media{margin-inline:auto 0;}
+  .panel__block[data-format][data-flip] .panel__block-media{margin-inline:0 auto;}
+}
+.panel__block[data-format] .panel__block-media img{max-height:none;}
+.panel__block[data-format="portrait"] .panel__block-media{--media-ar:.8;}
+.panel__block[data-format="landscape"] .panel__block-media{--media-ar:1.6;}
+.panel__block[data-format="square"] .panel__block-media{--media-ar:1;}
+.panel__block[data-format="portrait-tall"] .panel__block-media{--media-ar:.75;}
+.panel__block[data-format="portrait-9x16"] .panel__block-media{--media-ar:.5625;}
 .panel__block-text h3{font-size:1.05rem;margin-bottom:8px;}
 .panel__block-text p{color:var(--text-secondary);font-size:.9rem;margin:0;max-width:none;}
 
