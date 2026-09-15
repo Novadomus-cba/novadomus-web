@@ -91,6 +91,44 @@ texto para lector de pantalla.
 | `alarmas` | bloque 1 | la foto que hasta ahora era el hero (`servicio-alarmas.jpg` original no localizado en `Fotos/`, se regeneró desde el `-1440.webp` ya publicado) | 3:4 nativo (1440×2559 real) | **la foto que hasta ahora era el hero** baja al cuerpo del panel cuando el hero pasa a video (11/09/2026), mismo copy/alt que tenía como hero. Primer bloque con foto de este panel (estaba en cero) |
 | `audio-video` | hero (video) | Generado Gemini, texto puro (3 archivos: av1, h264, poster) | recorte de origen 1120×630 (misma tanda que alarmas/videovigilancia) | **pasa de foto a video** (11/09/2026). Home theater premium, pantalla con contenido abstracto. Sin `data-panel-video-once`: loopea. `object-position:50% center` |
 | `audio-video` | bloque 2 | la foto que hasta ahora era el hero (fuente original no localizada en `Fotos/`, se regeneró desde el `-1440.webp` ya publicado) | 4:3 (1440×1080 real) | **la foto que hasta ahora era el hero** baja al cuerpo del panel cuando el hero pasa a video (11/09/2026), mismo copy/alt que tenía como hero. Amplificador VSSL y parlantes de techo |
+| `audio-video` | bloque 3 (mosaico, tile A) | `Audio y Video 1-Vertical.jpeg` (Pagina- Nueva guía, 960×1280) | recorte 4:5 → 960×1200, se saca 80px de arriba (cielorraso de madera sobrante) | proyector colgado en soporte a cielorraso + surround de pared. Misma obra que el bloque 1 (Despeñaderos). Original de 960px de ancho: no se genera `-1440`, el `srcset` usa 640/960 |
+| `audio-video` | bloque 4 (mosaico, tile B) | `Audio y Video 1-Vertical 02.mp4` (Pagina- Nueva guía, 576×1024 real — el ffprobe crudo dice 1024×576, la rotación está en la matriz de display) | segmento 5.0–11.0s + **ping-pong** (ida y vuelta) = 12s de loop sin corte; sin audio; sin recorte de cuadro (el encuadre 3:4 lo hace el CSS con `object-position:50% 38%`) | **primer video en el cuerpo de un panel**, no en el hero. Mano con el celular frente a la pantalla del home cinema. Se monta con `js/inline-video.js`, no con `service-panel.js` |
+
+## Mosaico escalonado en `servicios.html` (15/09/2026)
+
+**Qué es.** Un bloque nuevo dentro del panel de `audio-video` (`.panel__mosaic`): tres piezas de
+la misma obra en una fila, cada una un escalón más abajo que la anterior — proyector colgado,
+clip de la sala comandada desde el celular, sala terminada. Reemplaza al `panel__block`
+`data-format="portrait"` que tenía la foto de la sala sola: esa foto **no se duplica**, pasa a ser
+el tile C del mosaico reusando los mismos `servicio-audio-video-bloque-1-{640,960}.webp` (el tile
+es 4:5 y la foto 3:4 — el `object-fit:cover` recorta un 6% de alto, nada relevante).
+
+**Detalles que no son obvios y conviene no "arreglar":**
+
+- El escalón va por `margin-top`, **no** por `transform`. `.reveal` ya usa `transform` para entrar
+  y las dos reglas se pisan. `margin-top` además reserva alto en la grilla, así que el bloque no
+  se come lo que viene abajo.
+- El retardo escalonado del reveal (`.js .panel__tile--b.reveal.is-in{transition-delay:.09s}`)
+  necesita una clase más que `.js .reveal.is-in`, porque esa regla setea el shorthand
+  `transition` y resetea el delay a 0.
+- El `object-position` del tile del video va en CSS sobre `img` **y** `video` juntos: el `<video>`
+  lo inyecta el script y no hereda un `style` inline puesto sobre la still.
+- Abajo de 860px la grilla es de una columna y el escalón pasa a ser lateral (tiles al 86% de
+  ancho, alternando alineación). Tres tiles a ancho completo dejaban 1700px de scroll en celular.
+
+**`js/inline-video.js` (archivo nuevo).** Monta el `<video>` recién cuando el tile entra en cuadro,
+lo pausa al salir y lo **desmonta** en el evento `close` del `dialog` — sin eso el decoder queda
+vivo después de cerrar el panel (mismo problema que ya había resuelto `unmountPanelVideo()` para
+el hero). Usa el `.panel__scroll` como `root` del IntersectionObserver: dentro de un takeover el
+viewport real es ese scroller, no la ventana. Con `prefers-reduced-motion`, sin IO o con el
+autoplay bloqueado no monta nada y queda la still — igual criterio que el hero, sin avisar nada.
+
+### Veto: `Audio y Video 3-Apaisada.mp4`
+
+**No se publica.** Son 8 segundos de una escena de Transformers ocupando el cuadro entero: no se
+ve la sala, ni el mueble, ni la instalación — solo la película. Publicarlo es reproducir metraje
+de un film con derechos, y no aporta prueba de obra propia. **Decidido por Agustín el 15/09/2026**
+al presentarle el problema. No volver a proponerlo como candidato de `audio-video`.
 
 ## `nosotros.html` — reescritura completa (13/09/2026, KICKOFF_L)
 
