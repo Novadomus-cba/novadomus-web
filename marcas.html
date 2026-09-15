@@ -60,6 +60,9 @@ p{line-height:1.6;max-width:62ch;}
 .mobile-menu__close::after{transform:rotate(-45deg);}
 .mobile-menu a{font-size:1.25rem;padding:14px 0;border-bottom:1px solid var(--line);}
 .mobile-menu .nav-cta{margin-top:20px;text-align:center;}
+.mobile-menu .mobile-menu__portal{margin-top:auto;padding:22px 0 8px;display:inline-flex;align-items:center;gap:9px;font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;color:var(--text-secondary);border-bottom:0;transition:color .2s;}
+.mobile-menu .mobile-menu__portal:hover,.mobile-menu .mobile-menu__portal:focus-visible{color:var(--dorado);}
+.mobile-menu__portal svg{width:14px;height:14px;flex:none;}
 @media (prefers-reduced-motion:no-preference){
   .mobile-menu[open]::backdrop{animation:nd-menu-fade .25s ease both;}
   .mobile-menu[open] .mobile-menu__panel{animation:nd-menu-in .28s cubic-bezier(.25,.1,.25,1) both;}
@@ -184,6 +187,10 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
     <a href="participaciones.html">Participaciones</a>
     <a href="contacto.html">Contacto</a>
     <a class="btn btn-outline nav-cta" href="https://wa.me/543516747513?text=Hola%20Nova%20Domus%2C%20quiero%20hacer%20una%20consulta" target="_blank" rel="noopener">Escribinos por WhatsApp</a>
+    <a class="mobile-menu__portal" href="https://portalnovadomus.pages.dev/" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10.5" rx="2"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg>
+      Portal interno
+    </a>
   </div>
 </dialog>
 
