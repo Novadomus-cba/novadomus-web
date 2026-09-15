@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /scripts/
+Disallow: /build_images.py
+Disallow: /*.md$
+
+Sitemap: https://nova-domus.com.ar/sitemap.xml
