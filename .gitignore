@@ -21,3 +21,8 @@ assets/img/*
 
 # material de trabajo de la auditoria de fotos
 Fotos/_laminas/
+
+# archivos de sistema operativo / editor
+.DS_Store
+Thumbs.db
+*.tmp
