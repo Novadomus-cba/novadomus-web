@@ -122,7 +122,22 @@ p{line-height:1.6;max-width:62ch;}
   .door__body{padding:24px;}
 }
 
+/* ---------- OBRA DESTACADA ---------- */
+.featured-project{display:grid;grid-template-columns:3fr 2fr;background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;}
+.featured-project__media{position:relative;aspect-ratio:3/2;overflow:hidden;}
+.featured-project__media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+.featured-project__body{padding:44px;display:flex;flex-direction:column;justify-content:center;gap:16px;}
+.featured-project__body h2{font-size:1.6rem;}
+.featured-project__body p{color:var(--text-secondary);font-size:.98rem;}
+.featured-project__promise{max-width:none;padding:14px 18px;border-left:3px solid var(--dorado);background:var(--dorado-dim);color:var(--dorado);font-weight:600;font-size:.98rem;}
+.featured-project__body .btn{align-self:flex-start;}
+@media (max-width:860px){
+  .featured-project{grid-template-columns:1fr;}
+  .featured-project__body{padding:28px;}
+}
+
 /* ---------- NUMEROS EN PROSA ---------- */
+.numbers{margin-top:40px;}
 .numbers p{border-top:1px solid var(--line);padding-top:32px;font-size:1.2rem;max-width:56ch;color:var(--crema);}
 .numbers a{margin-top:18px;display:inline-block;font-size:.9rem;color:var(--dorado);font-weight:600;}
 
@@ -291,12 +306,27 @@ footer{background:var(--surface);border-top:1px solid var(--line);padding:56px 0
     </div>
   </section>
 
-  <!-- Cuando llegue la foto de Casa FOA, esta banda se mueve al pie del bloque de obra
-       destacada y deja de ser seccion propia. -->
-  <section class="section numbers">
+  <section class="section featured">
     <div class="wrap">
-      <p class="rv">Más de 2.600 bocas eléctricas y más de 900 puntos de domótica e iluminación, programados uno por uno. Más de 40 obras eléctricas y más de 45 de tecnología — y en buena parte de ellas, las dos cosas las hicimos nosotros.</p>
-      <a class="rv rv2" href="obras.html">Ver las obras →</a>
+      <div class="featured-project rv">
+        <div class="featured-project__media">
+          <img src="assets/img/home-obra-casafoa-1440.webp"
+               srcset="assets/img/home-obra-casafoa-640.webp 640w, assets/img/home-obra-casafoa-960.webp 960w, assets/img/home-obra-casafoa-1440.webp 1440w"
+               sizes="(max-width: 860px) 100vw, 58vw" width="1440" height="960" loading="lazy" decoding="async"
+               alt="Sala de Casa FOA con iluminación lineal integrada en el cielorraso y un panel de control en la pared">
+        </div>
+        <div class="featured-project__body">
+          <p class="eyebrow">Obra propia</p>
+          <h2>Casa FOA, Córdoba.</h2>
+          <p>Empezamos ahí en 2023, y desde entonces volvimos cada edición. Es la obra donde todo el proceso queda a la vista en dos semanas: la instalación eléctrica, el cableado de red, la programación y la entrega. En la pared, un panel Control4 maneja todo el espacio. Nadie firma el certificado hasta que la casa responde.</p>
+          <p class="featured-project__promise">Queda funcionando y documentado.</p>
+          <a class="btn btn-outline" href="participaciones.html#casa-foa">Ver Casa FOA →</a>
+        </div>
+      </div>
+      <div class="numbers">
+        <p class="rv">Más de 2.600 bocas eléctricas y más de 900 puntos de domótica e iluminación, programados uno por uno. Más de 40 obras eléctricas y más de 45 de tecnología — y en buena parte de ellas, las dos cosas las hicimos nosotros.</p>
+        <a class="rv rv2" href="obras.html">Ver las obras →</a>
+      </div>
     </div>
   </section>
 
